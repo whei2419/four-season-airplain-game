@@ -1,0 +1,42 @@
+// Admin Styles - Tabler UI Framework
+@import '@tabler/core/dist/css/tabler.min.css';
+
+// Custom admin styles
+body.admin-layout {
+    font-family: 'Inter', sans-serif;
+}
+
+.admin-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.admin-sidebar {
+    background-color: #ffffff;
+    border-right: 1px solid #e9ecef;
+}
+
+// Custom overrides for Tabler
+.navbar-brand-image {
+    height: 2rem;
+}
+
+// Admin dashboard cards
+.dashboard-card {
+    transition: transform 0.2s;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+}
+
+// Admin table styles
+.admin-table {
+    th {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+}
