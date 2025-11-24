@@ -307,58 +307,190 @@
         }
     }
 
-    // Intl Tel Input Overrides
-    .iti {
+    // Custom Contact Input with Modal
+    .contact-input-group {
+        display: flex;
+        gap: 0;
+        position: relative;
+    }
+
+    .country-trigger {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 20px 20px 20px 30px;
+        background: white;
+        border: 3px solid #A7F3D0;
+        border-right: none;
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+        cursor: pointer;
+        font-family: 'Gordita', sans-serif;
+        transition: all 0.3s;
+        
+        &:hover {
+            border-color: #3BB776;
+        }
+        
+        .iti__flag {
+            transform: scale(1.8);
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .code-text {
+            font-size: 24px;
+            color: #3BB776;
+            font-weight: bold;
+        }
+        
+        .dropdown-arrow {
+            font-size: 12px;
+            color: #3BB776;
+            margin-left: 5px;
+        }
+    }
+
+    .contact-phone {
+        flex: 1;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
+
+    // Country Modal
+    .country-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        display: block;
-        margin-bottom: 0;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .country-modal-content {
+        background: white;
+        border-radius: 30px;
+        border: 8px solid #3BB776;
+        width: 90%;
+        max-width: 500px;
+        max-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        animation: cardSlideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px 30px;
+        border-bottom: 3px solid #A7F3D0;
         
-        // Ensure the flag container respects the pill shape
-        .iti__flag-container {
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
-            padding-left: 5px;
+        h3 {
+            font-family: 'Gordita', sans-serif;
+            font-size: 32px;
+            color: #3BB776;
+            font-weight: bold;
+            margin: 0;
         }
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 42px;
+        color: #3BB776;
+        cursor: pointer;
+        line-height: 1;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         
-        // Adjust the selected flag view
-        .iti__selected-flag {
-            background-color: transparent;
-            padding: 0 12px 0 20px;
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
-            height: 100%;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    .country-search {
+        margin: 20px 30px;
+        padding: 15px 25px;
+        border: 3px solid #A7F3D0;
+        border-radius: 25px;
+        font-family: 'Gordita', sans-serif;
+        font-size: 20px;
+        outline: none;
+        
+        &:focus {
+            border-color: #3BB776;
+        }
+    }
+
+    .country-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 15px 20px 15px;
+        
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #A7F3D0;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: #3BB776;
+        }
+    }
+
+    .country-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.2s;
+        
+        &:hover {
+            background-color: #3BB776;
+            color: white;
             
-            &:hover, &:focus {
-                background-color: rgba(59, 183, 118, 0.1);
+            .country-code {
+                color: white;
             }
         }
         
-        // Ensure the input has enough padding for the flag
-        input.registration-input {
-            padding-left: 100px !important; // Override default padding to make room for flag
+        .iti__flag {
+            transform: scale(1.6);
+            border-radius: 3px;
+            flex-shrink: 0;
         }
         
-        // Style the dropdown list
-        .iti__country-list {
-            border-radius: 20px;
-            border: 2px solid #A7F3D0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow-x: hidden;
-            width: 100%; // Match input width
-            max-width: 400px;
-            margin-top: 5px;
-            z-index: 100;
-            
-            .iti__country {
-                padding: 12px 20px;
-                font-family: 'Gordita', sans-serif;
-                font-size: 16px;
-                
-                &.iti__highlight {
-                    background-color: #3BB776;
-                    color: white;
-                }
-            }
+        .country-name {
+            flex: 1;
+            font-family: 'Gordita', sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .country-code {
+            font-family: 'Gordita', sans-serif;
+            font-size: 20px;
+            color: #3BB776;
+            font-weight: bold;
         }
     }
     

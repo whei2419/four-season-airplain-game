@@ -35,7 +35,29 @@
                     
                     <div class="form-group">
                         <label for="contact">Contact No.</label>
-                        <input type="text" id="contact" name="contact" placeholder="0123456789" class="registration-input" required>
+                        <div class="contact-input-group">
+                            <button type="button" id="country-trigger" class="country-trigger">
+                                <span id="selected-flag" class="iti__flag iti__my"></span>
+                                <span id="selected-code" class="code-text">+60</span>
+                                <span class="dropdown-arrow">▼</span>
+                            </button>
+                            <input type="hidden" id="country_code" name="country_code" value="+60">
+                            <input type="tel" id="contact" name="contact" placeholder="12 345 6789" class="registration-input contact-phone" required>
+                        </div>
+                    </div>
+
+                    <!-- Country Code Modal -->
+                    <div id="country-modal" class="country-modal">
+                        <div class="country-modal-content">
+                            <div class="modal-header">
+                                <h3>Select Country</h3>
+                                <button type="button" id="close-country-modal" class="close-modal">×</button>
+                            </div>
+                            <input type="text" id="country-search" class="country-search" placeholder="Search country...">
+                            <div id="country-list" class="country-list">
+                                <!-- Countries will be populated by JavaScript from intl-tel-input data -->
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-actions">

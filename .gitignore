@@ -30,3 +30,5 @@ Thumbs.db
 
 # Build (keep public/build for production)
 /public/hot
+/public/build
+

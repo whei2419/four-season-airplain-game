@@ -40,7 +40,7 @@
     ]
   },
   "resources/js/game/app.js": {
-    "file": "assets/app-B6nLINPq.js",
+    "file": "assets/app-1cm0r8N4.js",
     "name": "app",
     "src": "resources/js/game/app.js",
     "isEntry": true,
@@ -63,7 +63,7 @@
     "isEntry": true
   },
   "resources/sass/game/app.scss": {
-    "file": "assets/app-l5ten6MM.css",
+    "file": "assets/app-DX7sccKi.css",
     "src": "resources/sass/game/app.scss",
     "isEntry": true
   }
