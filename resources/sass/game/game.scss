@@ -1,0 +1,341 @@
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+// Game UI overlays
+.game-ui {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    pointer-events: none;
+    
+    &__score {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+    }
+    
+    &__lives {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+}
+
+// Loading screen
+.game-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    z-index: 9999;
+    
+    &__spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin-right: 15px;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Game menu
+.game-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    min-width: 400px;
+    
+    .game-logo {
+        max-width: 300px;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        margin-bottom: 30px;
+        font-size: 32px;
+        font-family: 'Gordita', sans-serif;
+    }
+    
+    button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        transition: background 0.3s;
+        
+        &:hover {
+            background: #5568d3;
+        }
+    }
+}
+
+#welcome-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+// Welcome page logo container
+.welcome-logo-container {
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    
+    .game-logo {
+        max-width: 400px;
+        width: 100%;
+        height: auto;
+    }
+}
+
+// Welcome page actions (Start button)
+.welcome-actions {
+    position: fixed;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+// Reusable Game Button
+.game-button {
+    display: inline-block;
+    background-color: #3BB776; /* Primary Green */
+    color: white;
+    font-family: 'Gordita', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 80px;
+    border-radius: 50px; /* Pill shape */
+    border: 8px solid white;
+    box-shadow: 0 8px 0 #2a8556; /* Darker green shadow for 3D effect */
+    transition: all 0.1s ease;
+    cursor: pointer;
+    text-align: center;
+    
+    &:hover {
+        transform: translateY(4px);
+        box-shadow: 0 4px 0 #2a8556;
+        background-color: #45c985;
+    }
+    
+    &:active {
+        transform: translateY(8px);
+        box-shadow: 0 0 0 #2a8556;
+    }
+}
+
+// Animations
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes cardSlideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes buttonSlideUp {
+    from { opacity: 0; transform: translate(-50%, 100px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+// Registration Overlay
+.registration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease-out;
+    
+    .registration-content {
+        text-align: center;
+        width: 90%;
+        max-width: 800px; // Much wider
+        padding: 20px;
+        position: relative;
+        // Shift content up slightly to accommodate fixed buttons at bottom
+        transform: translateY(-5%); 
+    }
+    
+    .registration-title {
+        font-family: 'Gordita', sans-serif;
+        color: #fff;
+        font-size: 72px; // Huge title
+        margin-bottom: 15px;
+        font-weight: bold;
+        text-shadow: 
+            -3px -3px 0 #2a8556,  
+             3px -3px 0 #2a8556,
+            -3px  3px 0 #2a8556,
+             3px  3px 0 #2a8556;
+    }
+    
+    .registration-subtitle {
+        font-family: 'Gordita', sans-serif;
+        color: #fff;
+        font-size: 32px; // Larger subtitle
+        margin-bottom: 40px;
+        font-weight: bold;
+        text-shadow: 
+            -2px -2px 0 #2a8556,  
+             2px -2px 0 #2a8556,
+            -2px  2px 0 #2a8556,
+             2px  2px 0 #2a8556;
+    }
+}
+
+.registration-card {
+    background: white;
+    border-radius: 50px;
+    padding: 50px 60px 80px 60px; // Large padding
+    border: 8px solid #3BB776;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    position: relative;
+    margin-bottom: 0; // Reset margin
+    animation: cardSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    
+    .form-title {
+        color: #3BB776; // Updated color
+        font-family: 'Gordita', sans-serif;
+        font-size: 56px; // Larger form title
+        font-weight: bold;
+        margin-bottom: 40px;
+    }
+    
+    .form-group {
+        margin-bottom: 35px;
+        text-align: left;
+        
+        label {
+            display: block;
+            color: #3BB776; // Updated color
+            font-family: 'Gordita', sans-serif;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 28px; // Larger labels
+        }
+    }
+    
+    .registration-input {
+        width: 100%;
+        padding: 20px 30px;
+        border: 3px solid #A7F3D0;
+        border-radius: 30px;
+        font-family: 'Gordita', sans-serif;
+        font-size: 24px; // Larger input text
+        color: #666;
+        outline: none;
+        transition: border-color 0.3s;
+        
+        &:focus {
+            border-color: #3BB776;
+        }
+        
+        &::placeholder {
+            color: #ccc;
+        }
+    }
+    
+    .form-actions {
+        position: fixed; // Fixed to screen bottom
+        bottom: -19%; // Moved down from 15%
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 30;
+        width: auto;
+        animation: buttonSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s backwards;
+    }
+    
+    .submit-btn {
+        white-space: nowrap;
+        padding: 15px 100px; // Wider button
+        font-size: 36px; // Larger button text
+    }
+}
+
+.back-btn {
+    position: fixed; // Fixed to screen bottom
+    bottom: -27%; // Moved down from 5%
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-family: 'Gordita', sans-serif;
+    font-size: 36px; // Larger back button
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-shadow: 
+        -2px -2px 0 #2a8556,  
+         2px -2px 0 #2a8556,
+        -2px  2px 0 #2a8556,
+         2px  2px 0 #2a8556;
+    z-index: 30;
+    animation: buttonSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s backwards;
+    
+    &:hover {
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+

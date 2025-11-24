@@ -86,8 +86,11 @@ function update() {
 
 // Initialize game when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing Phaser game...');
-    const game = new Phaser.Game(config);
+    // Only start the game if the game container exists
+    if (document.getElementById('game-container')) {
+        console.log('Initializing Phaser game...');
+        const game = new Phaser.Game(config);
+    }
 });
 
 export default config;

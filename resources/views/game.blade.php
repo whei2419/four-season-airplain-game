@@ -18,6 +18,7 @@
     
     <!-- Game Menu (Initially Hidden) -->
     <div class="game-menu" style="display: none;" id="game-menu">
+        <x-game-logo class="game-logo" style="max-width: 200px; margin-bottom: 20px;" />
         <h2>Four Season Airplane Game</h2>
         <p>Use arrow keys to control your airplane</p>
         <button onclick="startGame()">Start Game</button>
