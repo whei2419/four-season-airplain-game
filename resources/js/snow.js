@@ -8,7 +8,7 @@ class SnowEffect {
         this.container.appendChild(this.canvas);
 
         this.particles = [];
-        this.particleCount = 150; // Number of snowflakes
+        this.particleCount = 400; // Increased number of snowflakes
 
         this.resize();
         window.addEventListener('resize', () => this.resize());
@@ -34,10 +34,10 @@ class SnowEffect {
         return {
             x: Math.random() * this.width,
             y: reset ? -10 : Math.random() * this.height,
-            size: Math.random() * 3 + 1,
-            speedY: Math.random() * 1 + 0.5,
-            speedX: Math.random() * 0.5 - 0.25,
-            opacity: Math.random() * 0.5 + 0.3
+            size: Math.random() * 4 + 2, // Slightly larger for blur effect
+            speedY: Math.random() * 0.5 + 0.2, // Slower speed
+            speedX: Math.random() * 0.4 - 0.2, // Gentler drift
+            opacity: Math.random() * 0.4 + 0.2 // Softer opacity
         };
     }
 
@@ -45,6 +45,8 @@ class SnowEffect {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         this.ctx.fillStyle = 'white';
+        this.ctx.shadowBlur = 5; // Add blur effect
+        this.ctx.shadowColor = "white";
         
         this.particles.forEach((p, index) => {
             this.ctx.beginPath();
