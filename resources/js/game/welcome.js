@@ -292,6 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const keyboardKeys = document.querySelectorAll('.keyboard-visual .key');
     let activeInput = null;
     let isShiftActive = false;
+    let isSpecialChars = false;
 
     // Track which input is focused
     const inputs = document.querySelectorAll('.registration-input');
@@ -301,47 +302,173 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Function to update keyboard layout
+    function updateKeyboardLayout() {
+        const rows = document.querySelectorAll('.keyboard-visual .keyboard-row');
+        
+        if (isSpecialChars) {
+            // Special characters layout
+            rows[0].innerHTML = `
+                <div class="key">!</div>
+                <div class="key">@</div>
+                <div class="key">#</div>
+                <div class="key">$</div>
+                <div class="key">%</div>
+                <div class="key">^</div>
+                <div class="key">&</div>
+                <div class="key">*</div>
+                <div class="key">(</div>
+                <div class="key">)</div>
+            `;
+            rows[1].innerHTML = `
+                <div class="key">-</div>
+                <div class="key">_</div>
+                <div class="key">=</div>
+                <div class="key">+</div>
+                <div class="key">[</div>
+                <div class="key">]</div>
+                <div class="key">{</div>
+                <div class="key">}</div>
+                <div class="key">|</div>
+                <div class="key">\\</div>
+            `;
+            rows[2].innerHTML = `
+                <div class="key">:</div>
+                <div class="key">;</div>
+                <div class="key">"</div>
+                <div class="key">'</div>
+                <div class="key"><</div>
+                <div class="key">></div>
+                <div class="key">,</div>
+                <div class="key">.</div>
+                <div class="key">?</div>
+                <div class="key">/</div>
+            `;
+            rows[3].innerHTML = `
+                <div class="key wide">~\`</div>
+                <div class="key">.</div>
+                <div class="key">@</div>
+                <div class="key">.com</div>
+                <div class="key">.my</div>
+                <div class="key wide">⌫</div>
+            `;
+            rows[4].innerHTML = `
+                <div class="key wider">ABC</div>
+                <div class="key extra-wide">Space</div>
+                <div class="key wider">@</div>
+            `;
+        } else {
+            // Default QWERTY layout
+            rows[0].innerHTML = `
+                <div class="key">1</div>
+                <div class="key">2</div>
+                <div class="key">3</div>
+                <div class="key">4</div>
+                <div class="key">5</div>
+                <div class="key">6</div>
+                <div class="key">7</div>
+                <div class="key">8</div>
+                <div class="key">9</div>
+                <div class="key">0</div>
+            `;
+            rows[1].innerHTML = `
+                <div class="key">Q</div>
+                <div class="key">W</div>
+                <div class="key">E</div>
+                <div class="key">R</div>
+                <div class="key">T</div>
+                <div class="key">Y</div>
+                <div class="key">U</div>
+                <div class="key">I</div>
+                <div class="key">O</div>
+                <div class="key">P</div>
+            `;
+            rows[2].innerHTML = `
+                <div class="key">A</div>
+                <div class="key">S</div>
+                <div class="key">D</div>
+                <div class="key">F</div>
+                <div class="key">G</div>
+                <div class="key">H</div>
+                <div class="key">J</div>
+                <div class="key">K</div>
+                <div class="key">L</div>
+            `;
+            rows[3].innerHTML = `
+                <div class="key wide">Shift</div>
+                <div class="key">Z</div>
+                <div class="key">X</div>
+                <div class="key">C</div>
+                <div class="key">V</div>
+                <div class="key">B</div>
+                <div class="key">N</div>
+                <div class="key">M</div>
+                <div class="key wide">⌫</div>
+            `;
+            rows[4].innerHTML = `
+                <div class="key wider">!@#</div>
+                <div class="key extra-wide">Space</div>
+                <div class="key wider">@</div>
+            `;
+        }
+        
+        // Reattach event listeners to new keys
+        attachKeyboardListeners();
+    }
+
     // Handle keyboard key clicks
-    keyboardKeys.forEach(key => {
-        key.addEventListener('click', function() {
-            if (!activeInput) return;
+    function attachKeyboardListeners() {
+        const keys = document.querySelectorAll('.keyboard-visual .key');
+        keys.forEach(key => {
+            key.addEventListener('click', function() {
+                if (!activeInput) return;
 
-            const keyText = this.textContent;
+                const keyText = this.textContent;
 
-            if (keyText === 'Shift') {
-                isShiftActive = !isShiftActive;
-                this.style.background = isShiftActive ? '#3BB776' : 'white';
-                this.style.color = isShiftActive ? 'white' : '#3BB776';
-            } else if (keyText === '⌫') {
-                // Backspace
-                activeInput.value = activeInput.value.slice(0, -1);
-            } else if (keyText === 'Space') {
-                activeInput.value += ' ';
-            } else if (keyText === '!@#') {
-                // Toggle to special characters (for now just add common ones)
-                return;
-            } else if (keyText === '@') {
-                activeInput.value += '@';
-            } else if (keyText.length === 1) {
-                // Regular character
-                const char = isShiftActive ? keyText.toUpperCase() : keyText.toLowerCase();
-                activeInput.value += char;
-                
-                // Reset shift after typing
-                if (isShiftActive) {
-                    isShiftActive = false;
-                    const shiftKey = document.querySelector('.key.wide');
-                    if (shiftKey && shiftKey.textContent === 'Shift') {
-                        shiftKey.style.background = 'white';
-                        shiftKey.style.color = '#3BB776';
+                if (keyText === 'Shift') {
+                    isShiftActive = !isShiftActive;
+                    this.style.background = isShiftActive ? '#3BB776' : 'white';
+                    this.style.color = isShiftActive ? 'white' : '#3BB776';
+                } else if (keyText === '⌫') {
+                    // Backspace
+                    activeInput.value = activeInput.value.slice(0, -1);
+                } else if (keyText === 'Space') {
+                    activeInput.value += ' ';
+                } else if (keyText === '!@#') {
+                    // Switch to special characters
+                    isSpecialChars = true;
+                    updateKeyboardLayout();
+                } else if (keyText === 'ABC') {
+                    // Switch back to letters
+                    isSpecialChars = false;
+                    updateKeyboardLayout();
+                } else if (keyText.length <= 4) {
+                    // Regular character or multi-char like .com
+                    let char = keyText;
+                    if (keyText.length === 1 && /[a-zA-Z]/.test(keyText)) {
+                        char = isShiftActive ? keyText.toUpperCase() : keyText.toLowerCase();
+                    }
+                    activeInput.value += char;
+                    
+                    // Reset shift after typing
+                    if (isShiftActive && keyText.length === 1) {
+                        isShiftActive = false;
+                        const shiftKey = document.querySelector('.key.wide');
+                        if (shiftKey && shiftKey.textContent === 'Shift') {
+                            shiftKey.style.background = 'white';
+                            shiftKey.style.color = '#3BB776';
+                        }
                     }
                 }
-            }
 
-            // Trigger input event for validation
-            activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+                // Trigger input event for validation
+                activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+            });
         });
-    });
+    }
+
+    // Initial attachment
+    attachKeyboardListeners();
 
     // Populate all countries
     if (countryListContainer && allCountries) {
