@@ -224,9 +224,23 @@
     .registration-content {
         text-align: center;
         width: 90%;
-        max-width: 800px; // Much wider
+        max-width: 800px;
         padding: 20px;
         position: relative;
+    }
+    
+    .instruction-content {
+        text-align: center;
+        width: 90%;
+        max-width: 900px; // Slightly wider for instructions
+        padding: 20px;
+        position: relative;
+        margin-top: 100px;
+
+
+        .form-actions {
+            margin-top: 5vh;
+        }
     }
     
     .registration-title {
@@ -650,12 +664,18 @@
 // Instruction Card (Separate from Registration Card)
 .instruction-card {
     background: white;
-    border-radius: 50px;
+    margin-top: 10vh;
+    height: 50vh;
+    border-radius: 90px;
     padding: 40px 50px;
     border: 8px solid #3BB776;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     position: relative;
     animation: cardSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+    .form-actions {
+        margin-top: 10vh;
+    }
     
     .instruction-title {
         font-family: 'Gordita', sans-serif;

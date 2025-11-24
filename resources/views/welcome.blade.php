@@ -134,7 +134,7 @@
         </div>
         
         <!-- Instruction Content 1 - Tilt Controls -->
-        <div id="instruction-content-1" class="registration-content" style="display: none;">
+        <div id="instruction-content-1" class="instruction-content" style="display: none;">
             <div class="registration-card instruction-card">
                 <h2 class="instruction-title">How to Play</h2>
                 
@@ -156,7 +156,7 @@
         </div>
 
         <!-- Instruction Content 2 - Points -->
-        <div id="instruction-content-2" class="registration-content" style="display: none;">
+        <div id="instruction-content-2" class="instruction-content" style="display: none;">
             <div class="registration-card instruction-card">
                 <h2 class="instruction-title">How to Play</h2>
                 <p class="instruction-desc">
