@@ -260,6 +260,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const countrySearch = document.getElementById('country-search');
     const countryListContainer = document.getElementById('country-list');
     const closeModal = document.getElementById('close-country-modal');
+    const contactInput = document.getElementById('contact');
+
+    // Only allow numbers in contact input
+    if (contactInput) {
+        contactInput.addEventListener('keypress', function(e) {
+            // Allow only numbers (0-9) and control keys
+            const charCode = e.which ? e.which : e.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        });
+
+        // Prevent pasting non-numeric content
+        contactInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            const numbersOnly = pastedText.replace(/\D/g, '');
+            document.execCommand('insertText', false, numbersOnly);
+        });
+
+        // Remove any non-numeric characters on input
+        contactInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    }
 
     // Populate all countries
     if (countryListContainer && allCountries) {

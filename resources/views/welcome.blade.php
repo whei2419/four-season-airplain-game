@@ -15,6 +15,8 @@
 
     <!-- Registration Form Container (Hidden by default) -->
     <div id="registration-screen" class="registration-overlay" style="display: none;">
+        <button type="button" id="back-btn" class="back-btn-top">← BACK</button>
+        
         <div class="registration-content">
             <h1 class="registration-title">Welcome Aboard!</h1>
             <p class="registration-subtitle">Check in below to start your holiday with INNISFREE!</p>
@@ -61,12 +63,65 @@
                     </div>
                     
                     <div class="form-actions">
-                        <button type="submit" class="game-button submit-btn">SUBMIT</button>
+                        <button type="submit" class="game-button submit-btn-bottom">SUBMIT</button>
                     </div>
                 </form>
             </div>
-            
-            <button type="button" id="back-btn" class="back-btn">BACK</button>
+        </div>
+        
+        <!-- Large Keyboard Visual -->
+        <div class="keyboard-visual">
+            <div class="keyboard-row">
+                <div class="key">1</div>
+                <div class="key">2</div>
+                <div class="key">3</div>
+                <div class="key">4</div>
+                <div class="key">5</div>
+                <div class="key">6</div>
+                <div class="key">7</div>
+                <div class="key">8</div>
+                <div class="key">9</div>
+                <div class="key">0</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key">Q</div>
+                <div class="key">W</div>
+                <div class="key">E</div>
+                <div class="key">R</div>
+                <div class="key">T</div>
+                <div class="key">Y</div>
+                <div class="key">U</div>
+                <div class="key">I</div>
+                <div class="key">O</div>
+                <div class="key">P</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key">A</div>
+                <div class="key">S</div>
+                <div class="key">D</div>
+                <div class="key">F</div>
+                <div class="key">G</div>
+                <div class="key">H</div>
+                <div class="key">J</div>
+                <div class="key">K</div>
+                <div class="key">L</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key wide">Shift</div>
+                <div class="key">Z</div>
+                <div class="key">X</div>
+                <div class="key">C</div>
+                <div class="key">V</div>
+                <div class="key">B</div>
+                <div class="key">N</div>
+                <div class="key">M</div>
+                <div class="key wide">⌫</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key wider">123</div>
+                <div class="key extra-wide">Space</div>
+                <div class="key wider">@</div>
+            </div>
         </div>
     </div>
 
