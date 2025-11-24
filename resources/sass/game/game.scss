@@ -261,20 +261,20 @@
 // Large Keyboard Visual at Bottom
 .keyboard-visual {
     position: absolute;
-    bottom: 139px;
+    bottom: 0px;
     left: 0;
     right: 0;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.95), white);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.98), white);
     padding: 30px 40px 40px;
-    border-top: 4px solid #3BB776;
-    border-bottom: 4px solid #3BB776;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #3BB776;
+    border-bottom: 5px solid #3BB776;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
     
     .keyboard-row {
         display: flex;
         justify-content: center;
-        gap: 8px;
-        margin-bottom: 10px;
+        gap: 12px;
+        margin-bottom: 12px;
         
         &:last-child {
             margin-bottom: 0;
@@ -283,38 +283,38 @@
     
     .key {
         background: white;
-        border: 3px solid #A7F3D0;
-        border-radius: 8px;
-        padding: 15px;
-        min-width: 50px;
-        height: 60px;
+        border: 5px solid #A7F3D0;
+        border-radius: 12px;
+        padding: 18px;
+        min-width: 75px;
+        height: 85px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-family: 'Gordita', sans-serif;
-        font-size: 20px;
+        font-size: 32px;
         font-weight: bold;
         color: #3BB776;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
         transition: all 0.2s;
         cursor: pointer;
         
-        &:hover {
+        &:hover, &:active {
             background: #A7F3D0;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
         
         &.wide {
-            min-width: 80px;
+            min-width: 110px;
         }
         
         &.wider {
-            min-width: 100px;
+            min-width: 140px;
         }
         
         &.extra-wide {
-            min-width: 300px;
+            min-width: 420px;
         }
     }
 }

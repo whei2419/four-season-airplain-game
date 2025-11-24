@@ -288,6 +288,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Virtual Keyboard Functionality
+    const keyboardKeys = document.querySelectorAll('.keyboard-visual .key');
+    let activeInput = null;
+    let isShiftActive = false;
+
+    // Track which input is focused
+    const inputs = document.querySelectorAll('.registration-input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            activeInput = this;
+        });
+    });
+
+    // Handle keyboard key clicks
+    keyboardKeys.forEach(key => {
+        key.addEventListener('click', function() {
+            if (!activeInput) return;
+
+            const keyText = this.textContent;
+
+            if (keyText === 'Shift') {
+                isShiftActive = !isShiftActive;
+                this.style.background = isShiftActive ? '#3BB776' : 'white';
+                this.style.color = isShiftActive ? 'white' : '#3BB776';
+            } else if (keyText === '⌫') {
+                // Backspace
+                activeInput.value = activeInput.value.slice(0, -1);
+            } else if (keyText === 'Space') {
+                activeInput.value += ' ';
+            } else if (keyText === '!@#') {
+                // Toggle to special characters (for now just add common ones)
+                return;
+            } else if (keyText === '@') {
+                activeInput.value += '@';
+            } else if (keyText.length === 1) {
+                // Regular character
+                const char = isShiftActive ? keyText.toUpperCase() : keyText.toLowerCase();
+                activeInput.value += char;
+                
+                // Reset shift after typing
+                if (isShiftActive) {
+                    isShiftActive = false;
+                    const shiftKey = document.querySelector('.key.wide');
+                    if (shiftKey && shiftKey.textContent === 'Shift') {
+                        shiftKey.style.background = 'white';
+                        shiftKey.style.color = '#3BB776';
+                    }
+                }
+            }
+
+            // Trigger input event for validation
+            activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+    });
+
     // Populate all countries
     if (countryListContainer && allCountries) {
         allCountries.forEach(country => {
@@ -376,6 +431,15 @@ document.addEventListener('DOMContentLoaded', function() {
         startBtn.addEventListener('click', function() {
             startScreen.style.display = 'none';
             registrationScreen.style.display = 'flex';
+            
+            // Auto-focus on name input when registration opens
+            const nameInput = document.getElementById('name');
+            if (nameInput) {
+                setTimeout(() => {
+                    nameInput.focus();
+                    activeInput = nameInput;
+                }, 100);
+            }
         });
     }
 

@@ -118,7 +118,7 @@
                 <div class="key wide">⌫</div>
             </div>
             <div class="keyboard-row">
-                <div class="key wider">123</div>
+                <div class="key wider">!@#</div>
                 <div class="key extra-wide">Space</div>
                 <div class="key wider">@</div>
             </div>
