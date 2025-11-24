@@ -306,6 +306,61 @@
             color: #ccc;
         }
     }
+
+    // Intl Tel Input Overrides
+    .iti {
+        width: 100%;
+        display: block;
+        margin-bottom: 0;
+        
+        // Ensure the flag container respects the pill shape
+        .iti__flag-container {
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            padding-left: 5px;
+        }
+        
+        // Adjust the selected flag view
+        .iti__selected-flag {
+            background-color: transparent;
+            padding: 0 12px 0 20px;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            height: 100%;
+            
+            &:hover, &:focus {
+                background-color: rgba(59, 183, 118, 0.1);
+            }
+        }
+        
+        // Ensure the input has enough padding for the flag
+        input.registration-input {
+            padding-left: 100px !important; // Override default padding to make room for flag
+        }
+        
+        // Style the dropdown list
+        .iti__country-list {
+            border-radius: 20px;
+            border: 2px solid #A7F3D0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow-x: hidden;
+            width: 100%; // Match input width
+            max-width: 400px;
+            margin-top: 5px;
+            z-index: 100;
+            
+            .iti__country {
+                padding: 12px 20px;
+                font-family: 'Gordita', sans-serif;
+                font-size: 16px;
+                
+                &.iti__highlight {
+                    background-color: #3BB776;
+                    color: white;
+                }
+            }
+        }
+    }
     
     .form-actions {
         position: fixed; // Fixed to screen bottom
@@ -345,6 +400,79 @@
     
     &:hover {
         transform: translateX(-50%) scale(1.05);
+    }
+}
+
+// Instruction Screen Styles
+.instruction-logo {
+    max-width: 250px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.instruction-card {
+    padding: 40px 50px 100px 50px; // Extra bottom padding for button
+    
+    .instruction-title {
+        font-family: 'Gordita', sans-serif;
+        font-size: 64px;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 20px;
+        text-transform: none; // Keep "How to Play" casing
+        -webkit-text-stroke: 3px #3BB776; // Green outline
+        text-shadow: 
+            3px 3px 0 #3BB776,
+           -1px -1px 0 #3BB776,  
+            1px -1px 0 #3BB776,
+           -1px  1px 0 #3BB776,
+            1px  1px 0 #3BB776;
+    }
+
+    .instruction-desc {
+        font-family: 'Gordita', sans-serif;
+        color: #3BB776;
+        font-size: 22px;
+        line-height: 1.4;
+        margin-bottom: 40px;
+        font-weight: bold;
+        
+        .small-text {
+            font-size: 14px;
+            font-weight: normal;
+            opacity: 0.8;
+            display: block;
+            margin-top: 10px;
+        }
+    }
+    
+    .instruction-items {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        margin-bottom: 20px;
+        
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: center; // Center content
+            gap: 30px;
+            
+            .item-icon {
+                width: 100px; // Bigger icons
+                height: 100px;
+                object-fit: contain;
+            }
+            
+            .item-points {
+                font-family: 'Gordita', sans-serif;
+                font-size: 56px; // Huge points text
+                font-weight: bold;
+                color: #3BB776;
+            }
+        }
     }
 }
 
