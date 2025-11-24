@@ -318,20 +318,21 @@
     }
 }
 
+// Registration Card (Form)
 .registration-card {
     background: white;
     border-radius: 50px;
-    padding: 50px 60px 50px 60px; // Reduced bottom padding
+    padding: 50px 60px 50px 60px;
     border: 8px solid #3BB776;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     position: relative;
-    margin-bottom: 0; // Reset margin
+    margin-bottom: 0;
     animation: cardSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     
     .form-title {
-        color: #3BB776; // Updated color
+        color: #3BB776;
         font-family: 'Gordita', sans-serif;
-        font-size: 56px; // Larger form title
+        font-size: 56px;
         font-weight: bold;
         margin-bottom: 40px;
     }
@@ -342,11 +343,11 @@
         
         label {
             display: block;
-            color: #3BB776; // Updated color
+            color: #3BB776;
             font-family: 'Gordita', sans-serif;
             font-weight: bold;
             margin-bottom: 15px;
-            font-size: 28px; // Larger labels
+            font-size: 28px;
         }
     }
     
@@ -356,7 +357,7 @@
         border: 3px solid #A7F3D0;
         border-radius: 30px;
         font-family: 'Gordita', sans-serif;
-        font-size: 24px; // Larger input text
+        font-size: 24px;
         color: #666;
         outline: none;
         transition: border-color 0.3s;
@@ -577,9 +578,9 @@
     }
     
     .form-actions {
-        margin-top: 20px;
+        margin-top: 40px; // More spacing before NEXT button
         display: flex;
-        justify-content: flex-end;
+        justify-content: center; // Center the button for instruction screens
     }
     
     .submit-btn-bottom {
@@ -646,15 +647,22 @@
     }
 }
 
+// Instruction Card (Separate from Registration Card)
 .instruction-card {
-    padding: 40px 50px 100px 50px; // Extra bottom padding for button
+    background: white;
+    border-radius: 50px;
+    padding: 40px 50px;
+    border: 8px solid #3BB776;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    position: relative;
+    animation: cardSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     
     .instruction-title {
         font-family: 'Gordita', sans-serif;
         font-size: 64px;
         font-weight: bold;
         color: white;
-        margin-bottom: 20px;
+        margin-bottom: 40px; // More spacing after title
         text-transform: none; // Keep "How to Play" casing
         -webkit-text-stroke: 3px #3BB776; // Green outline
         text-shadow: 
@@ -713,17 +721,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 80px;
-        margin: 40px 0;
+        gap: 100px; // Increased gap between items
+        margin: 0; // Reset margin
+        padding: 30px 0 40px 0; // More bottom padding for spacing before NEXT button
         
         .tilt-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 20px; // Space between icon and label
             
             .tilt-icon {
-                width: 200px;
+                width: 220px; // Larger icons
                 height: auto;
                 object-fit: contain;
             }

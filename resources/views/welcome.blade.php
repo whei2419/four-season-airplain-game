@@ -125,15 +125,16 @@
         </div>
     </div>
 
-    <!-- Instruction Screen 1 - How to Play (Hidden by default) -->
-    <div id="instruction-screen-1" class="registration-overlay" style="display: none; background-image: url('{{ asset('assets/images/instruction_BG.webp') }}'); background-size: cover; background-position: center; background-color: transparent;">
-        <button type="button" id="instruction-1-back-btn" class="back-btn">BACK</button>
+    <!-- Instruction Screen (Hidden by default) -->
+    <div id="instruction-screen" class="registration-overlay" style="display: none; background-image: url('{{ asset('assets/images/instruction_BG.webp') }}'); background-size: cover; background-position: center; background-color: transparent;">
+        <button type="button" id="instruction-back-btn" class="back-btn">BACK</button>
         
         <div class="instruction-logo-container">
             <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="instruction-logo">
         </div>
         
-        <div class="registration-content">
+        <!-- Instruction Content 1 - Tilt Controls -->
+        <div id="instruction-content-1" class="registration-content" style="display: none;">
             <div class="registration-card instruction-card">
                 <h2 class="instruction-title">How to Play</h2>
                 
@@ -147,23 +148,15 @@
                         <span class="tilt-label">Tilt Right</span>
                     </div>
                 </div>
-
-                <div class="form-actions">
-                    <button id="instruction-1-next-btn" class="game-button">NEXT</button>
-                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button id="instruction-1-next-btn" class="game-button">NEXT</button>
             </div>
         </div>
-    </div>
 
-    <!-- Instruction Screen 2 - Points (Hidden by default) -->
-    <div id="instruction-screen-2" class="registration-overlay" style="display: none; background-image: url('{{ asset('assets/images/instruction_BG.webp') }}'); background-size: cover; background-position: center; background-color: transparent;">
-        <button type="button" id="instruction-2-back-btn" class="back-btn">BACK</button>
-        
-        <div class="instruction-logo-container">
-            <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="instruction-logo">
-        </div>
-        
-        <div class="registration-content">
+        <!-- Instruction Content 2 - Points -->
+        <div id="instruction-content-2" class="registration-content" style="display: none;">
             <div class="registration-card instruction-card">
                 <h2 class="instruction-title">How to Play</h2>
                 <p class="instruction-desc">
@@ -185,10 +178,10 @@
                         <span class="item-points">-5 Points</span>
                     </div>
                 </div>
-
-                <div class="form-actions">
-                    <button id="instruction-2-next-btn" class="game-button">NEXT</button>
-                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button id="instruction-2-next-btn" class="game-button">NEXT</button>
             </div>
         </div>
     </div>
