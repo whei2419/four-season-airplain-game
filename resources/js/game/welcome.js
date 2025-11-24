@@ -582,6 +582,36 @@ document.addEventListener('DOMContentLoaded', function() {
     if (registrationForm && instructionScreen) {
         registrationForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent actual submission
+            
+            // Validate form
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const contact = document.getElementById('contact').value.trim();
+            const countryCode = document.getElementById('country_code').value;
+            
+            // Name validation
+            if (name.length < 2) {
+                alert('Please enter a valid name (at least 2 characters)');
+                document.getElementById('name').focus();
+                return false;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                document.getElementById('email').focus();
+                return false;
+            }
+            
+            // Contact validation
+            if (contact.length < 7 || contact.length > 15) {
+                alert('Please enter a valid contact number (7-15 digits)');
+                document.getElementById('contact').focus();
+                return false;
+            }
+            
+            // All validations passed
             registrationScreen.style.display = 'none';
             instructionScreen.style.display = 'flex';
         });
