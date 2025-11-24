@@ -1,5 +1,18 @@
 // Game JavaScript - Phaser Configuration
 import Phaser from 'phaser';
+import Alpine from 'alpinejs';
+import SnowEffect from '../snow';
+import './welcome';
+
+window.Alpine = Alpine;
+Alpine.start();
+
+// Initialize Snow Effect
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('snow-container')) {
+        new SnowEffect('snow-container');
+    }
+});
 
 // Game Configuration
 const config = {
