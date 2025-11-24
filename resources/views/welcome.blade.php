@@ -48,6 +48,9 @@
         </div>
     </div>
     
+    <!-- Snow Effect Container -->
+    <div id="snow-container"></div>
+    
     <!-- Background Animation or Image could go here -->
     <div id="welcome-background" style="background-image: url('{{ asset('assets/images/welcome_BG.webp') }}');"></div>
 

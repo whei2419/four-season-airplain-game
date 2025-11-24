@@ -122,6 +122,16 @@
     background-repeat: no-repeat;
 }
 
+#snow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; // Above background, below UI
+    pointer-events: none; // Allow clicks to pass through
+}
+
 // Welcome page logo container
 .welcome-logo-container {
     position: fixed;
@@ -157,7 +167,8 @@
     font-weight: bold;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 15px 80px;
+    padding: 15px 0; // Vertical padding only
+    width: 300px; // Fixed width
     border-radius: 50px; /* Pill shape */
     border: 8px solid white;
     box-shadow: 0 8px 0 #2a8556; /* Darker green shadow for 3D effect */
@@ -308,8 +319,6 @@
     
     .submit-btn {
         white-space: nowrap;
-        padding: 15px 100px; // Wider button
-        font-size: 36px; // Larger button text
     }
 }
 
