@@ -16,8 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Public Game Route
-Route::get('/', [GameController::class, 'index'])->name('game.index');
+// Landing Page
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Game Route
+Route::get('/game', [GameController::class, 'index'])->name('game.index');
 
 // Admin Routes (Protected)
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {

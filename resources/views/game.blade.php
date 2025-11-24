@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <title>{{ config('app.name', 'Laravel') }} - Game</title>
-    
-    <!-- Game Styles -->
-    @vite(['resources/sass/game/app.scss', 'resources/js/game/app.js'])
-</head>
-<body class="game-layout">
+@extends('layouts.game')
+
+@section('title', 'Play')
+
+@section('content')
     <!-- Game UI Overlay -->
     <div class="game-ui">
         <div class="game-ui__score">
@@ -37,7 +29,7 @@
             <a href="{{ route('login') }}" style="color: white; text-decoration: underline;">Login</a>
         @endauth
     </div>
-    
+
     <script>
         function startGame() {
             document.getElementById('game-menu').style.display = 'none';
@@ -51,5 +43,4 @@
             }, 1000);
         });
     </script>
-</body>
-</html>
+@endsection

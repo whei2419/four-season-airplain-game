@@ -1,4 +1,32 @@
 // Game Styles
+@font-face {
+    font-family: 'InnisfreeGothic';
+    src: url('/assets/font/InnisfreeGothicR.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'InnisfreeGothic';
+    src: url('/assets/font/InnisfreeGothicB.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gordita';
+    src: url('/assets/font/Type Atelier - Gordita.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gordita';
+    src: url('/assets/font/Type Atelier - Gordita Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +34,7 @@
 }
 
 body.game-layout {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Gordita', 'Arial', sans-serif;
     background-color: #000;
     overflow: hidden;
 }
@@ -98,6 +126,7 @@ body.game-layout {
     h2 {
         margin-bottom: 30px;
         font-size: 32px;
+        font-family: 'InnisfreeGothic', sans-serif;
     }
     
     button {
