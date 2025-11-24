@@ -548,9 +548,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Instruction Screen Elements
-    const instructionScreen = document.getElementById('instruction-screen');
-    const instructionNextBtn = document.getElementById('instruction-next-btn');
-    const instructionBackBtn = document.getElementById('instruction-back-btn');
+    const instructionScreen1 = document.getElementById('instruction-screen-1');
+    const instructionScreen2 = document.getElementById('instruction-screen-2');
+    const instruction1NextBtn = document.getElementById('instruction-1-next-btn');
+    const instruction1BackBtn = document.getElementById('instruction-1-back-btn');
+    const instruction2NextBtn = document.getElementById('instruction-2-next-btn');
+    const instruction2BackBtn = document.getElementById('instruction-2-back-btn');
     const registrationForm = document.querySelector('form');
 
     // Start -> Registration
@@ -578,8 +581,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Registration Submit -> Instructions
-    if (registrationForm && instructionScreen) {
+    // Registration Submit -> Instruction Screen 1
+    if (registrationForm && instructionScreen1) {
         registrationForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent actual submission
             
@@ -611,24 +614,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
             
-            // All validations passed
+            // All validations passed, show instruction screen 1
             registrationScreen.style.display = 'none';
-            instructionScreen.style.display = 'flex';
+            instructionScreen1.style.display = 'flex';
         });
     }
 
-    // Instructions Next -> Game (Submit Form)
-    if (instructionNextBtn && registrationForm) {
-        instructionNextBtn.addEventListener('click', function() {
+    // Instruction 1 Next -> Instruction Screen 2
+    if (instruction1NextBtn && instructionScreen1 && instructionScreen2) {
+        instruction1NextBtn.addEventListener('click', function() {
+            instructionScreen1.style.display = 'none';
+            instructionScreen2.style.display = 'flex';
+        });
+    }
+
+    // Instruction 1 Back -> Registration
+    if (instruction1BackBtn && instructionScreen1 && registrationScreen) {
+        instruction1BackBtn.addEventListener('click', function() {
+            instructionScreen1.style.display = 'none';
+            registrationScreen.style.display = 'flex';
+        });
+    }
+
+    // Instruction 2 Next -> Game (Submit Form)
+    if (instruction2NextBtn && registrationForm) {
+        instruction2NextBtn.addEventListener('click', function() {
             registrationForm.submit();
         });
     }
 
-    // Instructions Back -> Registration
-    if (instructionBackBtn && instructionScreen && registrationScreen) {
-        instructionBackBtn.addEventListener('click', function() {
-            instructionScreen.style.display = 'none';
-            registrationScreen.style.display = 'flex';
+    // Instruction 2 Back -> Instruction Screen 1
+    if (instruction2BackBtn && instructionScreen2 && instructionScreen1) {
+        instruction2BackBtn.addEventListener('click', function() {
+            instructionScreen2.style.display = 'none';
+            instructionScreen1.style.display = 'flex';
         });
     }
 });
