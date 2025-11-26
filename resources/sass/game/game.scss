@@ -771,7 +771,7 @@
         justify-content: center;
         align-items: center;
         gap: 100px; // Increased gap between items
-        margin: 0; // Reset margin
+        margin-top: 60px; // Move down
         padding: 30px 0 40px 0; // More bottom padding for spacing before NEXT button
         
         .tilt-item {
@@ -781,7 +781,7 @@
             gap: 20px; // Space between icon and label
             
             .tilt-icon {
-                width: 220px; // Larger icons
+                width: 380px; // Larger icons
                 height: auto;
                 object-fit: contain;
             }
