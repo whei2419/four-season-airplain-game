@@ -21,8 +21,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Game Route
+// Game Routes
 Route::get('/game', [GameController::class, 'index'])->name('game.index');
+Route::get('/game/intro', function () {
+    return view('game-intro');
+})->name('game.intro');
+Route::get('/game/play', function () {
+    return view('game');
+})->name('game.play');
 
 // Admin Routes (Protected)
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {

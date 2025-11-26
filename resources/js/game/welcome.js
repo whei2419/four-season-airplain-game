@@ -554,6 +554,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const instruction1NextBtn = document.getElementById('instruction-1-next-btn');
     const instructionBackBtn = document.getElementById('instruction-back-btn');
     const instruction2NextBtn = document.getElementById('instruction-2-next-btn');
+    const takeoffAnimation = document.getElementById('takeoff-animation');
+    const instructionLogo = document.querySelector('.instruction-logo-container');
     const registrationForm = document.querySelector('form');
 
     // Start -> Registration
@@ -645,10 +647,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Instruction Content 2 Next -> Game (Submit Form)
-    if (instruction2NextBtn && registrationForm) {
+    // Instruction Content 2 Next -> Takeoff Animation -> Game
+    if (instruction2NextBtn && registrationForm && takeoffAnimation) {
         instruction2NextBtn.addEventListener('click', function() {
-            registrationForm.submit();
+            // Hide instruction content and logo
+            instructionContent2.style.display = 'none';
+            if (instructionLogo) {
+                instructionLogo.style.display = 'none';
+            }
+            if (instructionBackBtn) {
+                instructionBackBtn.style.display = 'none';
+            }
+            
+            // Show takeoff animation
+            takeoffAnimation.style.display = 'block';
+            
+            // Redirect after animation completes (3 seconds)
+            setTimeout(function() {
+                registrationForm.submit();
+            }, 3000);
         });
     }
 });

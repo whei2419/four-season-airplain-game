@@ -29,7 +29,7 @@
             <div class="registration-card">
                 <h2 class="form-title">Registration</h2>
                 
-                <form action="{{ route('game.index') }}" method="GET">
+                <form action="{{ route('game.intro') }}" method="GET">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" placeholder="Your Name" class="registration-input" required>
@@ -188,6 +188,11 @@
             <div class="form-actions">
                 <button id="instruction-2-next-btn" class="game-button">NEXT</button>
             </div>
+        </div>
+
+        <!-- Takeoff Animation (Hidden by default) -->
+        <div id="takeoff-animation" class="takeoff-animation" style="display: none;">
+            <img src="{{ asset('assets/images/animate-plian1.webp') }}" alt="Airplane Takeoff" class="takeoff-plane">
         </div>
     </div>
     

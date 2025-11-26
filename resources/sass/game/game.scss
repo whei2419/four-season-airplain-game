@@ -796,3 +796,179 @@
     }
 }
 
+// ===========================
+// Game Intro Animation Screen
+// ===========================
+
+#game-intro-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+// Game Intro Airplane Animation
+.game-intro-airplane-container {
+    position: fixed;
+    bottom: 20%;
+    left: -100%;
+    z-index: 0;
+    pointer-events: none;
+    width: 100%;
+    animation: gameIntroAirplane 3s ease-out forwards;
+    
+    .game-intro-airplane {
+        width: 1600px;
+        height: auto;
+    }
+}
+
+@keyframes gameIntroAirplane {
+    0% {
+        left: -100%;
+        bottom: 20%;
+        transform: translateX(0) rotate(-3deg);
+    }
+    50% {
+        left: 50%;
+        bottom: 18%;
+        transform: translateX(-50%) rotate(0deg);
+    }
+    100% {
+        left: 150%;
+        bottom: 22%;
+        transform: translateX(-50%) rotate(3deg);
+    }
+}
+
+// Game Intro Logo
+.game-intro-logo-container {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    animation: fadeInDown 1s ease-out;
+    
+    .game-intro-logo {
+        width: 350px;
+        height: auto;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+// Game Intro Message
+.game-intro-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    animation: fadeInScale 0.8s ease-out;
+    
+    .intro-title {
+        font-family: 'Gordita', sans-serif;
+        font-size: 80px;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        -webkit-text-stroke: 4px #3BB776;
+        text-shadow: 
+            4px 4px 0 #3BB776,
+           -2px -2px 0 #3BB776,  
+            2px -2px 0 #3BB776,
+           -2px  2px 0 #3BB776,
+            2px  2px 0 #3BB776;
+    }
+    
+    .intro-subtitle {
+        font-family: 'Gordita', sans-serif;
+        font-size: 32px;
+        font-weight: 600;
+        color: #3BB776;
+        margin-bottom: 30px;
+    }
+    
+    .countdown-number {
+        font-family: 'Gordita', sans-serif;
+        font-size: 120px;
+        font-weight: bold;
+        color: white;
+        -webkit-text-stroke: 5px #3BB776;
+        text-shadow: 
+            5px 5px 0 #3BB776,
+           -2px -2px 0 #3BB776,  
+            2px -2px 0 #3BB776,
+           -2px  2px 0 #3BB776,
+            2px  2px 0 #3BB776;
+        animation: countdownPulse 1s ease-in-out infinite;
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes countdownPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+// ===========================
+// Takeoff Animation (on Instruction Screen)
+// ===========================
+
+.takeoff-animation {
+    position: fixed;
+    bottom: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    pointer-events: none;
+    
+    .takeoff-plane {
+        width: 800px;
+        height: auto;
+        animation: planeTakeoff 3s ease-in forwards;
+    }
+}
+
+@keyframes planeTakeoff {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1);
+        opacity: 0.8;
+    }
+}
+
