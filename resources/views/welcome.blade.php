@@ -3,6 +3,11 @@
 @section('title', 'Welcome')
 
 @section('content')
+    <!-- Airplane Animation -->
+    <div class="airplane-container">
+        <img src="{{ asset('assets/images/land-plain.webp') }}" alt="Airplane" class="airplane-animation">
+    </div>
+
     <div class="welcome-logo-container">
         <x-game-logo class="game-logo" />
     </div>
