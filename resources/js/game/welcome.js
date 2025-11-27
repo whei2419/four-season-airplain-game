@@ -680,6 +680,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     welcomeBackground.style.display = 'none';
                 }
                 
+                // Show snow during countdown
+                const snowContainer = document.getElementById('snow-container');
+                if (snowContainer) {
+                    snowContainer.style.zIndex = '151';
+                }
+                
                 countdownScreen.style.display = 'block';
                 
                 // Start countdown

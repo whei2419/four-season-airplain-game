@@ -206,8 +206,6 @@
             </div>
 
             <div class="countdown-message">
-                <h1 class="countdown-title">Get Ready!</h1>
-                <p class="countdown-subtitle">Your adventure begins in</p>
                 <div class="countdown-number" id="countdown-number">3</div>
             </div>
         </div>
