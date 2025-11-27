@@ -5,7 +5,7 @@
 @section('content')
     <!-- Airplane Animation -->
     <div class="game-intro-airplane-container">
-        <img src="{{ asset('assets/images/game-intro-plane.webp') }}" alt="Airplane" class="game-intro-airplane">
+        <img src="{{ asset('assets/images/plane_fly up.webp') }}" alt="Airplane" class="game-intro-airplane">
     </div>
 
     <div class="game-intro-logo-container">
@@ -23,7 +23,7 @@
     <div id="snow-container"></div>
     
     <!-- Background -->
-    <div id="game-intro-background" style="background-image: url('{{ asset('assets/images/game_intro_BG.webp') }}');"></div>
+    <div id="game-intro-background" style="background-image: url('{{ asset('assets/images/background 03.webp') }}');"></div>
 @endsection
 
 @push('scripts')

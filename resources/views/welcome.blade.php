@@ -29,7 +29,7 @@
             <div class="registration-card">
                 <h2 class="form-title">Registration</h2>
                 
-                <form action="{{ route('game.intro') }}" method="GET">
+                <form action="{{ route('game.play') }}" method="GET">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" placeholder="Your Name" class="registration-input" required>
@@ -193,6 +193,23 @@
         <!-- Takeoff Animation (Hidden by default) -->
         <div id="takeoff-animation" class="takeoff-animation" style="display: none;">
             <img src="{{ asset('assets/images/animate-plian1.webp') }}" alt="Airplane Takeoff" class="takeoff-plane">
+        </div>
+
+        <!-- Countdown Screen (Hidden by default) -->
+        <div id="countdown-screen" class="countdown-screen" style="display: none; background-image: url('{{ asset('assets/images/background 03.webp') }}');">
+            <div class="countdown-logo-container">
+                <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="countdown-logo">
+            </div>
+            
+            <div class="countdown-airplane-container">
+                <img src="{{ asset('assets/images/plane_fly up.webp') }}" alt="Airplane" class="countdown-airplane">
+            </div>
+
+            <div class="countdown-message">
+                <h1 class="countdown-title">Get Ready!</h1>
+                <p class="countdown-subtitle">Your adventure begins in</p>
+                <div class="countdown-number" id="countdown-number">3</div>
+            </div>
         </div>
     </div>
     

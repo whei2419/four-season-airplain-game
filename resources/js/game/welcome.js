@@ -555,7 +555,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const instructionBackBtn = document.getElementById('instruction-back-btn');
     const instruction2NextBtn = document.getElementById('instruction-2-next-btn');
     const takeoffAnimation = document.getElementById('takeoff-animation');
+    const countdownScreen = document.getElementById('countdown-screen');
+    const countdownNumberElement = document.getElementById('countdown-number');
     const instructionLogo = document.querySelector('.instruction-logo-container');
+    const welcomeBackground = document.getElementById('welcome-background');
     const registrationForm = document.querySelector('form');
 
     // Start -> Registration
@@ -647,8 +650,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Instruction Content 2 Next -> Takeoff Animation -> Game
-    if (instruction2NextBtn && registrationForm && takeoffAnimation) {
+    // Instruction Content 2 Next -> Takeoff Animation -> Countdown -> Game
+    if (instruction2NextBtn && registrationForm && takeoffAnimation && countdownScreen) {
         instruction2NextBtn.addEventListener('click', function() {
             // Hide instruction content and logo
             instructionContent2.style.display = 'none';
@@ -662,9 +665,37 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show takeoff animation
             takeoffAnimation.style.display = 'block';
             
-            // Redirect after animation completes (3 seconds)
+            // After takeoff animation (3 seconds), show countdown
             setTimeout(function() {
-                registrationForm.submit();
+                takeoffAnimation.style.display = 'none';
+                
+                // Hide instruction screen background and make it transparent
+                if (instructionScreen) {
+                    instructionScreen.style.backgroundImage = 'none';
+                    instructionScreen.style.backgroundColor = 'transparent';
+                }
+                
+                // Hide welcome background
+                if (welcomeBackground) {
+                    welcomeBackground.style.display = 'none';
+                }
+                
+                countdownScreen.style.display = 'block';
+                
+                // Start countdown
+                let countdown = 3;
+                const countdownInterval = setInterval(() => {
+                    countdown--;
+                    if (countdown > 0) {
+                        countdownNumberElement.textContent = countdown;
+                    } else {
+                        clearInterval(countdownInterval);
+                        countdownNumberElement.textContent = 'GO!';
+                        setTimeout(() => {
+                            registrationForm.submit();
+                        }, 500);
+                    }
+                }, 1000);
             }, 3000);
         });
     }
