@@ -8,13 +8,25 @@ class SnowEffect {
         this.container.appendChild(this.canvas);
 
         this.particles = [];
-        this.particleCount = 400; // Increased number of snowflakes
+        this.particleCount = 150; // Reduced from 400 for better performance
+        this.animationFrame = null;
 
         this.resize();
         window.addEventListener('resize', () => this.resize());
 
         this.initParticles();
         this.animate();
+    }
+    
+    destroy() {
+        // Stop animation and clean up
+        if (this.animationFrame) {
+            cancelAnimationFrame(this.animationFrame);
+        }
+        this.particles = [];
+        if (this.canvas && this.canvas.parentNode) {
+            this.canvas.parentNode.removeChild(this.canvas);
+        }
     }
 
     resize() {
@@ -34,10 +46,10 @@ class SnowEffect {
         return {
             x: Math.random() * this.width,
             y: reset ? -10 : Math.random() * this.height,
-            size: Math.random() * 4 + 2, // Slightly larger for blur effect
-            speedY: Math.random() * 0.5 + 0.2, // Slower speed
-            speedX: Math.random() * 0.4 - 0.2, // Gentler drift
-            opacity: Math.random() * 0.4 + 0.2 // Softer opacity
+            size: Math.random() * 3 + 1.5, // Reduced from 4+2 for better performance
+            speedY: Math.random() * 0.5 + 0.2,
+            speedX: Math.random() * 0.4 - 0.2,
+            opacity: Math.random() * 0.4 + 0.2
         };
     }
 
@@ -45,7 +57,7 @@ class SnowEffect {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         this.ctx.fillStyle = 'white';
-        this.ctx.shadowBlur = 5; // Add blur effect
+        this.ctx.shadowBlur = 3; // Reduced from 5 for better performance
         this.ctx.shadowColor = "white";
         
         this.particles.forEach((p, index) => {
@@ -69,7 +81,7 @@ class SnowEffect {
             }
         });
 
-        requestAnimationFrame(() => this.animate());
+        this.animationFrame = requestAnimationFrame(() => this.animate());
     }
 }
 

@@ -727,6 +727,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 snowContainer.style.display = 'none';
                                 snowContainer.innerHTML = ''; // Clear all snow elements
                             }
+                            // Destroy snow animation properly
+                            if (window.destroySnowEffect) {
+                                window.destroySnowEffect();
+                            }
                             
                             // Hide body overflow
                             document.body.style.overflow = 'hidden';

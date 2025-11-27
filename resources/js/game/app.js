@@ -10,11 +10,20 @@ window.Alpine = Alpine;
 Alpine.start();
 
 // Initialize Snow Effect
+let snowEffect = null;
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('snow-container')) {
-        new SnowEffect('snow-container');
+        snowEffect = new SnowEffect('snow-container');
     }
 });
+
+// Export snow effect for cleanup
+window.destroySnowEffect = function() {
+    if (snowEffect && snowEffect.destroy) {
+        snowEffect.destroy();
+        snowEffect = null;
+    }
+};
 
 // Game Configuration
 const config = {

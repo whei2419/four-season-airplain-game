@@ -104,9 +104,9 @@ export default class GameScene extends Phaser.Scene {
     }
     
     startGameplay() {
-        // Start spawning objects after plane enters
+        // Reduce spawn rate for better performance (4 seconds instead of 3)
         objectTimer = this.time.addEvent({
-            delay: 3000,
+            delay: 4000,
             callback: this.spawnObject,
             callbackScope: this,
             loop: true
@@ -260,27 +260,27 @@ export default class GameScene extends Phaser.Scene {
     }
 
     createDecorativeClouds() {
-        // Create 8-12 random clouds on the sides
-        const cloudCount = Phaser.Math.Between(8, 12);
+        // Reduce cloud count for better performance (6-8 instead of 8-12)
+        const cloudCount = Phaser.Math.Between(6, 8);
         
         for (let i = 0; i < cloudCount; i++) {
             // Random position - spread across entire screen
             const x = Phaser.Math.Between(50, 1030);
-            const y = Phaser.Math.Between(200, 1800); // Spread more vertically
+            const y = Phaser.Math.Between(200, 1800);
             
             // Create cloud
             const cloud = this.add.image(x, y, 'cloud');
             
-            // Random scale (0.15 to 0.25) - larger
+            // Random scale (0.15 to 0.25)
             const scale = Phaser.Math.FloatBetween(0.15, 0.25);
             cloud.setScale(scale);
             
-            // Random opacity (0.6 to 0.9) - very visible
+            // Random opacity (0.6 to 0.9)
             const opacity = Phaser.Math.FloatBetween(0.6, 0.9);
             cloud.setAlpha(opacity);
             
             // Randomize depth - some clouds in front, some behind plane
-            const depth = Math.random() > 0.5 ? 1 : 100; // 1 = behind, 100 = in front of plane
+            const depth = Math.random() > 0.5 ? 1 : 100;
             cloud.setDepth(depth);
             
             // Add to array for parallax scrolling
