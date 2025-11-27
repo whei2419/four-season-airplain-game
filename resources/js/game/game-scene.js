@@ -12,8 +12,8 @@ let gameObjects;
 let objectTimer;
 let backgrounds = [];
 let decorativeClouds = [];
-let backgroundSpeed = 80;
-let cloudSpeed = 100;
+let backgroundSpeed = 150;
+let cloudSpeed = 180;
 
 export default class GameScene extends Phaser.Scene {
     constructor() {
@@ -26,10 +26,10 @@ export default class GameScene extends Phaser.Scene {
         // Create wide scrolling backgrounds (2 copies for seamless loop)
         backgrounds = [];
         for (let i = 0; i < 2; i++) {
-            const bg = this.add.image(810, 960 + (i * 1920), 'background');
+            const bg = this.add.image(540, 960 + (i * 1920), 'background');
             bg.setOrigin(0.5, 0.5);
             // Make background wide enough to cover horizontal movement
-            bg.displayWidth = 3240; // 2x canvas width for smooth horizontal scrolling
+            bg.displayWidth = 2160; // 2x canvas width for smooth horizontal scrolling
             bg.scaleY = bg.scaleX; // Maintain aspect ratio
             backgrounds.push(bg);
         }
@@ -39,7 +39,7 @@ export default class GameScene extends Phaser.Scene {
         this.createDecorativeClouds();
         
         // Add header at top (1080px width, centered on camera, fixed to camera)
-        const header = this.add.image(810, 0, 'header');
+        const header = this.add.image(540, 0, 'header');
         header.setOrigin(0.5, 0);
         header.displayWidth = 1080;
         header.scaleY = header.scaleX;
@@ -47,17 +47,15 @@ export default class GameScene extends Phaser.Scene {
         header.setScrollFactor(0); // Header stays fixed on screen
         
         // Create player at bottom center of world
-        player = this.physics.add.sprite(810, 1700, 'player');
+        player = this.physics.add.sprite(540, 1700, 'player');
         player.setScale(0.2);
         player.setCollideWorldBounds(true);
         
-        // Set world bounds (original width)
-        this.physics.world.setBounds(0, 0, 1620, 1920);
+        // Set world bounds to match canvas
+        this.physics.world.setBounds(0, 0, 1080, 1920);
         
-        // Camera follows player horizontally (centered on player)
-        this.cameras.main.setBounds(0, 0, 1620, 1920);
-        this.cameras.main.startFollow(player, true, 1, 0); // Instant horizontal follow
-        this.cameras.main.setFollowOffset(0, 0);
+        // Camera doesn't need to follow in standard size
+        this.cameras.main.setBounds(0, 0, 1080, 1920);
         
         // Create group for collectible objects
         gameObjects = this.physics.add.group();
@@ -69,9 +67,9 @@ export default class GameScene extends Phaser.Scene {
         // Input
         cursors = this.input.keyboard.createCursorKeys();
         
-        // Spawn objects every 1.5 seconds
+        // Spawn objects every 3 seconds (more spread out)
         objectTimer = this.time.addEvent({
-            delay: 1500,
+            delay: 3000,
             callback: this.spawnObject,
             callbackScope: this,
             loop: true
@@ -95,19 +93,37 @@ export default class GameScene extends Phaser.Scene {
         document.getElementById('timer').textContent = timeLeft;
     }
 
-    update() {
-        // Player movement (horizontal only)
+    update(time, delta) {
+        // Use delta for smooth frame-rate independent movement
+        const deltaSeconds = delta / 1000;
+        
+        // Player movement - direct position change instead of velocity
+        let playerMoveX = 0;
         if (cursors.left.isDown) {
-            player.setVelocityX(-400);
+            playerMoveX = -400 * deltaSeconds;
         } else if (cursors.right.isDown) {
-            player.setVelocityX(400);
-        } else {
-            player.setVelocityX(0);
+            playerMoveX = 400 * deltaSeconds;
         }
         
-        // Scroll backgrounds downward (parallax effect)
+        // Move player
+        player.x += playerMoveX;
+        
+        // Keep player in bounds
+        if (player.x < 50) player.x = 50;
+        if (player.x > 1030) player.x = 1030;
+        
+        // Parallax effect - move background opposite to player movement
+        const parallaxOffset = playerMoveX * 0.15;
+        
+        // Limit parallax movement to prevent extreme offsets
         backgrounds.forEach(bg => {
-            bg.y += backgroundSpeed * (1/60); // Move down
+            bg.y += backgroundSpeed * deltaSeconds; // Move down
+            
+            const newX = bg.x - parallaxOffset;
+            // Limit background offset (keep it between -200 and 200 from center)
+            if (Math.abs(newX - 540) < 200) {
+                bg.x = newX;
+            }
             
             // Reset position when off screen
             if (bg.y > 1920 + 960) {
@@ -115,18 +131,28 @@ export default class GameScene extends Phaser.Scene {
             }
         });
         
-        // Scroll clouds downward (faster than background)
+        // Scroll clouds downward and add parallax (faster than background)
+        const cloudParallaxOffset = playerMoveX * 0.25;
+        
         decorativeClouds.forEach(cloud => {
-            cloud.y += cloudSpeed * (1/60); // Move down faster
+            cloud.y += cloudSpeed * deltaSeconds; // Move down faster
+            cloud.x -= cloudParallaxOffset; // Moderate parallax for depth
             
             // Reset position when off screen
             if (cloud.y > 1920 + 100) {
-                // Randomize position when resetting
-                const isLeftSide = Math.random() > 0.5;
-                cloud.x = isLeftSide ? 
-                    Phaser.Math.Between(50, 350) : 
-                    Phaser.Math.Between(1270, 1570);
+                // Randomize position when resetting - spread across entire width
+                cloud.x = Phaser.Math.Between(50, 1030);
                 cloud.y = -100;
+            }
+        });
+        
+        // Move objects down with the background scroll (same speed as background)
+        gameObjects.children.entries.forEach(obj => {
+            obj.y += backgroundSpeed * deltaSeconds;
+            
+            // Remove if off screen
+            if (obj.y > 1920 + 100) {
+                obj.destroy();
             }
         });
     }
@@ -135,16 +161,17 @@ export default class GameScene extends Phaser.Scene {
         if (timeLeft <= 0) return;
         
         const types = [
-            { key: 'bottle', scale: 0.12 },
-            { key: 'present', scale: 0.06 },
-            { key: 'badcloud', scale: 0.15 }
+            { key: 'bottle', scale: 0.08 },
+            { key: 'present', scale: 0.04 },
+            { key: 'badcloud', scale: 0.10 }
         ];
         const selectedType = Phaser.Utils.Array.GetRandom(types);
-        const x = Phaser.Math.Between(150, 1470);
+        const x = Phaser.Math.Between(100, 980);
         
         const obj = gameObjects.create(x, -50, selectedType.key);
         obj.setScale(selectedType.scale);
-        obj.setVelocityY(300);
+        obj.setVelocityY(0); // No physics velocity - manual movement in update
+        obj.setVelocityX(0); // No horizontal movement
         obj.objectType = selectedType.key;
         
         // Remove objects that fall off screen
@@ -230,17 +257,9 @@ export default class GameScene extends Phaser.Scene {
         const cloudCount = Phaser.Math.Between(8, 12);
         
         for (let i = 0; i < cloudCount; i++) {
-            // Random position - left or right side
-            const isLeftSide = Math.random() > 0.5;
-            let x;
-            
-            if (isLeftSide) {
-                x = Phaser.Math.Between(50, 350); // Left side - more visible
-            } else {
-                x = Phaser.Math.Between(1270, 1570); // Right side - more visible
-            }
-            
-            const y = Phaser.Math.Between(300, 1700); // Random vertical position
+            // Random position - spread across entire screen
+            const x = Phaser.Math.Between(50, 1030);
+            const y = Phaser.Math.Between(200, 1800); // Spread more vertically
             
             // Create cloud
             const cloud = this.add.image(x, y, 'cloud');

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Game Configuration
 const config = {
     type: Phaser.AUTO,
-    width: 1620,
+    width: 1080,
     height: 1920,
     parent: 'game-container',
     physics: {
