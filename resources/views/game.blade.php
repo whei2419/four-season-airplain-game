@@ -8,13 +8,26 @@
         <div class="game-ui__score">
             Score: <span id="score">0</span>
         </div>
-        <div class="game-ui__lives">
-            Lives: <span id="lives">3</span>
+        <div class="game-ui__timer">
+            Time: <span id="timer">60</span>s
         </div>
     </div>
     
     <!-- Game Container -->
     <div id="game-container"></div>
+    
+    <!-- Pass asset URLs to JavaScript -->
+    <script>
+        window.gameAssets = {
+            player: "{{ asset('assets/images/game/plain.webp') }}",
+            background: "{{ asset('assets/images/game/main-bg.webp') }}",
+            header: "{{ asset('assets/images/game/header.webp') }}",
+            cloud: "{{ asset('assets/images/game/cloud.webp') }}",
+            bottle: "{{ asset('assets/images/game/game-object/bottle_15pts.webp') }}",
+            present: "{{ asset('assets/images/game/game-object/present_10pts.webp') }}",
+            badcloud: "{{ asset('assets/images/game/game-object/bad cloud_-5pts.webp') }}"
+        };
+    </script>
     
     <!-- Game Menu (Initially Hidden) -->
     <div class="game-menu" style="display: none;" id="game-menu">
