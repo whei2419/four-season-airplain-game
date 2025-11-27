@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Landing Page
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [GameController::class, 'welcome'])->name('welcome');
 
 // Game Routes
 Route::get('/game', [GameController::class, 'index'])->name('game.index');
