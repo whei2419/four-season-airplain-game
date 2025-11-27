@@ -46,11 +46,27 @@ export default class GameScene extends Phaser.Scene {
         header.setDepth(1000);
         header.setScrollFactor(0); // Header stays fixed on screen
         
-        // Create player at bottom center
-        player = this.physics.add.sprite(540, 1700, 'player');
+        // Create player at bottom center (off-screen initially)
+        player = this.physics.add.sprite(540, 2100, 'player');
         player.setScale(0.2);
         player.setCollideWorldBounds(true);
         player.setDepth(50); // Middle depth for cloud layering
+        
+        // Disable physics body during entrance animation
+        player.body.enable = false;
+        
+        // Animate plane entering from bottom
+        this.tweens.add({
+            targets: player,
+            y: 1600,
+            duration: 1500,
+            ease: 'Power2',
+            onComplete: () => {
+                // Re-enable physics and start gameplay
+                player.body.enable = true;
+                this.startGameplay();
+            }
+        });
         
         // Set world bounds to match camera
         this.physics.world.setBounds(0, 0, 1080, 1920);
@@ -65,13 +81,8 @@ export default class GameScene extends Phaser.Scene {
         // Input
         cursors = this.input.keyboard.createCursorKeys();
         
-        // Spawn objects every 3 seconds (more spread out)
-        objectTimer = this.time.addEvent({
-            delay: 3000,
-            callback: this.spawnObject,
-            callbackScope: this,
-            loop: true
-        });
+        // Don't spawn objects immediately - wait for plane animation
+        objectTimer = null;
         
         // Collision detection
         this.physics.add.overlap(player, gameObjects, this.collectObject, null, this);
@@ -90,6 +101,16 @@ export default class GameScene extends Phaser.Scene {
         gameTime = 0;
         document.getElementById('score').textContent = score;
         document.getElementById('timer').textContent = timeLeft;
+    }
+    
+    startGameplay() {
+        // Start spawning objects after plane enters
+        objectTimer = this.time.addEvent({
+            delay: 3000,
+            callback: this.spawnObject,
+            callbackScope: this,
+            loop: true
+        });
     }
 
     update(time, delta) {
