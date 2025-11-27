@@ -38,7 +38,7 @@ export default class GameScene extends Phaser.Scene {
         decorativeClouds = [];
         this.createDecorativeClouds();
         
-        // Add header at top (1080px width, centered, fixed to camera)
+        // Add header at top (1080px width, centered on camera, fixed to camera)
         const header = this.add.image(810, 0, 'header');
         header.setOrigin(0.5, 0);
         header.displayWidth = 1080;
@@ -46,18 +46,18 @@ export default class GameScene extends Phaser.Scene {
         header.setDepth(1000);
         header.setScrollFactor(0); // Header stays fixed on screen
         
-        // Create player at bottom center
+        // Create player at bottom center of world
         player = this.physics.add.sprite(810, 1700, 'player');
         player.setScale(0.2);
         player.setCollideWorldBounds(true);
         
-        // Set world bounds to be wider than camera for smooth scrolling
+        // Set world bounds (original width)
         this.physics.world.setBounds(0, 0, 1620, 1920);
         
-        // Camera follows player horizontally only (smooth follow)
+        // Camera follows player horizontally (centered on player)
         this.cameras.main.setBounds(0, 0, 1620, 1920);
-        this.cameras.main.startFollow(player, true, 0.08, 0);
-        this.cameras.main.setDeadzone(200, 0); // Player can move 200px before camera follows
+        this.cameras.main.startFollow(player, true, 1, 0); // Instant horizontal follow
+        this.cameras.main.setFollowOffset(0, 0);
         
         // Create group for collectible objects
         gameObjects = this.physics.add.group();
