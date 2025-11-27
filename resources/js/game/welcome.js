@@ -688,6 +688,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 countdownScreen.style.display = 'block';
                 
+                // Prepare game container (show but keep behind countdown)
+                const gameContainer = document.getElementById('game-container');
+                const gameUI = document.getElementById('game-ui');
+                if (gameContainer) {
+                    gameContainer.style.display = 'flex';
+                    gameContainer.style.position = 'fixed';
+                    gameContainer.style.top = '0';
+                    gameContainer.style.left = '0';
+                    gameContainer.style.width = '100vw';
+                    gameContainer.style.height = '100vh';
+                    gameContainer.style.zIndex = '100'; // Behind countdown (151)
+                }
+                
+                // Initialize game during countdown so it's ready
+                let gameInstance = null;
+                if (window.initializeGame) {
+                    gameInstance = window.initializeGame();
+                }
+                
                 // Start countdown
                 let countdown = 3;
                 const countdownInterval = setInterval(() => {
@@ -698,7 +717,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         clearInterval(countdownInterval);
                         countdownNumberElement.textContent = 'GO!';
                         setTimeout(() => {
-                            registrationForm.submit();
+                            // Hide entire welcome page wrapper
+                            const welcomePageWrapper = document.getElementById('welcome-page-wrapper');
+                            if (welcomePageWrapper) welcomePageWrapper.style.display = 'none';
+                            
+                            // Stop and remove snow effect for performance
+                            const snowContainer = document.getElementById('snow-container');
+                            if (snowContainer) {
+                                snowContainer.style.display = 'none';
+                                snowContainer.innerHTML = ''; // Clear all snow elements
+                            }
+                            
+                            // Hide body overflow
+                            document.body.style.overflow = 'hidden';
+                            
+                            // Bring game container to front and show UI
+                            if (gameContainer) {
+                                gameContainer.style.zIndex = '9999';
+                            }
+                            if (gameUI) {
+                                gameUI.style.display = 'block';
+                                gameUI.style.zIndex = '10000';
+                            }
                         }, 500);
                     }
                 }, 1000);

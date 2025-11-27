@@ -3,20 +3,22 @@
 @section('title', 'Welcome')
 
 @section('content')
-    <!-- Airplane Animation -->
-    <div class="airplane-container">
-        <img src="{{ asset('assets/images/land-plain.webp') }}" alt="Airplane" class="airplane-animation">
-    </div>
+    <!-- Welcome Page Wrapper (will be hidden when game starts) -->
+    <div id="welcome-page-wrapper">
+        <!-- Airplane Animation -->
+        <div class="airplane-container">
+            <img src="{{ asset('assets/images/land-plain.webp') }}" alt="Airplane" class="airplane-animation">
+        </div>
 
-    <div class="welcome-logo-container">
-        <x-game-logo class="game-logo" />
-    </div>
+        <div class="welcome-logo-container">
+            <x-game-logo class="game-logo" />
+        </div>
 
-    <div class="welcome-actions" id="start-screen">
-        <button id="start-btn" class="game-button">
-            Start
-        </button>
-    </div>
+        <div class="welcome-actions" id="start-screen">
+            <button id="start-btn" class="game-button">
+                Start
+            </button>
+        </div>
 
     <!-- Registration Form Container (Hidden by default) -->
     <div id="registration-screen" class="registration-overlay" style="display: none;">
@@ -216,4 +218,32 @@
     
     <!-- Background Animation or Image could go here -->
     <div id="welcome-background" style="background-image: url('{{ asset('assets/images/welcome_BG.webp') }}');"></div>
+    </div>
+    <!-- End Welcome Page Wrapper -->
+    
+    <!-- Game Container (Hidden until countdown finishes) -->
+    <div id="game-container" style="display: none;"></div>
+    
+    <!-- Game UI Overlay (Hidden until game starts) -->
+    <div class="game-ui" id="game-ui" style="display: none;">
+        <div class="game-ui__score">
+            Score: <span id="score">0</span>
+        </div>
+        <div class="game-ui__timer">
+            Time: <span id="timer">60</span>s
+        </div>
+    </div>
+    
+    <!-- Pass asset URLs to JavaScript for preloading -->
+    <script>
+        window.gameAssets = {
+            player: "{{ asset('assets/images/game/plain.webp') }}",
+            background: "{{ asset('assets/images/game/main-bg.webp') }}",
+            header: "{{ asset('assets/images/game/header.webp') }}",
+            cloud: "{{ asset('assets/images/game/cloud.webp') }}",
+            bottle: "{{ asset('assets/images/game/game-object/bottle_15pts.webp') }}",
+            present: "{{ asset('assets/images/game/game-object/present_10pts.webp') }}",
+            badcloud: "{{ asset('assets/images/game/game-object/bad cloud_-5pts.webp') }}"
+        };
+    </script>
 @endsection

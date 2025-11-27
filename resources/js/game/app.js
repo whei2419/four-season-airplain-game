@@ -33,13 +33,11 @@ const config = {
     backgroundColor: '#87CEEB'
 };
 
-// Initialize game when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Only start the game if the game container exists
-    if (document.getElementById('game-container')) {
-        console.log('Initializing Phaser game...');
-        const game = new Phaser.Game(config);
-    }
-});
+// Global game initialization function
+window.initializeGame = function() {
+    console.log('Initializing Phaser game...');
+    const game = new Phaser.Game(config);
+    return game;
+};
 
 export default config;

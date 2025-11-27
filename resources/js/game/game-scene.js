@@ -24,12 +24,12 @@ export default class GameScene extends Phaser.Scene {
     create() {
         console.log('Creating game scene...');
         
-        // Create wide scrolling backgrounds (2 copies for seamless loop)
+        // Create wide scrolling backgrounds (seamless vertical loop with 3 copies to prevent gaps)
         backgrounds = [];
-        for (let i = 0; i < 2; i++) {
-            const bg = this.add.image(540, 960 + (i * 1920), 'background');
+        for (let i = 0; i < 3; i++) {
+            const bg = this.add.image(540, (i * 1920) - 960, 'background');
             bg.setOrigin(0.5, 0.5);
-            bg.displayWidth = 2160; // 2x canvas width for smooth horizontal scrolling
+            bg.displayWidth = 1080; // Match canvas width
             bg.scaleY = bg.scaleX; // Maintain aspect ratio
             backgrounds.push(bg);
         }
@@ -136,9 +136,9 @@ export default class GameScene extends Phaser.Scene {
         backgrounds.forEach(bg => {
             bg.y += currentBackgroundSpeed * deltaSeconds;
             
-            // Reset position when off screen
+            // Reset position when off screen (seamless loop with 3 backgrounds)
             if (bg.y > 1920 + 960) {
-                bg.y = -960;
+                bg.y -= 1920 * 3;
             }
         });
         
