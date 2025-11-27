@@ -16,7 +16,7 @@ export default class PreloadScene extends Phaser.Scene {
         // Loading text
         const loadingText = this.add.text(width / 2, height / 2 - 50, 'Loading...', {
             fontSize: '48px',
-            fontFamily: 'Gordita, sans-serif',
+            fontFamily: 'Gordita, Arial, sans-serif',
             fill: '#ffffff',
             fontWeight: 'bold'
         });
@@ -31,7 +31,7 @@ export default class PreloadScene extends Phaser.Scene {
         // Percentage text
         const percentText = this.add.text(width / 2, height / 2 + 25, '0%', {
             fontSize: '36px',
-            fontFamily: 'Gordita, sans-serif',
+            fontFamily: 'Gordita, Arial, sans-serif',
             fill: '#ffffff'
         });
         percentText.setOrigin(0.5);

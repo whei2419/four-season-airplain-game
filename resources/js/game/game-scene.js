@@ -22,6 +22,9 @@ export default class GameScene extends Phaser.Scene {
         // Add background
         this.add.image(540, 960, 'background');
         
+        // Add decorative clouds on the sides
+        this.createDecorativeClouds();
+        
         // Add header at top (100% width, auto height, positioned at top left)
         const header = this.add.image(0, 0, 'header');
         header.setOrigin(0, 0);
@@ -139,7 +142,7 @@ export default class GameScene extends Phaser.Scene {
         // Create points text
         const pointText = this.add.text(x, y, (points > 0 ? '+' : '') + points, {
             fontSize: '28px',
-            fontFamily: 'Gordita, sans-serif',
+            fontFamily: 'Gordita, Arial, sans-serif',
             fill: '#ffffff',
             fontWeight: 'bold'
         });
@@ -173,5 +176,38 @@ export default class GameScene extends Phaser.Scene {
     endGame() {
         console.log('Game Over! Final Score:', score);
         // TODO: Show game over screen and save score
+    }
+
+    createDecorativeClouds() {
+        // Create 8-12 random clouds on the sides
+        const cloudCount = Phaser.Math.Between(8, 12);
+        
+        for (let i = 0; i < cloudCount; i++) {
+            // Random position - left or right side
+            const isLeftSide = Math.random() > 0.5;
+            let x;
+            
+            if (isLeftSide) {
+                x = Phaser.Math.Between(50, 250); // Left side - more visible
+            } else {
+                x = Phaser.Math.Between(830, 1030); // Right side - more visible
+            }
+            
+            const y = Phaser.Math.Between(300, 1700); // Random vertical position
+            
+            // Create cloud
+            const cloud = this.add.image(x, y, 'cloud');
+            
+            // Random scale (0.15 to 0.25) - larger
+            const scale = Phaser.Math.FloatBetween(0.15, 0.25);
+            cloud.setScale(scale);
+            
+            // Random opacity (0.6 to 0.9) - very visible
+            const opacity = Phaser.Math.FloatBetween(0.6, 0.9);
+            cloud.setAlpha(opacity);
+            
+            // Set depth behind player but in front of background
+            cloud.setDepth(1);
+        }
     }
 }
