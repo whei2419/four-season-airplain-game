@@ -14,6 +14,7 @@ let backgrounds = [];
 let decorativeClouds = [];
 let backgroundSpeed = 150;
 let cloudSpeed = 180;
+let gameTime = 0;
 
 export default class GameScene extends Phaser.Scene {
     constructor() {
@@ -28,7 +29,6 @@ export default class GameScene extends Phaser.Scene {
         for (let i = 0; i < 2; i++) {
             const bg = this.add.image(540, 960 + (i * 1920), 'background');
             bg.setOrigin(0.5, 0.5);
-            // Make background wide enough to cover horizontal movement
             bg.displayWidth = 2160; // 2x canvas width for smooth horizontal scrolling
             bg.scaleY = bg.scaleX; // Maintain aspect ratio
             backgrounds.push(bg);
@@ -46,16 +46,14 @@ export default class GameScene extends Phaser.Scene {
         header.setDepth(1000);
         header.setScrollFactor(0); // Header stays fixed on screen
         
-        // Create player at bottom center of world
+        // Create player at bottom center
         player = this.physics.add.sprite(540, 1700, 'player');
         player.setScale(0.2);
         player.setCollideWorldBounds(true);
+        player.setDepth(50); // Middle depth for cloud layering
         
-        // Set world bounds to match canvas
+        // Set world bounds to match camera
         this.physics.world.setBounds(0, 0, 1080, 1920);
-        
-        // Camera doesn't need to follow in standard size
-        this.cameras.main.setBounds(0, 0, 1080, 1920);
         
         // Create group for collectible objects
         gameObjects = this.physics.add.group();
@@ -89,6 +87,7 @@ export default class GameScene extends Phaser.Scene {
         // Reset game variables
         score = 0;
         timeLeft = 60;
+        gameTime = 0;
         document.getElementById('score').textContent = score;
         document.getElementById('timer').textContent = timeLeft;
     }
@@ -96,34 +95,25 @@ export default class GameScene extends Phaser.Scene {
     update(time, delta) {
         // Use delta for smooth frame-rate independent movement
         const deltaSeconds = delta / 1000;
+        gameTime += deltaSeconds;
         
-        // Player movement - direct position change instead of velocity
-        let playerMoveX = 0;
+        // Increase speed over time (10% faster every 10 seconds, max 2x speed)
+        const speedMultiplier = Math.min(1 + (Math.floor(gameTime / 10) * 0.1), 2.0);
+        const currentBackgroundSpeed = backgroundSpeed * speedMultiplier;
+        const currentCloudSpeed = cloudSpeed * speedMultiplier;
+        
+        // Player movement with velocity
         if (cursors.left.isDown) {
-            playerMoveX = -400 * deltaSeconds;
+            player.setVelocityX(-400);
         } else if (cursors.right.isDown) {
-            playerMoveX = 400 * deltaSeconds;
+            player.setVelocityX(400);
+        } else {
+            player.setVelocityX(0);
         }
         
-        // Move player
-        player.x += playerMoveX;
-        
-        // Keep player in bounds
-        if (player.x < 50) player.x = 50;
-        if (player.x > 1030) player.x = 1030;
-        
-        // Parallax effect - move background opposite to player movement
-        const parallaxOffset = playerMoveX * 0.15;
-        
-        // Limit parallax movement to prevent extreme offsets
+        // Scroll backgrounds downward only - camera movement creates parallax naturally
         backgrounds.forEach(bg => {
-            bg.y += backgroundSpeed * deltaSeconds; // Move down
-            
-            const newX = bg.x - parallaxOffset;
-            // Limit background offset (keep it between -200 and 200 from center)
-            if (Math.abs(newX - 540) < 200) {
-                bg.x = newX;
-            }
+            bg.y += currentBackgroundSpeed * deltaSeconds;
             
             // Reset position when off screen
             if (bg.y > 1920 + 960) {
@@ -131,24 +121,20 @@ export default class GameScene extends Phaser.Scene {
             }
         });
         
-        // Scroll clouds downward and add parallax (faster than background)
-        const cloudParallaxOffset = playerMoveX * 0.25;
-        
+        // Scroll clouds downward - camera creates natural parallax
         decorativeClouds.forEach(cloud => {
-            cloud.y += cloudSpeed * deltaSeconds; // Move down faster
-            cloud.x -= cloudParallaxOffset; // Moderate parallax for depth
+            cloud.y += currentCloudSpeed * deltaSeconds;
             
             // Reset position when off screen
             if (cloud.y > 1920 + 100) {
-                // Randomize position when resetting - spread across entire width
                 cloud.x = Phaser.Math.Between(50, 1030);
                 cloud.y = -100;
             }
         });
         
-        // Move objects down with the background scroll (same speed as background)
+        // Move objects down - they stay in X position, player flies to them
         gameObjects.children.entries.forEach(obj => {
-            obj.y += backgroundSpeed * deltaSeconds;
+            obj.y += currentBackgroundSpeed * deltaSeconds;
             
             // Remove if off screen
             if (obj.y > 1920 + 100) {
@@ -272,8 +258,9 @@ export default class GameScene extends Phaser.Scene {
             const opacity = Phaser.Math.FloatBetween(0.6, 0.9);
             cloud.setAlpha(opacity);
             
-            // Set depth behind player but in front of background
-            cloud.setDepth(1);
+            // Randomize depth - some clouds in front, some behind plane
+            const depth = Math.random() > 0.5 ? 1 : 100; // 1 = behind, 100 = in front of plane
+            cloud.setDepth(depth);
             
             // Add to array for parallax scrolling
             decorativeClouds.push(cloud);
