@@ -10,6 +10,10 @@ let timeLeft = 60;
 let timerText;
 let gameObjects;
 let objectTimer;
+let backgrounds = [];
+let decorativeClouds = [];
+let backgroundSpeed = 80;
+let cloudSpeed = 100;
 
 export default class GameScene extends Phaser.Scene {
     constructor() {
@@ -19,23 +23,41 @@ export default class GameScene extends Phaser.Scene {
     create() {
         console.log('Creating game scene...');
         
-        // Add background
-        this.add.image(540, 960, 'background');
+        // Create wide scrolling backgrounds (2 copies for seamless loop)
+        backgrounds = [];
+        for (let i = 0; i < 2; i++) {
+            const bg = this.add.image(810, 960 + (i * 1920), 'background');
+            bg.setOrigin(0.5, 0.5);
+            // Make background wide enough to cover horizontal movement
+            bg.displayWidth = 3240; // 2x canvas width for smooth horizontal scrolling
+            bg.scaleY = bg.scaleX; // Maintain aspect ratio
+            backgrounds.push(bg);
+        }
         
         // Add decorative clouds on the sides
+        decorativeClouds = [];
         this.createDecorativeClouds();
         
-        // Add header at top (100% width, auto height, positioned at top left)
-        const header = this.add.image(0, 0, 'header');
-        header.setOrigin(0, 0);
+        // Add header at top (1080px width, centered, fixed to camera)
+        const header = this.add.image(810, 0, 'header');
+        header.setOrigin(0.5, 0);
         header.displayWidth = 1080;
         header.scaleY = header.scaleX;
         header.setDepth(1000);
+        header.setScrollFactor(0); // Header stays fixed on screen
         
-        // Create player
-        player = this.physics.add.sprite(540, 1600, 'player');
+        // Create player at bottom center
+        player = this.physics.add.sprite(810, 1700, 'player');
         player.setScale(0.2);
         player.setCollideWorldBounds(true);
+        
+        // Set world bounds to be wider than camera for smooth scrolling
+        this.physics.world.setBounds(0, 0, 1620, 1920);
+        
+        // Camera follows player horizontally only (smooth follow)
+        this.cameras.main.setBounds(0, 0, 1620, 1920);
+        this.cameras.main.startFollow(player, true, 0.08, 0);
+        this.cameras.main.setDeadzone(200, 0); // Player can move 200px before camera follows
         
         // Create group for collectible objects
         gameObjects = this.physics.add.group();
@@ -82,6 +104,31 @@ export default class GameScene extends Phaser.Scene {
         } else {
             player.setVelocityX(0);
         }
+        
+        // Scroll backgrounds downward (parallax effect)
+        backgrounds.forEach(bg => {
+            bg.y += backgroundSpeed * (1/60); // Move down
+            
+            // Reset position when off screen
+            if (bg.y > 1920 + 960) {
+                bg.y = -960;
+            }
+        });
+        
+        // Scroll clouds downward (faster than background)
+        decorativeClouds.forEach(cloud => {
+            cloud.y += cloudSpeed * (1/60); // Move down faster
+            
+            // Reset position when off screen
+            if (cloud.y > 1920 + 100) {
+                // Randomize position when resetting
+                const isLeftSide = Math.random() > 0.5;
+                cloud.x = isLeftSide ? 
+                    Phaser.Math.Between(50, 350) : 
+                    Phaser.Math.Between(1270, 1570);
+                cloud.y = -100;
+            }
+        });
     }
 
     spawnObject() {
@@ -93,7 +140,7 @@ export default class GameScene extends Phaser.Scene {
             { key: 'badcloud', scale: 0.15 }
         ];
         const selectedType = Phaser.Utils.Array.GetRandom(types);
-        const x = Phaser.Math.Between(100, 980);
+        const x = Phaser.Math.Between(150, 1470);
         
         const obj = gameObjects.create(x, -50, selectedType.key);
         obj.setScale(selectedType.scale);
@@ -188,9 +235,9 @@ export default class GameScene extends Phaser.Scene {
             let x;
             
             if (isLeftSide) {
-                x = Phaser.Math.Between(50, 250); // Left side - more visible
+                x = Phaser.Math.Between(50, 350); // Left side - more visible
             } else {
-                x = Phaser.Math.Between(830, 1030); // Right side - more visible
+                x = Phaser.Math.Between(1270, 1570); // Right side - more visible
             }
             
             const y = Phaser.Math.Between(300, 1700); // Random vertical position
@@ -208,6 +255,9 @@ export default class GameScene extends Phaser.Scene {
             
             // Set depth behind player but in front of background
             cloud.setDepth(1);
+            
+            // Add to array for parallax scrolling
+            decorativeClouds.push(cloud);
         }
     }
 }
