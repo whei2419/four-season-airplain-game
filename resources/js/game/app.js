@@ -4,10 +4,15 @@ import Alpine from 'alpinejs';
 import SnowEffect from '../snow';
 import PreloadScene from './preload-scene';
 import GameScene from './game-scene';
+import ControlManager from './controls/control-manager';
 import './welcome';
 
 window.Alpine = Alpine;
 Alpine.start();
+
+// Initialize Control Manager
+window.controlManager = new ControlManager();
+window.controlManager.setupKeyboardControls();
 
 // Initialize Snow Effect
 let snowEffect = null;
@@ -15,7 +20,55 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('snow-container')) {
         snowEffect = new SnowEffect('snow-container');
     }
+    
+    // Setup control mode UI
+    setupControlUI();
 });
+
+// Setup control mode switching UI
+function setupControlUI() {
+    const controlModeBtn = document.getElementById('control-mode-btn');
+    const calibrateBtn = document.getElementById('calibrate-btn');
+    const cameraContainer = document.getElementById('camera-container');
+    
+    if (!controlModeBtn) return;
+    
+    let currentMode = 'keyboard';
+    
+    controlModeBtn.addEventListener('click', async () => {
+        if (currentMode === 'keyboard') {
+            // Switch to gesture mode
+            const videoElement = document.getElementById('gesture-video');
+            const canvasElement = document.getElementById('gesture-canvas');
+            
+            const success = await window.controlManager.initializeGestureMode(videoElement, canvasElement);
+            
+            if (success) {
+                window.controlManager.setControlMode('gesture');
+                currentMode = 'gesture';
+                document.getElementById('control-mode-text').textContent = 'Gesture';
+                cameraContainer.style.display = 'block';
+                calibrateBtn.style.display = 'inline-block';
+            } else {
+                alert('Failed to initialize gesture controls. Please allow camera access and try again.');
+            }
+        } else {
+            // Switch back to keyboard
+            window.controlManager.setControlMode('keyboard');
+            currentMode = 'keyboard';
+            document.getElementById('control-mode-text').textContent = 'Keyboard';
+            cameraContainer.style.display = 'none';
+            calibrateBtn.style.display = 'none';
+        }
+    });
+    
+    if (calibrateBtn) {
+        calibrateBtn.addEventListener('click', () => {
+            window.controlManager.calibrateTilt();
+            alert('Tilt calibrated! Current position is now center.');
+        });
+    }
+}
 
 // Export snow effect for cleanup
 window.destroySnowEffect = function() {

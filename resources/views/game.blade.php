@@ -4,13 +4,27 @@
 
 @section('content')
     <!-- Game UI Overlay -->
-    <div class="game-ui">
+    <div class="game-ui" id="game-ui">
         <div class="game-ui__score">
             <span id="score">0</span>
         </div>
         <div class="game-ui__timer">
             <span id="timer">00:60</span>
         </div>
+        
+        <!-- Control Mode Toggle -->
+        <div class="game-ui__controls">
+            <button id="control-mode-btn" class="control-btn">
+                <span id="control-mode-text">Keyboard</span>
+            </button>
+            <button id="calibrate-btn" class="control-btn" style="display: none;">Calibrate Tilt</button>
+        </div>
+    </div>
+    
+    <!-- Camera Feed for Gesture Control -->
+    <div id="camera-container" style="display: none;">
+        <video id="gesture-video" autoplay playsinline style="display: none;"></video>
+        <canvas id="gesture-canvas"></canvas>
     </div>
     
     <!-- Game Container -->

@@ -127,13 +127,29 @@ export default class GameScene extends Phaser.Scene {
         const currentBackgroundSpeed = backgroundSpeed * speedMultiplier;
         const currentCloudSpeed = cloudSpeed * speedMultiplier;
         
-        // Player movement with velocity
-        if (cursors.left.isDown) {
+        // Get input from control manager (supports keyboard and gesture controls)
+        const input = window.controlManager ? window.controlManager.getInput() : { horizontal: 0, vertical: 0 };
+        
+        // Player horizontal movement (left/right)
+        if (input.horizontal !== 0) {
+            player.setVelocityX(input.horizontal * 400);
+        } else if (cursors.left.isDown) {
             player.setVelocityX(-400);
         } else if (cursors.right.isDown) {
             player.setVelocityX(400);
         } else {
             player.setVelocityX(0);
+        }
+        
+        // Player vertical movement (up/down)
+        if (input.vertical !== 0) {
+            player.setVelocityY(-input.vertical * 450); // Negative because Y increases downward
+        } else if (cursors.up.isDown) {
+            player.setVelocityY(-450);
+        } else if (cursors.down.isDown) {
+            player.setVelocityY(450);
+        } else {
+            player.setVelocityY(0);
         }
         
         // Scroll backgrounds downward only - camera movement creates parallax naturally

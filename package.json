@@ -16,8 +16,11 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "@mediapipe/camera_utils": "^0.3.1640029074",
+        "@mediapipe/hands": "^0.4.1646424915",
         "@tabler/core": "^1.4.0",
         "@tabler/icons": "^3.35.0",
+        "@tensorflow/tfjs": "^4.22.0",
         "intl-tel-input": "^25.12.5",
         "phaser": "^3.90.0",
         "sass": "^1.94.1"
