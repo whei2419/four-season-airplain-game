@@ -688,35 +688,60 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 countdownScreen.style.display = 'block';
                 
-                // Prepare game container (show but keep behind countdown)
-                const gameContainer = document.getElementById('game-container');
-                const gameUI = document.getElementById('game-ui');
-                if (gameContainer) {
-                    gameContainer.style.display = 'flex';
-                    gameContainer.style.position = 'fixed';
-                    gameContainer.style.top = '0';
-                    gameContainer.style.left = '0';
-                    gameContainer.style.width = '100vw';
-                    gameContainer.style.height = '100vh';
-                    gameContainer.style.zIndex = '100'; // Behind countdown (151)
-                }
-                
-                // Initialize game during countdown so it's ready
-                let gameInstance = null;
-                if (window.initializeGame) {
-                    gameInstance = window.initializeGame();
-                }
-                
-                // Start countdown
-                let countdown = 3;
-                const countdownInterval = setInterval(() => {
-                    countdown--;
-                    if (countdown > 0) {
-                        countdownNumberElement.textContent = countdown;
-                    } else {
-                        clearInterval(countdownInterval);
-                        countdownNumberElement.textContent = 'GO!';
+                // Wait for airplane animation to complete (3.5s), then show loading
+                setTimeout(() => {
+                    console.log('Showing game loading screen...');
+                    const gameLoading = document.getElementById('game-loading');
+                    const progressBar = document.getElementById('progress-bar');
+                    if (gameLoading) {
+                        gameLoading.style.display = 'block';
+                    }
+                    
+                    // Start initializing game early so background loads before fade
+                    setTimeout(() => {
+                        console.log('Initializing game...');
+                        // Setup game container behind loading screen
+                        const gameContainer = document.getElementById('game-container');
+                        const gameUI = document.getElementById('game-ui');
+                        if (gameContainer) {
+                            gameContainer.style.display = 'flex';
+                            gameContainer.style.position = 'fixed';
+                            gameContainer.style.top = '0';
+                            gameContainer.style.left = '0';
+                            gameContainer.style.width = '100vw';
+                            gameContainer.style.height = '100vh';
+                            gameContainer.style.zIndex = '100'; // Behind loading (152)
+                        }
+                        
+                        // Initialize game (it will load in background)
+                        if (window.initializeGame) {
+                            const gameInstance = window.initializeGame();
+                            
+                            // Set flag when game is ready
+                            if (gameInstance && gameInstance.events) {
+                                gameInstance.events.once('ready', () => {
+                                    window.gameReady = true;
+                                    console.log('Game is ready!');
+                                });
+                            }
+                        }
+                    }, 500);
+                    
+                    // Wait for full 5 seconds for progress bar to complete
+                    setTimeout(() => {
+                        console.log('Starting fade out after 5 seconds...');
+                        const gameLoading = document.getElementById('game-loading');
+                        
+                        // Fade out loading screen
+                        if (gameLoading) {
+                            gameLoading.style.transition = 'opacity 0.5s ease-out';
+                            gameLoading.style.opacity = '0';
+                        }
+                        
                         setTimeout(() => {
+                            // Hide countdown screen and loading
+                            countdownScreen.style.display = 'none';
+                            
                             // Hide entire welcome page wrapper
                             const welcomePageWrapper = document.getElementById('welcome-page-wrapper');
                             if (welcomePageWrapper) welcomePageWrapper.style.display = 'none';
@@ -735,7 +760,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Hide body overflow
                             document.body.style.overflow = 'hidden';
                             
-                            // Bring game container to front and show UI
+                            // Bring game to front
+                            const gameContainer = document.getElementById('game-container');
+                            const gameUI = document.getElementById('game-ui');
                             if (gameContainer) {
                                 gameContainer.style.zIndex = '9999';
                             }
@@ -744,8 +771,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 gameUI.style.zIndex = '10000';
                             }
                         }, 500);
-                    }
-                }, 1000);
+                    }, 5000);
+                }, 3500);
             }, 3000);
         });
     }

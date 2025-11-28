@@ -199,16 +199,19 @@
 
         <!-- Countdown Screen (Hidden by default) -->
         <div id="countdown-screen" class="countdown-screen" style="display: none; background-image: url('{{ asset('assets/images/background 03.webp') }}');">
-            <div class="countdown-logo-container">
-                <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="countdown-logo">
-            </div>
-            
             <div class="countdown-airplane-container">
                 <img src="{{ asset('assets/images/plane_fly up.webp') }}" alt="Airplane" class="countdown-airplane">
             </div>
 
-            <div class="countdown-message">
-                <div class="countdown-number" id="countdown-number">3</div>
+            <div class="game-loading" id="game-loading" style="display: none; background-image: url('{{ asset('assets/images/background 03.webp') }}');">
+                <div class="loading-content">
+                    <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="loading-logo">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+                </div>
             </div>
         </div>
     </div>

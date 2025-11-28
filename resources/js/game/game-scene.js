@@ -34,6 +34,10 @@ export default class GameScene extends Phaser.Scene {
             backgrounds.push(bg);
         }
         
+        // Signal that game is ready (background is loaded)
+        window.gameReady = true;
+        console.log('Game background loaded, signaling ready');
+        
         // Add decorative clouds on the sides
         decorativeClouds = [];
         this.createDecorativeClouds();

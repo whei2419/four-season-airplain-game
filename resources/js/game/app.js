@@ -39,7 +39,7 @@ const config = {
         }
     },
     scene: [PreloadScene, GameScene],
-    backgroundColor: '#87CEEB'
+    backgroundColor: 'transparent'
 };
 
 // Global game initialization function

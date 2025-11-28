@@ -1073,3 +1073,66 @@
     }
 }
 
+// Game Loading Indicator
+.game-loading {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 152;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    .loading-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        
+        .loading-logo {
+            width: 350px;
+            height: auto;
+            display: block;
+            margin: 0 auto 25px auto;
+            opacity: 0;
+            animation: fadeInLogo 0.6s ease-out forwards;
+        }
+        
+        .progress-bar-container {
+            width: 350px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            
+            .progress-bar {
+                height: 100%;
+                background: linear-gradient(90deg, #3BB776 0%, #5dd88f 100%);
+                width: 0%;
+                border-radius: 20px;
+                animation: progressLoad 5s ease-out forwards;
+                box-shadow: 0 0 15px rgba(59, 183, 118, 0.6);
+            }
+        }
+    }
+}
+
+@keyframes fadeInLogo {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes progressLoad {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
