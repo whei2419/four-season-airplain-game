@@ -33,7 +33,28 @@ function setupControlUI() {
     
     if (!controlModeBtn) return;
     
-    let currentMode = 'keyboard';
+    let currentMode = 'gesture';
+    
+    // Auto-initialize gesture mode on load
+    setTimeout(async () => {
+        const videoElement = document.getElementById('gesture-video');
+        const canvasElement = document.getElementById('gesture-canvas');
+        
+        const success = await window.controlManager.initializeGestureMode(videoElement, canvasElement);
+        
+        if (success) {
+            window.controlManager.setControlMode('gesture');
+            document.getElementById('control-mode-text').textContent = 'Gesture';
+            cameraContainer.style.display = 'block';
+            calibrateBtn.style.display = 'inline-block';
+            console.log('Gesture controls initialized automatically');
+        } else {
+            // Fallback to keyboard if gesture fails
+            currentMode = 'keyboard';
+            document.getElementById('control-mode-text').textContent = 'Keyboard';
+            console.log('Failed to initialize gesture controls, using keyboard');
+        }
+    }, 1000);
     
     controlModeBtn.addEventListener('click', async () => {
         if (currentMode === 'keyboard') {

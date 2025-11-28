@@ -15,16 +15,18 @@
         <!-- Control Mode Toggle -->
         <div class="game-ui__controls">
             <button id="control-mode-btn" class="control-btn">
-                <span id="control-mode-text">Keyboard</span>
+                <span id="control-mode-text">Gesture</span>
             </button>
-            <button id="calibrate-btn" class="control-btn" style="display: none;">Calibrate Tilt</button>
+            <button id="calibrate-btn" class="control-btn">Calibrate Tilt</button>
         </div>
     </div>
     
     <!-- Camera Feed for Gesture Control -->
-    <div id="camera-container" style="display: none;">
-        <video id="gesture-video" autoplay playsinline style="display: none;"></video>
-        <canvas id="gesture-canvas"></canvas>
+    <div id="camera-container">
+        <div class="camera-wrapper">
+            <video id="gesture-video" autoplay playsinline></video>
+            <canvas id="gesture-canvas"></canvas>
+        </div>
     </div>
     
     <!-- Game Container -->

@@ -24,8 +24,9 @@ Route::get('/game', [GameController::class, 'index'])->name('game.index');
 Route::get('/game/intro', function () {
     return view('game-intro');
 })->name('game.intro');
+// Note: game.play redirects to welcome page where game is embedded
 Route::get('/game/play', function () {
-    return view('game');
+    return redirect()->route('welcome');
 })->name('game.play');
 
 // Admin Routes (Protected)

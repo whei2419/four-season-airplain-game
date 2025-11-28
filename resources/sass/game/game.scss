@@ -80,19 +80,35 @@
 // Camera Container for Gesture Control
 #camera-container {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  top: 20px;
+  right: 20px;
   z-index: 999;
   border: 3px solid #3BB776;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   
-  #gesture-canvas {
+  .camera-wrapper {
+    position: relative;
     width: 320px;
     height: 240px;
-    display: block;
-    background: #000;
+    
+    #gesture-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transform: scaleX(-1); // Mirror the video
+    }
+    
+    #gesture-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
   }
 }
 

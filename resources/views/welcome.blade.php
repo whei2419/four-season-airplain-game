@@ -235,6 +235,22 @@
         <div class="game-ui__timer">
             <span id="timer">60</span>
         </div>
+        
+        <!-- Control Mode Toggle -->
+        <div class="game-ui__controls">
+            <button id="control-mode-btn" class="control-btn">
+                <span id="control-mode-text">Gesture</span>
+            </button>
+            <button id="calibrate-btn" class="control-btn">Calibrate Tilt</button>
+        </div>
+    </div>
+    
+    <!-- Camera Feed for Gesture Control -->
+    <div id="camera-container">
+        <div class="camera-wrapper">
+            <video id="gesture-video" autoplay playsinline></video>
+            <canvas id="gesture-canvas"></canvas>
+        </div>
     </div>
     
     <!-- Pass asset URLs to JavaScript for preloading -->
