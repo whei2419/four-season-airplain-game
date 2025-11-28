@@ -692,7 +692,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     console.log('Showing game loading screen...');
                     const gameLoading = document.getElementById('game-loading');
-                    const progressBar = document.getElementById('progress-bar');
                     if (gameLoading) {
                         gameLoading.style.display = 'block';
                     }
@@ -700,20 +699,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Start initializing game early so background loads before fade
                     setTimeout(() => {
                         console.log('Initializing game...');
-                        // Setup game container behind loading screen
-                        const gameContainer = document.getElementById('game-container');
-                        const gameUI = document.getElementById('game-ui');
-                        if (gameContainer) {
-                            gameContainer.style.display = 'flex';
-                            gameContainer.style.position = 'fixed';
-                            gameContainer.style.top = '0';
-                            gameContainer.style.left = '0';
-                            gameContainer.style.width = '100vw';
-                            gameContainer.style.height = '100vh';
-                            gameContainer.style.zIndex = '100'; // Behind loading (152)
-                        }
                         
-                        // Initialize game (it will load in background)
+                        // Initialize game first (but don't show container yet)
                         if (window.initializeGame) {
                             const gameInstance = window.initializeGame();
                             
@@ -725,6 +712,20 @@ document.addEventListener('DOMContentLoaded', function() {
                                 });
                             }
                         }
+                        
+                        // Wait a bit for game to render, then show container behind loading
+                        setTimeout(() => {
+                            const gameContainer = document.getElementById('game-container');
+                            if (gameContainer) {
+                                gameContainer.style.display = 'flex';
+                                gameContainer.style.position = 'fixed';
+                                gameContainer.style.top = '0';
+                                gameContainer.style.left = '0';
+                                gameContainer.style.width = '100vw';
+                                gameContainer.style.height = '100vh';
+                                gameContainer.style.zIndex = '100'; // Behind loading (152)
+                            }
+                        }, 2000);
                     }, 500);
                     
                     // Wait for full 5 seconds for progress bar to complete

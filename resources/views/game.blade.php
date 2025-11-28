@@ -6,10 +6,10 @@
     <!-- Game UI Overlay -->
     <div class="game-ui">
         <div class="game-ui__score">
-            Score: <span id="score">0</span>
+            <span id="score">0</span>
         </div>
         <div class="game-ui__timer">
-            Time: <span id="timer">60</span>s
+            <span id="timer">00:60</span>
         </div>
     </div>
     

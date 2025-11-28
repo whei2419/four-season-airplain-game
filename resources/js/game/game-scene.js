@@ -104,7 +104,7 @@ export default class GameScene extends Phaser.Scene {
         timeLeft = 60;
         gameTime = 0;
         document.getElementById('score').textContent = score;
-        document.getElementById('timer').textContent = timeLeft;
+        document.getElementById('timer').textContent = '01:00';
     }
     
     startGameplay() {
@@ -250,7 +250,10 @@ export default class GameScene extends Phaser.Scene {
     updateTimer() {
         if (timeLeft > 0) {
             timeLeft--;
-            document.getElementById('timer').textContent = timeLeft;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timer').textContent = formattedTime;
         } else {
             // Game over
             objectTimer.remove();

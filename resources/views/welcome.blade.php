@@ -230,10 +230,10 @@
     <!-- Game UI Overlay (Hidden until game starts) -->
     <div class="game-ui" id="game-ui" style="display: none;">
         <div class="game-ui__score">
-            Score: <span id="score">0</span>
+           <span id="score">0</span>
         </div>
         <div class="game-ui__timer">
-            Time: <span id="timer">60</span>s
+            <span id="timer">60</span>
         </div>
     </div>
     
