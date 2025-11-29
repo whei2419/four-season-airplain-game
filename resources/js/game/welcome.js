@@ -567,6 +567,12 @@ document.addEventListener('DOMContentLoaded', function() {
             startScreen.style.display = 'none';
             registrationScreen.style.display = 'flex';
             
+            // Hide welcome logo when showing registration
+            const welcomeLogo = document.querySelector('.welcome-logo-container');
+            if (welcomeLogo) {
+                welcomeLogo.classList.remove('active');
+            }
+            
             // Auto-focus on name input when registration opens
             const nameInput = document.getElementById('name');
             if (nameInput) {
@@ -583,6 +589,12 @@ document.addEventListener('DOMContentLoaded', function() {
         backBtn.addEventListener('click', function() {
             registrationScreen.style.display = 'none';
             startScreen.style.display = 'block';
+            
+            // Show welcome logo when going back
+            const welcomeLogo = document.querySelector('.welcome-logo-container');
+            if (welcomeLogo) {
+                welcomeLogo.classList.add('active');
+            }
         });
     }
 
@@ -625,6 +637,17 @@ document.addEventListener('DOMContentLoaded', function() {
             instructionContent1.style.display = 'block';
             instructionContent2.style.display = 'none';
             
+            // Hide welcome logo and show instruction logo
+            const welcomeLogo = document.querySelector('.welcome-logo-container');
+            if (welcomeLogo) {
+                welcomeLogo.classList.remove('active');
+            }
+            
+            const instructionLogo = document.querySelector('.instruction-logo-container');
+            if (instructionLogo) {
+                instructionLogo.classList.add('active');
+            }
+            
             // Hide snow during instruction screen
             if (window.viewManager) {
                 window.viewManager.hideSnow('snow-container');
@@ -651,6 +674,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // If on content 1, go back to registration
                 instructionScreen.style.display = 'none';
                 registrationScreen.style.display = 'flex';
+                
+                // Hide instruction logo
+                const instructionLogo = document.querySelector('.instruction-logo-container');
+                if (instructionLogo) {
+                    instructionLogo.classList.remove('active');
+                }
             }
         });
     }
@@ -660,8 +689,9 @@ document.addEventListener('DOMContentLoaded', function() {
         instruction2NextBtn.addEventListener('click', function() {
             // Hide instruction content and logo
             instructionContent2.style.display = 'none';
+            const instructionLogo = document.querySelector('.instruction-logo-container');
             if (instructionLogo) {
-                instructionLogo.style.display = 'none';
+                instructionLogo.classList.remove('active');
             }
             if (instructionBackBtn) {
                 instructionBackBtn.style.display = 'none';
@@ -687,6 +717,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Show snow during countdown (managed by CSS .active class)
                 // Snow visibility is handled by view manager
+                // Show snow effect
+
+                if (window.viewManager) {
+                    window.viewManager.showSnow('snow-container');
+                }
                 
                 countdownScreen.style.display = 'block';
                 
@@ -717,6 +752,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Wait a bit for game to render, then show container behind loading
                         setTimeout(() => {
+                            //hide snow during gameplay
+                            if (window.viewManager) {
+                                window.viewManager.hideSnow('snow-container');
+                            }
                             const gameContainer = document.getElementById('game-container');
                             if (gameContainer) {
                                 gameContainer.style.display = 'flex';

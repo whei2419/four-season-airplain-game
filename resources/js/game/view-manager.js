@@ -120,6 +120,16 @@ export default class ViewManager {
 
     hideRunwayLandingAnimation() {
         this.removeActiveClass(['welcome-page-wrapper']);
+        
+        // Hide child elements that use position: fixed
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        if (welcomeWrapper) {
+            const welcomeLogo = welcomeWrapper.querySelector('.welcome-logo-container');
+            const welcomeActions = welcomeWrapper.querySelector('.welcome-actions');
+            
+            if (welcomeLogo) welcomeLogo.classList.remove('active');
+            if (welcomeActions) welcomeActions.classList.remove('active');
+        }
     }
 
     // Plane Sky Animation Screen
