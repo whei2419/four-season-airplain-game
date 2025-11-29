@@ -21,7 +21,7 @@
         </div>
 
     <!-- Registration Form Container (Hidden by default) -->
-    <div id="registration-screen" class="registration-overlay" style="display: none;">
+    <div id="registration-screen" class="registration-overlay">
         <button type="button" id="back-btn" class="back-btn-top">← BACK</button>
         
         <div class="registration-content">
@@ -133,7 +133,7 @@
     </div>
 
     <!-- Instruction Screen (Hidden by default) -->
-    <div id="instruction-screen" class="registration-overlay" style="display: none; background-image: url('{{ asset('assets/images/instruction_BG.webp') }}'); background-size: cover; background-position: center; background-color: transparent;">
+    <div id="instruction-screen" class="registration-overlay" style="background-image: url('{{ asset('assets/images/instruction_BG.webp') }}'); background-size: cover; background-position: center; background-color: transparent;">
         <button type="button" id="instruction-back-btn" class="back-btn-top">← BACK</button>
         
         <div class="instruction-logo-container">
@@ -141,7 +141,7 @@
         </div>
         
         <!-- Instruction Content 1 - Tilt Controls -->
-        <div id="instruction-content-1" class="instruction-content" style="display: none;">
+        <div id="instruction-content-1" class="instruction-content">
             <div class="registration-card instruction-card">
                 <h2 class="instruction-title">How to Play</h2>
                 
@@ -163,7 +163,7 @@
         </div>
 
         <!-- Instruction Content 2 - Points -->
-        <div id="instruction-content-2" class="instruction-content" style="display: none;">
+        <div id="instruction-content-2" class="instruction-content">
             <div class="registration-card instruction-card">
                 <h2 class="instruction-title">How to Play</h2>
                 <p class="instruction-desc">
@@ -193,17 +193,17 @@
         </div>
 
         <!-- Takeoff Animation (Hidden by default) -->
-        <div id="takeoff-animation" class="takeoff-animation" style="display: none;">
+        <div id="takeoff-animation" class="takeoff-animation">
             <img src="{{ asset('assets/images/animate-plian1.webp') }}" alt="Airplane Takeoff" class="takeoff-plane">
         </div>
 
         <!-- Countdown Screen (Hidden by default) -->
-        <div id="countdown-screen" class="countdown-screen" style="display: none; background-image: url('{{ asset('assets/images/background 03.webp') }}');">
+        <div id="planeSkyAnimation" class="planeSkyAnimation" style="background-image: url('{{ asset('assets/images/background 03.webp') }}');">
             <div class="countdown-airplane-container">
                 <img src="{{ asset('assets/images/plane_fly up.webp') }}" alt="Airplane" class="countdown-airplane">
             </div>
 
-            <div class="game-loading" id="game-loading" style="display: none; background-image: url('{{ asset('assets/images/background 03.webp') }}');">
+            <div class="game-loading" id="game-loading" style="background-image: url('{{ asset('assets/images/background 03.webp') }}');">
                 <div class="loading-content">
                     <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="loading-logo">
                     <div class="progress-bar-container">
@@ -225,10 +225,10 @@
     <!-- End Welcome Page Wrapper -->
     
     <!-- Game Container (Hidden until countdown finishes) -->
-    <div id="game-container" style="display: none;"></div>
+    <div id="game-container"></div>
     
     <!-- Game UI Overlay (Hidden until game starts) -->
-    <div class="game-ui" id="game-ui" style="display: none;">
+    <div class="game-ui" id="game-ui">
         <div class="game-ui__score">
            <span id="score">0</span>
         </div>
@@ -254,7 +254,7 @@
     </div>
     
     <!-- Game Over Screen (Hidden until game ends) -->
-    <div id="game-over-screen" class="game-over-screen" style="display: none;">
+    <div id="game-over-screen" class="game-over-screen">
         <!-- Snow Effect for Game Over -->
         <div id="game-over-snow-container"></div>
         

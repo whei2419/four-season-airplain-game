@@ -555,7 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const instructionBackBtn = document.getElementById('instruction-back-btn');
     const instruction2NextBtn = document.getElementById('instruction-2-next-btn');
     const takeoffAnimation = document.getElementById('takeoff-animation');
-    const countdownScreen = document.getElementById('countdown-screen');
+    const countdownScreen = document.getElementById('planeSkyAnimation');
     const countdownNumberElement = document.getElementById('countdown-number');
     const instructionLogo = document.querySelector('.instruction-logo-container');
     const welcomeBackground = document.getElementById('welcome-background');
@@ -624,6 +624,11 @@ document.addEventListener('DOMContentLoaded', function() {
             instructionScreen.style.display = 'flex';
             instructionContent1.style.display = 'block';
             instructionContent2.style.display = 'none';
+            
+            // Hide snow during instruction screen
+            if (window.viewManager) {
+                window.viewManager.hideSnow('snow-container');
+            }
         });
     }
 
@@ -680,11 +685,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     welcomeBackground.style.display = 'none';
                 }
                 
-                // Show snow during countdown
-                const snowContainer = document.getElementById('snow-container');
-                if (snowContainer) {
-                    snowContainer.style.zIndex = '151';
-                }
+                // Show snow during countdown (managed by CSS .active class)
+                // Snow visibility is handled by view manager
                 
                 countdownScreen.style.display = 'block';
                 

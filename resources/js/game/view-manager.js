@@ -12,7 +12,7 @@ export default class ViewManager {
                 onExit: () => this.hideRunwayLandingAnimation()
             },
             planeSkyAnimation: {
-                elements: ['countdown-screen', 'snow-container'],
+                elements: ['planeSkyAnimation', 'snow-container'],
                 onEnter: () => this.showPlaneSkyAnimation(),
                 onExit: () => this.hidePlaneSkyAnimation()
             },
@@ -25,6 +25,11 @@ export default class ViewManager {
                 elements: ['game-container', 'game-ui', 'camera-container'],
                 onEnter: () => this.showGame(),
                 onExit: () => this.hideGame()
+            },
+            planeDescending: {
+                elements: ['game-over-screen', 'game-over-snow-container'],
+                onEnter: () => this.showPlaneDescending(),
+                onExit: () => this.hidePlaneDescending()
             },
             gameOver: {
                 elements: ['game-over-screen', 'game-over-snow-container'],
@@ -61,8 +66,8 @@ export default class ViewManager {
 
     // Runway Landing Animation Screen
     showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true) {
-        this.addActiveClass(['welcome-page-wrapper', 'snow-container']);
         this.hideAllExcept(['welcome-page-wrapper', 'snow-container']);
+        this.addActiveClass(['welcome-page-wrapper', 'snow-container']);
         
         // Control logo visibility
         const welcomeWrapper = document.getElementById('welcome-page-wrapper');
@@ -119,18 +124,25 @@ export default class ViewManager {
 
     // Plane Sky Animation Screen
     showPlaneSkyAnimation() {
-        this.addActiveClass(['countdown-screen', 'snow-container']);
-        this.hideAllExcept(['countdown-screen', 'snow-container']);
+        this.hideAllExcept(['planeSkyAnimation', 'snow-container']);
+        this.addActiveClass(['planeSkyAnimation', 'snow-container']);
+        
+        // Start snow effect with a small delay to ensure container is visible
+        setTimeout(() => {
+            this.startSnow('snow-container');
+        }, 50);
     }
 
     hidePlaneSkyAnimation() {
-        this.removeActiveClass(['countdown-screen']);
+        this.removeActiveClass(['planeSkyAnimation']);
     }
 
     // Loading Screen
     showLoading() {
-        this.addActiveClass(['game-loading', 'snow-container']);
         this.hideAllExcept(['game-loading', 'snow-container']);
+        this.addActiveClass(['game-loading', 'snow-container']);
+        
+        // Keep snow effect running (already started from planeSkyAnimation)
     }
 
     hideLoading() {
@@ -147,14 +159,14 @@ export default class ViewManager {
 
     // Game Screen
     showGame() {
-        // Hide welcome and snow
-        this.removeActiveClass(['welcome-page-wrapper', 'snow-container']);
-
-        // Clear snow for performance
+        // Stop and clear snow before showing game
         this.stopSnow('snow-container');
         if (window.destroySnowEffect) {
             window.destroySnowEffect();
         }
+        
+        // Hide welcome and snow containers
+        this.removeActiveClass(['welcome-page-wrapper', 'snow-container']);
 
         // Show game elements
         this.addActiveClass(['game-container', 'game-ui', 'camera-container']);
@@ -166,7 +178,16 @@ export default class ViewManager {
         this.removeActiveClass(['game-container', 'game-ui', 'camera-container']);
     }
 
-    // Game Over Screen
+    // Plane Descending View (Airplane flying down animation)
+    showPlaneDescending() {
+        // TO DO: Refactor this view
+    }
+
+    hidePlaneDescending() {
+        // TO DO: Refactor this view
+    }
+
+    // Game Over Screen (Landing simulation phase)
     showGameOver(finalScore = 0) {
         // Prevent multiple simultaneous game over animations
         if (this.gameOverAnimating) {
@@ -180,74 +201,18 @@ export default class ViewManager {
         this.gameOverTimeouts.forEach(timeout => clearTimeout(timeout));
         this.gameOverTimeouts = [];
         
-        const gameOverScreen = document.getElementById('game-over-screen');
+        // Hide the descending plane
+        this.hidePlaneDescending();
         
-        // Hide game elements
-        this.hideGame();
+        // TO DO: Refactor game over view
 
-        // Show game over screen
-        if (gameOverScreen) {
-            gameOverScreen.classList.add('active');
-        }
-
-        // Initialize snow effect for game over
-        this.startSnow('game-over-snow-container');
-
-        // Phase 1: Trigger plane flying animation (5 seconds)
-        this.gameOverTimeouts.push(setTimeout(() => {
-            const airplaneContainer = gameOverScreen?.querySelector('.airplane-container-down');
-            if (airplaneContainer) {
-                airplaneContainer.classList.add('active');
-                console.log('Airplane animation triggered');
-            }
-        }, 100));
-
-        // Phase 2: Show landing simulation after plane flies across (5.5 seconds)
-        this.gameOverTimeouts.push(setTimeout(() => {
-            this.showLandingSimulation();
-        }, 5500));
-
-        // Phase 3: Show congratulations screen after landing simulation (8.5 seconds total)
+        // Show congratulations screen after landing simulation (3 seconds)
         // TEMPORARILY DISABLED FOR DEBUGGING
         /*
         this.gameOverTimeouts.push(setTimeout(() => {
             this.showCongratulations(finalScore);
-        }, 8500));
+        }, 3000));
         */
-    }
-
-    showLandingSimulation() {
-        // Hide the flying plane animation
-        const airplaneContainer = document.querySelector('.airplane-container-down');
-        if (airplaneContainer) {
-            airplaneContainer.classList.remove('active');
-        }
-        
-        // Hide game over screen background
-        const gameOverScreen = document.getElementById('game-over-screen');
-        if (gameOverScreen) {
-            gameOverScreen.classList.remove('active');
-        }
-        
-        // Show welcome page wrapper but hide logo and buttons
-        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
-        const welcomeLogo = welcomeWrapper?.querySelector('.welcome-logo-container');
-        const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
-        const welcomePlane = welcomeWrapper?.querySelector('.airplane-container');
-        
-        if (welcomeWrapper) {
-            welcomeWrapper.classList.add('active');
-        }
-        if (welcomeLogo) {
-            welcomeLogo.classList.remove('active');
-        }
-        if (welcomeActions) {
-            welcomeActions.classList.remove('active');
-        }
-        if (welcomePlane) {
-            // Show the airplane animation (land-plain.webp going up)
-            welcomePlane.classList.add('active');
-        }
     }
 
     showLandingTerminal() {
@@ -426,6 +391,20 @@ export default class ViewManager {
         const container = document.getElementById(containerId);
         if (container) {
             container.innerHTML = '';
+        }
+    }
+
+    showSnow(containerId) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.classList.add('active');
+        }
+    }
+
+    hideSnow(containerId) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.classList.remove('active');
         }
     }
 

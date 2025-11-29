@@ -20,24 +20,33 @@
 
 // All views use absolute positioning with fixed 1080p portrait size
 #welcome-page-wrapper,
-#countdown-screen,
+#planeSkyAnimation,
 #game-loading,
 #game-container,
 .game-ui,
 #game-over-screen,
 #snow-container,
-#game-over-snow-container {
+#game-over-snow-container,
+#registration-screen,
+#instruction-screen,
+.instruction-content {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   display: none;
+  z-index: 0; // Hidden screens default to 0
+}
+
+// Takeoff animation needs separate handling (position: fixed)
+#takeoff-animation {
+  display: none;
 }
 
 // Show views when active
 #welcome-page-wrapper.active,
-#countdown-screen.active,
+#planeSkyAnimation.active,
 #snow-container.active,
 #game-over-snow-container.active {
   display: block;
@@ -55,8 +64,8 @@
 
 // Z-index layering (fixed hierarchy)
 #welcome-page-wrapper { z-index: 1000; }
-#snow-container { z-index: 1001; }
-#countdown-screen { z-index: 2000; }
+#snow-container { z-index: 2001; } // Above planeSkyAnimation
+#planeSkyAnimation { z-index: 2000; }
 #game-loading { z-index: 3000; }
 #game-container { z-index: 9999; }
 .game-ui { z-index: 10000; }
@@ -1142,8 +1151,8 @@
 // Countdown Screen (on Welcome Page)
 // ===========================
 
-.countdown-screen,
-#countdown-screen {
+.planeSkyAnimation,
+#planeSkyAnimation {
   background-image: url('../../../public/assets/images/background 03.webp');
   background-size: cover;
   background-position: center;
