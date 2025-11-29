@@ -27,7 +27,7 @@ export default class ViewManager {
                 onExit: () => this.hideGame()
             },
             planeDescending: {
-                elements: ['game-over-screen', 'game-over-snow-container'],
+                elements: ['planeDescendingView', 'snow-container'],
                 onEnter: () => this.showPlaneDescending(),
                 onExit: () => this.hidePlaneDescending()
             },
@@ -169,14 +169,8 @@ export default class ViewManager {
 
     // Game Screen
     showGame() {
-        // Stop and clear snow before showing game
-        this.stopSnow('snow-container');
-        if (window.destroySnowEffect) {
-            window.destroySnowEffect();
-        }
-        
-        // Hide welcome and snow containers
-        this.removeActiveClass(['welcome-page-wrapper', 'snow-container']);
+        // Hide welcome page wrapper but keep snow visible
+        this.removeActiveClass(['welcome-page-wrapper']);
 
         // Show game elements
         this.addActiveClass(['game-container', 'game-ui', 'camera-container']);
@@ -190,39 +184,25 @@ export default class ViewManager {
 
     // Plane Descending View (Airplane flying down animation)
     showPlaneDescending() {
-        // TO DO: Refactor this view
+        console.log('showPlaneDescending called');
+        this.hideAllExcept(['planeDescendingView', 'snow-container']);
+        this.addActiveClass(['planeDescendingView', 'snow-container']);
+        
+        // The plane descending animation will start automatically via CSS
+        console.log('Plane descending view shown with automatic animation');
+        
+        // Keep snow effect running
     }
 
     hidePlaneDescending() {
-        // TO DO: Refactor this view
+        this.removeActiveClass(['planeDescendingView']);
     }
 
     // Game Over Screen (Landing simulation phase)
     showGameOver(finalScore = 0) {
-        // Prevent multiple simultaneous game over animations
-        if (this.gameOverAnimating) {
-            console.log('Game over animation already in progress, skipping...');
-            return;
-        }
-        
-        this.gameOverAnimating = true;
-        
-        // Clear any existing timeouts
-        this.gameOverTimeouts.forEach(timeout => clearTimeout(timeout));
-        this.gameOverTimeouts = [];
-        
-        // Hide the descending plane
-        this.hidePlaneDescending();
-        
-        // TO DO: Refactor game over view
 
-        // Show congratulations screen after landing simulation (3 seconds)
-        // TEMPORARILY DISABLED FOR DEBUGGING
-        /*
-        this.gameOverTimeouts.push(setTimeout(() => {
-            this.showCongratulations(finalScore);
-        }, 3000));
-        */
+        this.showPlaneDescending();
+        
     }
 
     showLandingTerminal() {

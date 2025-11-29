@@ -216,6 +216,13 @@
         </div>
     </div>
     
+    <!-- Plane Descending Screen (Hidden by default) -->
+    <div id="planeDescendingView" class="planeSkyAnimation" style="background-image: url('{{ asset('assets/images/background 03.webp') }}');">
+        <div class="plane-descending-container">
+            <img src="{{ asset('assets/images/plane_fly down.webp') }}" alt="Airplane Descending" class="plane-descending">
+        </div>
+    </div>
+    
     <!-- Snow Effect Container -->
     <div id="snow-container"></div>
     
