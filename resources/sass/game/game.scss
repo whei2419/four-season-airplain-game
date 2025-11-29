@@ -21,6 +21,7 @@
 // All views use absolute positioning with fixed 1080p portrait size
 #welcome-page-wrapper,
 #planeSkyAnimation,
+#planeDescendingView,
 #game-loading,
 #game-container,
 .game-ui,
@@ -1203,7 +1204,7 @@
   left: -10%;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 151;
+  z-index: 2500;
   pointer-events: none;
   animation: planeDescending 3s linear forwards;
 

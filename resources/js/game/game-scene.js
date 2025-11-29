@@ -298,15 +298,12 @@ export default class GameScene extends Phaser.Scene {
         // Hide the Phaser game scene
         this.cameras.main.setVisible(false);
         
-        // Use view manager to show plane descending first
+        // Use view manager to show game over sequence
         if (window.viewManager) {
             // Hide game UI and container
             window.viewManager.removeActiveClass(['game-ui', 'camera-container', 'game-container']);
             
-            // Show plane descending animation
-            window.viewManager.showPlaneDescending();
-            
-            // showGameOver will handle the timing internally (waits 3s for descending animation)
+            // Start the game over sequence (descending -> runway -> congratulations)
             window.viewManager.showGameOver(score);
         } else {
             // Fallback if view manager not available

@@ -184,14 +184,8 @@ export default class ViewManager {
 
     // Plane Descending View (Airplane flying down animation)
     showPlaneDescending() {
-        console.log('showPlaneDescending called');
         this.hideAllExcept(['planeDescendingView', 'snow-container']);
         this.addActiveClass(['planeDescendingView', 'snow-container']);
-        
-        // The plane descending animation will start automatically via CSS
-        console.log('Plane descending view shown with automatic animation');
-        
-        // Keep snow effect running
     }
 
     hidePlaneDescending() {
@@ -200,9 +194,41 @@ export default class ViewManager {
 
     // Game Over Screen (Landing simulation phase)
     showGameOver(finalScore = 0) {
-
+        console.log('showGameOver called with score:', finalScore, 'gameOverAnimating:', this.gameOverAnimating);
+        
+        // Prevent multiple simultaneous game over animations
+        if (this.gameOverAnimating) {
+            console.log('Game over animation already in progress, skipping...');
+            return;
+        }
+        
+        this.gameOverAnimating = true;
+        
+        // Clear any existing timeouts
+        this.gameOverTimeouts.forEach(timeout => clearTimeout(timeout));
+        this.gameOverTimeouts = [];
+        
+        // Show plane descending animation first
+        console.log('Step 1: Showing plane descending');
         this.showPlaneDescending();
         
+        // After 3.5 seconds, show runway landing animation
+        const timeout1 = setTimeout(() => {
+            console.log('Step 2: Showing runway landing');
+            this.hidePlaneDescending();
+            this.showRunwayLandingAnimation(false, false, true); // No logo, no button, with plane animation
+            
+            // After runway animation completes (5 seconds), show congratulations
+            const timeout2 = setTimeout(() => {
+                console.log('Step 3: Showing congratulations');
+                this.showCongratulations(finalScore);
+                this.gameOverAnimating = false; // Reset flag after sequence completes
+            }, 5000);
+            this.gameOverTimeouts.push(timeout2);
+        }, 3500);
+        this.gameOverTimeouts.push(timeout1);
+        
+        this.currentView = 'gameOver';
     }
 
     showLandingTerminal() {
