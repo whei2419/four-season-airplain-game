@@ -764,12 +764,17 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Bring game to front
                             const gameContainer = document.getElementById('game-container');
                             const gameUI = document.getElementById('game-ui');
+                            const cameraContainer = document.getElementById('camera-container');
                             if (gameContainer) {
                                 gameContainer.style.zIndex = '9999';
                             }
                             if (gameUI) {
                                 gameUI.style.display = 'block';
                                 gameUI.style.zIndex = '10000';
+                            }
+                            if (cameraContainer) {
+                                cameraContainer.style.display = 'block';
+                                cameraContainer.style.zIndex = '10001';
                             }
                         }, 500);
                     }, 5000);

@@ -1,12 +1,10 @@
 // Control Manager - Coordinates all input methods
-import GestureControl from './gesture-control.js';
-import TiltControl from './tilt-control.js';
+import BodyPoseControl from './body-pose-control.js';
 
 export default class ControlManager {
     constructor() {
-        this.controlMode = 'keyboard'; // 'keyboard' or 'gesture'
-        this.gestureControl = new GestureControl();
-        this.tiltControl = new TiltControl();
+        this.controlMode = 'keyboard'; // 'keyboard' or 'pose'
+        this.bodyPoseControl = new BodyPoseControl();
         
         // Input states
         this.horizontalInput = 0; // -1 (left) to 1 (right)
@@ -21,31 +19,15 @@ export default class ControlManager {
         };
     }
 
-    async initializeGestureMode(videoElement, canvasElement) {
+    async initializePoseMode(videoElement, canvasElement) {
         try {
-            // Initialize gesture control
-            await this.gestureControl.initialize(videoElement, canvasElement);
+            // Initialize body pose control
+            await this.bodyPoseControl.initialize(videoElement, canvasElement);
             
-            // Initialize tilt control
-            const tiltSupported = await this.tiltControl.initialize();
-            
-            if (!tiltSupported) {
-                console.warn('Tilt control not supported on this device');
-            }
-            
-            // Set up callbacks
-            this.gestureControl.onGestureChange = (input) => {
-                this.verticalInput = input;
-            };
-            
-            this.tiltControl.onTiltChange = (input) => {
-                this.horizontalInput = input;
-            };
-            
-            console.log('Gesture mode initialized');
+            console.log('Pose mode initialized');
             return true;
         } catch (error) {
-            console.error('Failed to initialize gesture mode:', error);
+            console.error('Failed to initialize pose mode:', error);
             return false;
         }
     }
@@ -53,14 +35,18 @@ export default class ControlManager {
     setControlMode(mode) {
         this.controlMode = mode;
         
-        if (mode === 'gesture') {
-            this.gestureControl.enable();
-            this.tiltControl.enable();
-            console.log('Switched to gesture control mode');
+        if (mode === 'pose') {
+            this.bodyPoseControl.enable();
+            console.log('Switched to body pose control mode');
         } else {
-            this.gestureControl.disable();
-            this.tiltControl.disable();
+            this.bodyPoseControl.disable();
             console.log('Switched to keyboard control mode');
+        }
+    }
+
+    calibratePose() {
+        if (this.bodyPoseControl) {
+            this.bodyPoseControl.calibrate();
         }
     }
 
@@ -101,13 +87,11 @@ export default class ControlManager {
     }
 
     getInput() {
-        if (this.controlMode === 'gesture') {
-            return {
-                horizontal: this.tiltControl.getHorizontalInput(),
-                vertical: this.gestureControl.getVerticalInput()
-            };
+        if (this.controlMode === 'pose') {
+            // Get input from body pose control
+            return this.bodyPoseControl.getInput();
         } else {
-            // Keyboard input
+            // Keyboard controls
             let horizontal = 0;
             let vertical = 0;
             
@@ -120,14 +104,7 @@ export default class ControlManager {
         }
     }
 
-    calibrateTilt() {
-        if (this.controlMode === 'gesture') {
-            this.tiltControl.calibrate();
-        }
-    }
-
     destroy() {
-        this.gestureControl.destroy();
-        this.tiltControl.destroy();
+        this.bodyPoseControl.destroy();
     }
 }

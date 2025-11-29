@@ -17,6 +17,10 @@ export default class GestureControl {
         this.videoElement = videoElement;
         this.canvasElement = canvasElement;
 
+        // Set canvas dimensions to match video
+        this.canvasElement.width = 320;
+        this.canvasElement.height = 240;
+
         // Initialize MediaPipe Hands
         this.hands = new Hands({
             locateFile: (file) => {
@@ -36,12 +40,11 @@ export default class GestureControl {
         // Initialize camera
         this.camera = new Camera(this.videoElement, {
             onFrame: async () => {
-                if (this.enabled) {
-                    await this.hands.send({ image: this.videoElement });
-                }
+                // Always process frames to show visual feedback
+                await this.hands.send({ image: this.videoElement });
             },
-            width: 640,
-            height: 480
+            width: 320,
+            height: 240
         });
 
         await this.camera.start();
@@ -49,21 +52,30 @@ export default class GestureControl {
     }
 
     onResults(results) {
-        if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
-            this.verticalInput = 0;
-            return;
-        }
-
-        const landmarks = results.multiHandLandmarks[0];
-        
-        // Draw hand landmarks on canvas for visual feedback
-        this.drawHandLandmarks(landmarks);
-
-        // Detect gestures
-        this.detectGesture(landmarks);
-
-        if (this.onGestureChange) {
-            this.onGestureChange(this.verticalInput);
+        // Always draw landmarks for visual feedback
+        if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+            const landmarks = results.multiHandLandmarks[0];
+            this.drawHandLandmarks(landmarks);
+            
+            // Only update input if enabled
+            if (this.enabled) {
+                this.detectGesture(landmarks);
+                
+                if (this.onGestureChange) {
+                    this.onGestureChange(this.verticalInput);
+                }
+            }
+        } else {
+            // Clear canvas when no hand detected
+            if (this.canvasElement) {
+                const ctx = this.canvasElement.getContext('2d');
+                ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+            }
+            
+            // Reset input when no hand
+            if (this.enabled) {
+                this.verticalInput = 0;
+            }
         }
     }
 

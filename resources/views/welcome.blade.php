@@ -239,9 +239,9 @@
         <!-- Control Mode Toggle -->
         <div class="game-ui__controls">
             <button id="control-mode-btn" class="control-btn">
-                <span id="control-mode-text">Gesture</span>
+                <span id="control-mode-text">Body Pose</span>
             </button>
-            <button id="calibrate-btn" class="control-btn">Calibrate Tilt</button>
+            <button id="calibrate-btn" class="control-btn">Calibrate</button>
         </div>
     </div>
     

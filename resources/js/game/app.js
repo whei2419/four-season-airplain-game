@@ -33,45 +33,45 @@ function setupControlUI() {
     
     if (!controlModeBtn) return;
     
-    let currentMode = 'gesture';
+    let currentMode = 'pose';
     
-    // Auto-initialize gesture mode on load
+    // Auto-initialize pose mode on load
     setTimeout(async () => {
         const videoElement = document.getElementById('gesture-video');
         const canvasElement = document.getElementById('gesture-canvas');
         
-        const success = await window.controlManager.initializeGestureMode(videoElement, canvasElement);
+        const success = await window.controlManager.initializePoseMode(videoElement, canvasElement);
         
         if (success) {
-            window.controlManager.setControlMode('gesture');
-            document.getElementById('control-mode-text').textContent = 'Gesture';
+            window.controlManager.setControlMode('pose');
+            document.getElementById('control-mode-text').textContent = 'Body Pose';
             cameraContainer.style.display = 'block';
             calibrateBtn.style.display = 'inline-block';
-            console.log('Gesture controls initialized automatically');
+            console.log('Body pose controls initialized automatically');
         } else {
-            // Fallback to keyboard if gesture fails
+            // Fallback to keyboard if pose fails
             currentMode = 'keyboard';
             document.getElementById('control-mode-text').textContent = 'Keyboard';
-            console.log('Failed to initialize gesture controls, using keyboard');
+            console.log('Failed to initialize body pose controls, using keyboard');
         }
     }, 1000);
     
     controlModeBtn.addEventListener('click', async () => {
         if (currentMode === 'keyboard') {
-            // Switch to gesture mode
+            // Switch to pose mode
             const videoElement = document.getElementById('gesture-video');
             const canvasElement = document.getElementById('gesture-canvas');
             
-            const success = await window.controlManager.initializeGestureMode(videoElement, canvasElement);
+            const success = await window.controlManager.initializePoseMode(videoElement, canvasElement);
             
             if (success) {
-                window.controlManager.setControlMode('gesture');
-                currentMode = 'gesture';
-                document.getElementById('control-mode-text').textContent = 'Gesture';
+                window.controlManager.setControlMode('pose');
+                currentMode = 'pose';
+                document.getElementById('control-mode-text').textContent = 'Body Pose';
                 cameraContainer.style.display = 'block';
                 calibrateBtn.style.display = 'inline-block';
             } else {
-                alert('Failed to initialize gesture controls. Please allow camera access and try again.');
+                alert('Failed to initialize body pose controls. Please allow camera access and try again.');
             }
         } else {
             // Switch back to keyboard
@@ -85,8 +85,8 @@ function setupControlUI() {
     
     if (calibrateBtn) {
         calibrateBtn.addEventListener('click', () => {
-            window.controlManager.calibrateTilt();
-            alert('Tilt calibrated! Current position is now center.');
+            window.controlManager.calibratePose();
+            alert('Body pose calibrated! Current shoulder position is now center.');
         });
     }
 }
