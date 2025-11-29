@@ -725,6 +725,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 countdownScreen.style.display = 'block';
                 
+                // Start countdown animation (3, 2, 1)
+                if (countdownNumberElement) {
+                    let count = 3;
+                    countdownNumberElement.textContent = count;
+                    countdownNumberElement.style.display = 'block';
+                    
+                    const countdownInterval = setInterval(() => {
+                        count--;
+                        if (count > 0) {
+                            countdownNumberElement.textContent = count;
+                        } else {
+                            countdownNumberElement.style.display = 'none';
+                            clearInterval(countdownInterval);
+                        }
+                    }, 1000);
+                }
+                
                 // Wait for airplane animation to complete (3.5s), then show loading
                 setTimeout(() => {
                     console.log('Showing game loading screen...');
