@@ -134,7 +134,7 @@
 
     <!-- Instruction Screen (Hidden by default) -->
     <div id="instruction-screen" class="registration-overlay" style="display: none; background-image: url('{{ asset('assets/images/instruction_BG.webp') }}'); background-size: cover; background-position: center; background-color: transparent;">
-        <button type="button" id="instruction-back-btn" class="back-btn">BACK</button>
+        <button type="button" id="instruction-back-btn" class="back-btn-top">← BACK</button>
         
         <div class="instruction-logo-container">
             <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="instruction-logo">
