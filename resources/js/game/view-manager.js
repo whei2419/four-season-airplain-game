@@ -1,17 +1,20 @@
 // View Manager - Handles screen transitions and state management
 export default class ViewManager {
     constructor() {
-        this.currentView = 'welcome';
+        this.currentView = 'runwayLandingAnimation';
+        this.activeSnowEffects = {}; // Track active snow instances
+        this.gameOverAnimating = false; // Prevent multiple game over animations
+        this.gameOverTimeouts = []; // Track timeouts for cleanup
         this.views = {
-            welcome: {
+            runwayLandingAnimation: {
                 elements: ['welcome-page-wrapper', 'snow-container'],
-                onEnter: () => this.showWelcome(),
-                onExit: () => this.hideWelcome()
+                onEnter: () => this.showRunwayLandingAnimation(),
+                onExit: () => this.hideRunwayLandingAnimation()
             },
-            countdown: {
+            planeSkyAnimation: {
                 elements: ['countdown-screen', 'snow-container'],
-                onEnter: () => this.showCountdown(),
-                onExit: () => this.hideCountdown()
+                onEnter: () => this.showPlaneSkyAnimation(),
+                onExit: () => this.hidePlaneSkyAnimation()
             },
             loading: {
                 elements: ['game-loading', 'snow-container'],
@@ -29,6 +32,9 @@ export default class ViewManager {
                 onExit: () => this.hideGameOver()
             }
         };
+        
+        // Initialize default view on construction
+        this.showRunwayLandingAnimation();
     }
 
     switchView(viewName) {
@@ -53,98 +59,127 @@ export default class ViewManager {
         }
     }
 
-    // Welcome Screen
-    showWelcome() {
-        this.setElementsDisplay(['welcome-page-wrapper', 'snow-container'], 'block');
+    // Runway Landing Animation Screen
+    showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true) {
+        this.addActiveClass(['welcome-page-wrapper', 'snow-container']);
         this.hideAllExcept(['welcome-page-wrapper', 'snow-container']);
-    }
-
-    hideWelcome() {
-        this.setElementsDisplay(['welcome-page-wrapper'], 'none');
-    }
-
-    // Countdown Screen
-    showCountdown() {
-        const countdownScreen = document.getElementById('countdown-screen');
-        if (countdownScreen) {
-            countdownScreen.style.display = 'flex';
+        
+        // Control logo visibility
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        const welcomeLogo = welcomeWrapper?.querySelector('.welcome-logo-container');
+        const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
+        
+        if (welcomeLogo) {
+            if (withLogo) {
+                welcomeLogo.classList.add('active');
+            } else {
+                welcomeLogo.classList.remove('active');
+            }
         }
+        if (welcomeActions) {
+            if (withButton) {
+                welcomeActions.classList.add('active');
+            } else {
+                welcomeActions.classList.remove('active');
+            }
+        }
+        
+        // Trigger plane animation if requested
+        if (withPlaneAnimation) {
+            // Small delay to ensure view is rendered before animation
+            setTimeout(() => {
+                this.triggerPlaneAnimation();
+            }, 100);
+        }
+    }
+
+    // Trigger the airplane animation manually
+    triggerPlaneAnimation() {
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        const welcomePlane = welcomeWrapper?.querySelector('.airplane-container');
+        
+        if (welcomePlane) {
+            // Remove active class first to reset animation
+            welcomePlane.classList.remove('active');
+            
+            // Force browser reflow to completely reset the animation
+            void welcomePlane.offsetWidth;
+            
+            // Small delay to ensure clean restart
+            requestAnimationFrame(() => {
+                welcomePlane.classList.add('active');
+                console.log('Plane animation triggered');
+            });
+        }
+    }
+
+    hideRunwayLandingAnimation() {
+        this.removeActiveClass(['welcome-page-wrapper']);
+    }
+
+    // Plane Sky Animation Screen
+    showPlaneSkyAnimation() {
+        this.addActiveClass(['countdown-screen', 'snow-container']);
         this.hideAllExcept(['countdown-screen', 'snow-container']);
     }
 
-    hideCountdown() {
-        const countdownScreen = document.getElementById('countdown-screen');
-        if (countdownScreen) {
-            countdownScreen.style.display = 'none';
-        }
+    hidePlaneSkyAnimation() {
+        this.removeActiveClass(['countdown-screen']);
     }
 
     // Loading Screen
     showLoading() {
-        const loadingScreen = document.getElementById('game-loading');
-        if (loadingScreen) {
-            loadingScreen.style.display = 'flex';
-        }
+        this.addActiveClass(['game-loading', 'snow-container']);
         this.hideAllExcept(['game-loading', 'snow-container']);
     }
 
     hideLoading() {
         const loadingScreen = document.getElementById('game-loading');
         if (loadingScreen) {
-            loadingScreen.style.opacity = '0';
+            loadingScreen.classList.add('fade-out');
             setTimeout(() => {
-                if (loadingScreen) loadingScreen.style.display = 'none';
+                if (loadingScreen) {
+                    loadingScreen.classList.remove('active', 'fade-out');
+                }
             }, 500);
         }
     }
 
     // Game Screen
     showGame() {
-        const gameContainer = document.getElementById('game-container');
-        const gameUI = document.getElementById('game-ui');
-        const cameraContainer = document.getElementById('camera-container');
-
         // Hide welcome and snow
-        this.setElementsDisplay(['welcome-page-wrapper', 'snow-container'], 'none');
+        this.removeActiveClass(['welcome-page-wrapper', 'snow-container']);
 
         // Clear snow for performance
-        const snowContainer = document.getElementById('snow-container');
-        if (snowContainer) {
-            snowContainer.innerHTML = '';
-        }
+        this.stopSnow('snow-container');
         if (window.destroySnowEffect) {
             window.destroySnowEffect();
         }
 
         // Show game elements
-        if (gameContainer) {
-            gameContainer.style.display = 'flex';
-            gameContainer.style.zIndex = '9999';
-        }
-
-        if (gameUI) {
-            gameUI.style.display = 'block';
-            gameUI.style.zIndex = '10000';
-        }
-
-        if (cameraContainer) {
-            cameraContainer.style.display = 'block';
-            cameraContainer.style.zIndex = '10001';
-        }
+        this.addActiveClass(['game-container', 'game-ui', 'camera-container']);
 
         document.body.style.overflow = 'hidden';
     }
 
     hideGame() {
-        const gameContainer = document.getElementById('game-container');
-        const gameUI = document.getElementById('game-ui');
-        const cameraContainer = document.getElementById('camera-container');
-
-        this.setElementsDisplay(['game-container', 'game-ui', 'camera-container'], 'none');
+        this.removeActiveClass(['game-container', 'game-ui', 'camera-container']);
     }
 
     // Game Over Screen
     showGameOver(finalScore = 0) {
+        // Prevent multiple simultaneous game over animations
+        if (this.gameOverAnimating) {
+            console.log('Game over animation already in progress, skipping...');
+            return;
+        }
+        
+        this.gameOverAnimating = true;
+        
+        // Clear any existing timeouts
+        this.gameOverTimeouts.forEach(timeout => clearTimeout(timeout));
+        this.gameOverTimeouts = [];
+        
         const gameOverScreen = document.getElementById('game-over-screen');
         
         // Hide game elements
@@ -152,34 +187,72 @@ export default class ViewManager {
 
         // Show game over screen
         if (gameOverScreen) {
-            gameOverScreen.style.display = 'flex';
-            gameOverScreen.style.zIndex = '20000';
+            gameOverScreen.classList.add('active');
         }
 
         // Initialize snow effect for game over
-        const gameOverSnowContainer = document.getElementById('game-over-snow-container');
-        if (gameOverSnowContainer && window.SnowEffect) {
-            this.gameOverSnow = new window.SnowEffect('game-over-snow-container');
-        }
+        this.startSnow('game-over-snow-container');
 
         // Phase 1: Trigger plane flying animation (5 seconds)
-        setTimeout(() => {
+        this.gameOverTimeouts.push(setTimeout(() => {
             const airplaneContainer = gameOverScreen?.querySelector('.airplane-container-down');
             if (airplaneContainer) {
                 airplaneContainer.classList.add('active');
+                console.log('Airplane animation triggered');
             }
-        }, 100);
+        }, 100));
 
-        // Phase 2: Show congratulations screen after plane flies across (5.5 seconds)
-        setTimeout(() => {
+        // Phase 2: Show landing simulation after plane flies across (5.5 seconds)
+        this.gameOverTimeouts.push(setTimeout(() => {
+            this.showLandingSimulation();
+        }, 5500));
+
+        // Phase 3: Show congratulations screen after landing simulation (8.5 seconds total)
+        // TEMPORARILY DISABLED FOR DEBUGGING
+        /*
+        this.gameOverTimeouts.push(setTimeout(() => {
             this.showCongratulations(finalScore);
-        }, 5500);
+        }, 8500));
+        */
+    }
+
+    showLandingSimulation() {
+        // Hide the flying plane animation
+        const airplaneContainer = document.querySelector('.airplane-container-down');
+        if (airplaneContainer) {
+            airplaneContainer.classList.remove('active');
+        }
+        
+        // Hide game over screen background
+        const gameOverScreen = document.getElementById('game-over-screen');
+        if (gameOverScreen) {
+            gameOverScreen.classList.remove('active');
+        }
+        
+        // Show welcome page wrapper but hide logo and buttons
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        const welcomeLogo = welcomeWrapper?.querySelector('.welcome-logo-container');
+        const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
+        const welcomePlane = welcomeWrapper?.querySelector('.airplane-container');
+        
+        if (welcomeWrapper) {
+            welcomeWrapper.classList.add('active');
+        }
+        if (welcomeLogo) {
+            welcomeLogo.classList.remove('active');
+        }
+        if (welcomeActions) {
+            welcomeActions.classList.remove('active');
+        }
+        if (welcomePlane) {
+            // Show the airplane animation (land-plain.webp going up)
+            welcomePlane.classList.add('active');
+        }
     }
 
     showLandingTerminal() {
         const landingTerminal = document.getElementById('landing-terminal');
         if (landingTerminal) {
-            landingTerminal.style.display = 'block';
             landingTerminal.classList.add('active');
             
             // Trigger plane descending animation
@@ -193,27 +266,32 @@ export default class ViewManager {
     }
 
     showCongratulations(finalScore) {
-        // Hide landing terminal first
-        const landingTerminal = document.getElementById('landing-terminal');
-        if (landingTerminal) {
-            landingTerminal.style.display = 'none';
+        // Hide welcome page wrapper
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        if (welcomeWrapper) {
+            welcomeWrapper.classList.remove('active');
+        }
+        
+        // Show game over screen again
+        const gameOverScreen = document.getElementById('game-over-screen');
+        if (gameOverScreen) {
+            gameOverScreen.classList.add('active');
         }
         
         // Hide the flying plane animation
         const airplaneContainer = document.querySelector('.airplane-container-down');
         if (airplaneContainer) {
-            airplaneContainer.style.display = 'none';
+            airplaneContainer.classList.remove('active');
         }
         
         // Ensure game container is hidden
         const gameContainer = document.getElementById('game-container');
         if (gameContainer) {
-            gameContainer.style.display = 'none';
+            gameContainer.classList.remove('active');
         }
         
         const congratsScreen = document.getElementById('congratulations-screen');
         if (congratsScreen) {
-            congratsScreen.style.display = 'flex';
             congratsScreen.classList.add('active');
             
             // Update score display
@@ -243,25 +321,34 @@ export default class ViewManager {
     }
 
     hideGameOver() {
+        this.gameOverAnimating = false;
+        
+        // Clear any pending timeouts
+        this.gameOverTimeouts.forEach(timeout => clearTimeout(timeout));
+        this.gameOverTimeouts = [];
+        
         const gameOverScreen = document.getElementById('game-over-screen');
         if (gameOverScreen) {
-            gameOverScreen.style.display = 'none';
+            gameOverScreen.classList.remove('active');
         }
 
         // Clean up all phases
-        const landingTerminal = document.getElementById('landing-terminal');
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
         const congratsScreen = document.getElementById('congratulations-screen');
         const airplaneContainer = document.querySelector('.airplane-container-down');
         
-        if (landingTerminal) {
-            landingTerminal.style.display = 'none';
-            landingTerminal.classList.remove('active');
-            const landingPlane = landingTerminal.querySelector('.landing-plane');
-            if (landingPlane) landingPlane.classList.remove('descending');
+        // Reset welcome wrapper elements visibility
+        if (welcomeWrapper) {
+            const welcomeLogo = welcomeWrapper.querySelector('.welcome-logo-container');
+            const welcomeActions = welcomeWrapper.querySelector('.welcome-actions');
+            const welcomePlane = welcomeWrapper.querySelector('.airplane-container');
+            
+            if (welcomeLogo) welcomeLogo.classList.add('active');
+            if (welcomeActions) welcomeActions.classList.add('active');
+            if (welcomePlane) welcomePlane.classList.add('active');
         }
         
         if (congratsScreen) {
-            congratsScreen.style.display = 'none';
             congratsScreen.classList.remove('active');
         }
         
@@ -270,18 +357,24 @@ export default class ViewManager {
         }
 
         // Clean up game over snow
-        const gameOverSnowContainer = document.getElementById('game-over-snow-container');
-        if (gameOverSnowContainer) {
-            gameOverSnowContainer.innerHTML = '';
-        }
+        this.stopSnow('game-over-snow-container');
     }
 
     // Helper methods
-    setElementsDisplay(elementIds, displayValue) {
+    addActiveClass(elementIds) {
         elementIds.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.style.display = displayValue;
+                element.classList.add('active');
+            }
+        });
+    }
+
+    removeActiveClass(elementIds) {
+        elementIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.classList.remove('active');
             }
         });
     }
@@ -293,7 +386,7 @@ export default class ViewManager {
                     if (!keepVisible.includes(elementId)) {
                         const element = document.getElementById(elementId);
                         if (element) {
-                            element.style.display = 'none';
+                            element.classList.remove('active');
                         }
                     }
                 });
@@ -303,5 +396,43 @@ export default class ViewManager {
 
     getCurrentView() {
         return this.currentView;
+    }
+
+    // Snow Effect Helper Methods
+    startSnow(containerId) {
+        // Stop any existing snow effect for this container
+        this.stopSnow(containerId);
+        
+        // Create new snow effect
+        if (window.SnowEffect) {
+            this.activeSnowEffects[containerId] = new window.SnowEffect(containerId);
+            console.log(`Snow effect started for: ${containerId}`);
+        } else {
+            console.warn('SnowEffect class not available');
+        }
+    }
+
+    stopSnow(containerId) {
+        // Stop and clean up snow effect
+        if (this.activeSnowEffects[containerId]) {
+            if (this.activeSnowEffects[containerId].destroy) {
+                this.activeSnowEffects[containerId].destroy();
+            }
+            delete this.activeSnowEffects[containerId];
+            console.log(`Snow effect stopped for: ${containerId}`);
+        }
+        
+        // Also clean up the container
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = '';
+        }
+    }
+
+    stopAllSnow() {
+        // Stop all active snow effects
+        Object.keys(this.activeSnowEffects).forEach(containerId => {
+            this.stopSnow(containerId);
+        });
     }
 }

@@ -263,20 +263,12 @@
             <img src="{{ asset('assets/images/plane_fly down.webp') }}" alt="Airplane" class="airplane-animation-down">
         </div>
         
-        <!-- Phase 2: Landing at Terminal -->
-        <div id="landing-terminal" class="landing-terminal" style="display: none;">
-            <div class="terminal-building">
-                <img src="{{ asset('assets/images/background 04.webp') }}" alt="Terminal" class="terminal-bg">
-            </div>
-            <div class="landing-plane">
-                <img src="{{ asset('assets/images/plane_top.webp') }}" alt="Airplane Landing" class="plane-landing">
-            </div>
-        </div>
+        <!-- Phase 2: Will reuse welcome-page-wrapper for landing simulation -->
         
         <!-- Phase 3: Congratulations Screen -->
-        <div id="congratulations-screen" class="congratulations-screen" style="display: none;">
+        <div id="congratulations-screen" class="congratulations-screen">
             <div class="congrats-logo">
-                <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="airline-logo">
+                <x-game-logo class="game-logo" />
             </div>
             
             <h1 class="congrats-title">Congratulations!</h1>
