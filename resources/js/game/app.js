@@ -5,10 +5,17 @@ import SnowEffect from '../snow';
 import PreloadScene from './preload-scene';
 import GameScene from './game-scene';
 import ControlManager from './controls/control-manager';
+import ViewManager from './view-manager';
 import './welcome';
 
 window.Alpine = Alpine;
 Alpine.start();
+
+// Export SnowEffect for game over screen
+window.SnowEffect = SnowEffect;
+
+// Initialize View Manager
+window.viewManager = new ViewManager();
 
 // Initialize Control Manager
 window.controlManager = new ControlManager();
@@ -23,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup control mode UI
     setupControlUI();
+    
+    // Setup play again button
+    setupPlayAgainButton();
 });
 
 // Setup control mode switching UI
@@ -87,6 +97,17 @@ function setupControlUI() {
         calibrateBtn.addEventListener('click', () => {
             window.controlManager.calibratePose();
             alert('Body pose calibrated! Current shoulder position is now center.');
+        });
+    }
+}
+
+// Setup Play Again button
+function setupPlayAgainButton() {
+    const playAgainBtn = document.getElementById('play-again-btn');
+    if (playAgainBtn) {
+        playAgainBtn.addEventListener('click', () => {
+            console.log('Play again clicked, reloading page...');
+            window.location.reload();
         });
     }
 }

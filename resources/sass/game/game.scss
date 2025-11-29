@@ -239,6 +239,16 @@
   pointer-events: none; // Allow clicks to pass through
 }
 
+#game-over-snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20001;
+  pointer-events: none;
+}
+
 // Welcome page logo container
 .welcome-logo-container {
   position: fixed;
@@ -1055,7 +1065,7 @@
   width: 100%;
   height: 100%;
   z-index: 150;
-  background-image: url("/assets/images/background 03.webp");
+  background-image: url('../../../public/assets/images/background 03.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1207,5 +1217,285 @@
   }
   100% {
     width: 100%;
+  }
+}
+
+// Game Over Screen
+.game-over-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../../public/assets/images/background 03.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1a1a2e;
+  z-index: 20000;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  // Phase 1: Airplane Flying Across
+  .airplane-container-down {
+    position: fixed;
+    bottom: 20%;
+    left: -100%;
+    z-index: 20001;
+    pointer-events: none;
+    opacity: 0;
+    
+    &.active {
+      animation: airplaneFlyAcross 5s ease-in-out forwards;
+    }
+    
+    .airplane-animation-down {
+      width: 800px;
+      height: auto;
+      transform: rotate(0deg);
+    }
+  }
+  
+  // Phase 2: Landing at Terminal
+  .landing-terminal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20002;
+    opacity: 0;
+    
+    &.active {
+      animation: fadeIn 1s ease-in forwards;
+    }
+    
+    .terminal-building {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 60%;
+      
+      .terminal-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: bottom;
+      }
+    }
+    
+    .landing-plane {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      
+      &.descending {
+        animation: planeDescend 2s ease-in forwards;
+      }
+      
+      .plane-landing {
+        width: 600px;
+        height: auto;
+      }
+    }
+  }
+  
+  // Phase 3: Congratulations Screen
+  .congratulations-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20003;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    
+    &.active {
+      animation: fadeInScale 0.8s ease-out forwards;
+    }
+    
+    .congrats-logo {
+      margin-bottom: 20px;
+      animation: fadeIn 0.6s ease-out 0.2s both;
+      
+      .airline-logo {
+        width: 200px;
+        height: auto;
+      }
+    }
+    
+    .congrats-title {
+      font-family: "Gordita", sans-serif;
+      font-size: 56px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: -3px -3px 0 #2a8556, 3px -3px 0 #2a8556, -3px 3px 0 #2a8556, 3px 3px 0 #2a8556;
+      margin-bottom: 10px;
+      animation: bounceIn 0.6s ease-out 0.3s both;
+    }
+    
+    .congrats-subtitle {
+      font-family: "Gordita", sans-serif;
+      font-size: 28px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: -2px -2px 0 #2a8556, 2px -2px 0 #2a8556, -2px 2px 0 #2a8556, 2px 2px 0 #2a8556;
+      margin-bottom: 30px;
+      animation: fadeIn 0.6s ease-out 0.4s both;
+    }
+    
+    .congrats-arrived {
+      font-family: "Gordita", sans-serif;
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.6s ease-out 0.5s both;
+    }
+    
+    .score-display {
+      text-align: center;
+      margin-bottom: 20px;
+      animation: slideUpBounce 0.6s ease-out 0.6s both;
+      
+      .score-value {
+        font-family: "Gordita", sans-serif;
+        font-size: 120px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 1;
+        margin: 0;
+        text-shadow: -4px -4px 0 #2a8556, 4px -4px 0 #2a8556, -4px 4px 0 #2a8556, 4px 4px 0 #2a8556;
+      }
+      
+      .score-suffix {
+        font-family: "Gordita", sans-serif;
+        font-size: 32px;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: -2px -2px 0 #2a8556, 2px -2px 0 #2a8556, -2px 2px 0 #2a8556, 2px 2px 0 #2a8556;
+      }
+    }
+    
+    .ranking-display {
+      margin-bottom: 40px;
+      text-align: center;
+      animation: slideUpBounce 0.6s ease-out 0.7s both;
+      
+      .ranking-text {
+        font-family: "Gordita", sans-serif;
+        font-size: 28px;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: -2px -2px 0 #2a8556, 2px -2px 0 #2a8556, -2px 2px 0 #2a8556, 2px 2px 0 #2a8556;
+        
+        #final-ranking {
+          color: #fff;
+        }
+      }
+    }
+    
+    .game-button {
+      animation: slideUpBounce 0.6s ease-out 0.9s both;
+    }
+  }
+}
+
+// Animations
+@keyframes airplaneFlyAcross {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
+}
+
+@keyframes planeDescend {
+  0% {
+    top: -20%;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 35%;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUpBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

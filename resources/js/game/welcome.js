@@ -740,41 +740,41 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         
                         setTimeout(() => {
-                            // Hide countdown screen and loading
-                            countdownScreen.style.display = 'none';
-                            
-                            // Hide entire welcome page wrapper
-                            const welcomePageWrapper = document.getElementById('welcome-page-wrapper');
-                            if (welcomePageWrapper) welcomePageWrapper.style.display = 'none';
-                            
-                            // Stop and remove snow effect for performance
-                            const snowContainer = document.getElementById('snow-container');
-                            if (snowContainer) {
-                                snowContainer.style.display = 'none';
-                                snowContainer.innerHTML = ''; // Clear all snow elements
-                            }
-                            // Destroy snow animation properly
-                            if (window.destroySnowEffect) {
-                                window.destroySnowEffect();
-                            }
-                            
-                            // Hide body overflow
-                            document.body.style.overflow = 'hidden';
-                            
-                            // Bring game to front
-                            const gameContainer = document.getElementById('game-container');
-                            const gameUI = document.getElementById('game-ui');
-                            const cameraContainer = document.getElementById('camera-container');
-                            if (gameContainer) {
-                                gameContainer.style.zIndex = '9999';
-                            }
-                            if (gameUI) {
-                                gameUI.style.display = 'block';
-                                gameUI.style.zIndex = '10000';
-                            }
-                            if (cameraContainer) {
-                                cameraContainer.style.display = 'block';
-                                cameraContainer.style.zIndex = '10001';
+                            // Use view manager to switch to game
+                            if (window.viewManager) {
+                                window.viewManager.switchView('game');
+                            } else {
+                                // Fallback if view manager not available
+                                countdownScreen.style.display = 'none';
+                                
+                                const welcomePageWrapper = document.getElementById('welcome-page-wrapper');
+                                if (welcomePageWrapper) welcomePageWrapper.style.display = 'none';
+                                
+                                const snowContainer = document.getElementById('snow-container');
+                                if (snowContainer) {
+                                    snowContainer.style.display = 'none';
+                                    snowContainer.innerHTML = '';
+                                }
+                                if (window.destroySnowEffect) {
+                                    window.destroySnowEffect();
+                                }
+                                
+                                document.body.style.overflow = 'hidden';
+                                
+                                const gameContainer = document.getElementById('game-container');
+                                const gameUI = document.getElementById('game-ui');
+                                const cameraContainer = document.getElementById('camera-container');
+                                if (gameContainer) {
+                                    gameContainer.style.zIndex = '9999';
+                                }
+                                if (gameUI) {
+                                    gameUI.style.display = 'block';
+                                    gameUI.style.zIndex = '10000';
+                                }
+                                if (cameraContainer) {
+                                    cameraContainer.style.display = 'block';
+                                    cameraContainer.style.zIndex = '10001';
+                                }
                             }
                         }, 500);
                     }, 5000);
@@ -783,3 +783,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Game Over Screen Function (Legacy support - view manager handles most of this now)
+window.showGameOverScreen = function(finalScore) {
+    if (window.viewManager) {
+        // View manager handles the transition
+        return;
+    }
+    
+    // Fallback if view manager not available
+    const gameOverScreen = document.getElementById('game-over-screen');
+    
+    if (gameOverScreen) {
+        gameOverScreen.style.display = 'flex';
+        
+        // Initialize snow effect
+        const gameOverSnowContainer = document.getElementById('game-over-snow-container');
+        if (gameOverSnowContainer && window.SnowEffect) {
+            const snowEffect = new window.SnowEffect('game-over-snow-container');
+        }
+        
+        // Trigger plane animation
+        setTimeout(() => {
+            const airplaneContainer = gameOverScreen.querySelector('.airplane-container-down');
+            if (airplaneContainer) {
+                airplaneContainer.classList.add('active');
+            }
+        }, 100);
+    }
+};

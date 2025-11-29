@@ -8,7 +8,7 @@ class SnowEffect {
         this.container.appendChild(this.canvas);
 
         this.particles = [];
-        this.particleCount = 150; // Reduced from 400 for better performance
+        this.particleCount = 80; // Further reduced from 150 for better performance
         this.animationFrame = null;
 
         this.resize();
@@ -22,6 +22,7 @@ class SnowEffect {
         // Stop animation and clean up
         if (this.animationFrame) {
             cancelAnimationFrame(this.animationFrame);
+            this.animationFrame = null;
         }
         this.particles = [];
         if (this.canvas && this.canvas.parentNode) {
@@ -46,7 +47,7 @@ class SnowEffect {
         return {
             x: Math.random() * this.width,
             y: reset ? -10 : Math.random() * this.height,
-            size: Math.random() * 3 + 1.5, // Reduced from 4+2 for better performance
+            size: Math.random() * 2.5 + 1, // Further reduced size
             speedY: Math.random() * 0.5 + 0.2,
             speedX: Math.random() * 0.4 - 0.2,
             opacity: Math.random() * 0.4 + 0.2
@@ -57,7 +58,7 @@ class SnowEffect {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         this.ctx.fillStyle = 'white';
-        this.ctx.shadowBlur = 3; // Reduced from 5 for better performance
+        this.ctx.shadowBlur = 2; // Reduced shadow for better performance
         this.ctx.shadowColor = "white";
         
         this.particles.forEach((p, index) => {

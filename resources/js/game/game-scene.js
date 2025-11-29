@@ -6,7 +6,7 @@ let player;
 let cursors;
 let score = 0;
 let scoreText;
-let timeLeft = 60;
+let timeLeft = 5; // Set to 5 seconds for testing
 let timerText;
 let gameObjects;
 let objectTimer;
@@ -101,10 +101,10 @@ export default class GameScene extends Phaser.Scene {
         
         // Reset game variables
         score = 0;
-        timeLeft = 60;
+        timeLeft = 5; // Set to 5 seconds for testing
         gameTime = 0;
         document.getElementById('score').textContent = score;
-        document.getElementById('timer').textContent = '01:00';
+        document.getElementById('timer').textContent = '00:05';
     }
     
     startGameplay() {
@@ -279,7 +279,27 @@ export default class GameScene extends Phaser.Scene {
 
     endGame() {
         console.log('Game Over! Final Score:', score);
-        // TODO: Show game over screen and save score
+        
+        // Pause game physics
+        this.physics.pause();
+        
+        // Stop object spawning
+        if (objectTimer) {
+            objectTimer.remove();
+        }
+        
+        // Use view manager to switch to game over screen with score
+        if (window.viewManager) {
+            window.viewManager.showGameOver(score);
+            window.viewManager.currentView = 'gameOver';
+        } else {
+            // Fallback if view manager not available
+            const gameUI = document.getElementById('game-ui');
+            const cameraContainer = document.getElementById('camera-container');
+            if (gameUI) gameUI.style.display = 'none';
+            if (cameraContainer) cameraContainer.style.display = 'none';
+            window.showGameOverScreen(score);
+        }
     }
 
     createDecorativeClouds() {

@@ -30,7 +30,7 @@ export default class BodyPoseControl {
         });
 
         this.pose.setOptions({
-            modelComplexity: 1,
+            modelComplexity: 0, // Reduced from 1 for better performance
             smoothLandmarks: true,
             enableSegmentation: false,
             smoothSegmentation: false,

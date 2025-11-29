@@ -253,6 +253,50 @@
         </div>
     </div>
     
+    <!-- Game Over Screen (Hidden until game ends) -->
+    <div id="game-over-screen" class="game-over-screen" style="display: none;">
+        <!-- Snow Effect for Game Over -->
+        <div id="game-over-snow-container"></div>
+        
+        <!-- Phase 1: Airplane Animation Flying Across -->
+        <div class="airplane-container-down">
+            <img src="{{ asset('assets/images/plane_fly down.webp') }}" alt="Airplane" class="airplane-animation-down">
+        </div>
+        
+        <!-- Phase 2: Landing at Terminal -->
+        <div id="landing-terminal" class="landing-terminal" style="display: none;">
+            <div class="terminal-building">
+                <img src="{{ asset('assets/images/background 04.webp') }}" alt="Terminal" class="terminal-bg">
+            </div>
+            <div class="landing-plane">
+                <img src="{{ asset('assets/images/plane_top.webp') }}" alt="Airplane Landing" class="plane-landing">
+            </div>
+        </div>
+        
+        <!-- Phase 3: Congratulations Screen -->
+        <div id="congratulations-screen" class="congratulations-screen" style="display: none;">
+            <div class="congrats-logo">
+                <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="airline-logo">
+            </div>
+            
+            <h1 class="congrats-title">Congratulations!</h1>
+            <p class="congrats-subtitle">Welcome to INNISFREE Jeju House!</p>
+            
+            <p class="congrats-arrived">You've safely arrived with:</p>
+            
+            <div class="score-display">
+                <div class="score-value" id="final-score-display">0</div>
+                <div class="score-suffix">Points</div>
+            </div>
+            
+            <div class="ranking-display">
+                <span class="ranking-text">YOUR RANKING: <span id="final-ranking">#01</span></span>
+            </div>
+            
+            <button id="play-again-btn" class="game-button">Play Again</button>
+        </div>
+    </div>
+
     <!-- Pass asset URLs to JavaScript for preloading -->
     <script>
         window.gameAssets = {
