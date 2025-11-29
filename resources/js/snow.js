@@ -8,8 +8,9 @@ class SnowEffect {
         this.container.appendChild(this.canvas);
 
         this.particles = [];
-        this.particleCount = 80; // Further reduced from 150 for better performance
+        this.particleCount = 150; // More particles for better effect
         this.animationFrame = null;
+        this.wind = 0; // Wind effect for more natural movement
 
         this.resize();
         window.addEventListener('resize', () => this.resize());
@@ -47,38 +48,57 @@ class SnowEffect {
         return {
             x: Math.random() * this.width,
             y: reset ? -10 : Math.random() * this.height,
-            size: Math.random() * 2.5 + 1, // Further reduced size
-            speedY: Math.random() * 0.5 + 0.2,
-            speedX: Math.random() * 0.4 - 0.2,
-            opacity: Math.random() * 0.4 + 0.2
+            size: Math.random() * 3 + 1.5, // Varied sizes (1.5-4.5px)
+            speedY: Math.random() * 1.5 + 0.5, // Faster fall (0.5-2)
+            speedX: Math.random() * 0.8 - 0.4, // More horizontal drift
+            opacity: Math.random() * 0.6 + 0.3, // Better visibility (0.3-0.9)
+            baseOpacity: Math.random() * 0.6 + 0.3, // Store initial opacity
+            swing: Math.random() * 0.5, // Swinging motion
+            swingSpeed: Math.random() * 0.02 + 0.01, // Swing speed variation
+            fadeStart: Math.random() * 0.4 + 0.5 // Random fade start between 50-90% for depth
         };
     }
 
     animate() {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
-        this.ctx.fillStyle = 'white';
-        this.ctx.shadowBlur = 2; // Reduced shadow for better performance
-        this.ctx.shadowColor = "white";
+        // Subtle wind effect that changes over time
+        this.wind = Math.sin(Date.now() / 5000) * 0.3;
         
         this.particles.forEach((p, index) => {
+            // Calculate fade based on each particle's individual fade start (depth simulation)
+            const fadeStartHeight = this.height * p.fadeStart;
+            const fadeDistance = this.height - fadeStartHeight;
+            
+            if (p.y > fadeStartHeight) {
+                const fadeProgress = (p.y - fadeStartHeight) / fadeDistance;
+                p.opacity = p.baseOpacity * (1 - fadeProgress);
+            } else {
+                p.opacity = p.baseOpacity;
+            }
+            
+            // Draw snowflake with soft glow
             this.ctx.beginPath();
-            this.ctx.globalAlpha = p.opacity;
+            this.ctx.globalAlpha = Math.max(0, p.opacity);
+            this.ctx.fillStyle = 'white';
+            this.ctx.shadowBlur = 8;
+            this.ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
             this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
             this.ctx.fill();
 
-            // Update position
+            // Update position with swing effect
+            p.swing += p.swingSpeed;
             p.y += p.speedY;
-            p.x += p.speedX;
+            p.x += p.speedX + Math.sin(p.swing) * 0.5 + this.wind;
 
             // Reset if out of bounds
             if (p.y > this.height) {
                 this.particles[index] = this.createParticle(true);
             }
-            if (p.x > this.width) {
-                p.x = 0;
-            } else if (p.x < 0) {
-                p.x = this.width;
+            if (p.x > this.width + 10) {
+                p.x = -10;
+            } else if (p.x < -10) {
+                p.x = this.width + 10;
             }
         });
 
@@ -87,3 +107,4 @@ class SnowEffect {
 }
 
 export default SnowEffect;
+
