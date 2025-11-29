@@ -6,10 +6,11 @@ let player;
 let cursors;
 let score = 0;
 let scoreText;
-let timeLeft = 60; // Game duration in seconds
+let timeLeft = 5; // Set to 5 seconds for testing
 let timerText;
 let gameObjects;
 let objectTimer;
+let timerEvent; // Store timer event reference
 let backgrounds = [];
 let decorativeClouds = [];
 let backgroundSpeed = 150;
@@ -87,27 +88,28 @@ export default class GameScene extends Phaser.Scene {
         
         // Don't spawn objects immediately - wait for plane animation
         objectTimer = null;
+        timerEvent = null;
         
         // Collision detection
         this.physics.add.overlap(player, gameObjects, this.collectObject, null, this);
         
-        // Game timer countdown
-        this.time.addEvent({
+        // Reset game variables
+        score = 0;
+        timeLeft = 5; // Set to 5 seconds for testing
+        gameTime = 0;
+        document.getElementById('score').textContent = score;
+        document.getElementById('timer').textContent = '00:05';
+    }
+    
+    startGameplay() {
+        // Start game timer countdown
+        timerEvent = this.time.addEvent({
             delay: 1000,
             callback: this.updateTimer,
             callbackScope: this,
             loop: true
         });
         
-        // Reset game variables
-        score = 0;
-        timeLeft = 60; // Game duration in seconds
-        gameTime = 0;
-        document.getElementById('score').textContent = score;
-        document.getElementById('timer').textContent = '01:00';
-    }
-    
-    startGameplay() {
         // Reduce spawn rate for better performance (4 seconds instead of 3)
         objectTimer = this.time.addEvent({
             delay: 4000,

@@ -750,11 +750,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         gameLoading.style.display = 'block';
                     }
                     
-                    // Start initializing game early so background loads before fade
+                    // Wait for full 5 seconds for progress bar to complete, then initialize game
                     setTimeout(() => {
                         console.log('Initializing game...');
                         
-                        // Initialize game first (but don't show container yet)
+                        // Initialize game just before fade out
                         if (window.initializeGame) {
                             const gameInstance = window.initializeGame();
                             
@@ -767,42 +767,38 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         }
                         
-                        // Wait a bit for game to render, then show container behind loading
-                        setTimeout(() => {
-                            //hide snow during gameplay
-                            const gameContainer = document.getElementById('game-container');
-                            if (gameContainer) {
-                                gameContainer.style.display = 'flex';
-                                gameContainer.style.position = 'fixed';
-                                gameContainer.style.top = '0';
-                                gameContainer.style.left = '0';
-                                gameContainer.style.width = '100vw';
-                                gameContainer.style.height = '100vh';
-                                gameContainer.style.zIndex = '100'; // Behind loading (152)
-                            }
-                        }, 2000);
-                    }, 500);
-                    
-                    // Wait for full 5 seconds for progress bar to complete
-                    setTimeout(() => {
-                        console.log('Starting fade out after 5 seconds...');
-                        const gameLoading = document.getElementById('game-loading');
-                        
-                        // Fade out loading screen
-                        if (gameLoading) {
-                            gameLoading.style.transition = 'opacity 0.5s ease-out';
-                            gameLoading.style.opacity = '0';
+                        // Show game container behind loading screen
+                        const gameContainer = document.getElementById('game-container');
+                        if (gameContainer) {
+                            gameContainer.style.display = 'flex';
+                            gameContainer.style.position = 'fixed';
+                            gameContainer.style.top = '0';
+                            gameContainer.style.left = '0';
+                            gameContainer.style.width = '100vw';
+                            gameContainer.style.height = '100vh';
+                            gameContainer.style.zIndex = '100'; // Behind loading
                         }
                         
+                        // Small delay then fade out loading screen
                         setTimeout(() => {
-                            //hide snow effect
-                            if (window.viewManager) {
-                                window.viewManager.hideSnow('snow-container');
+                            console.log('Starting fade out...');
+                            const gameLoading = document.getElementById('game-loading');
+                        
+                            // Fade out loading screen
+                            if (gameLoading) {
+                                gameLoading.style.transition = 'opacity 0.5s ease-out';
+                                gameLoading.style.opacity = '0';
                             }
-                            // Use view manager to switch to game
-                            if (window.viewManager) {
-                                window.viewManager.switchView('game');
-                            } else {
+                        
+                            setTimeout(() => {
+                                //hide snow effect
+                                if (window.viewManager) {
+                                    window.viewManager.hideSnow('snow-container');
+                                }
+                                // Use view manager to switch to game
+                                if (window.viewManager) {
+                                    window.viewManager.switchView('game');
+                                } else {
                                 // Fallback if view manager not available
                                 countdownScreen.style.display = 'none';
                                 
@@ -835,6 +831,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     cameraContainer.style.zIndex = '10001';
                                 }
                             }
+                            }, 500);
                         }, 500);
                     }, 5000);
                 }, 3500);
