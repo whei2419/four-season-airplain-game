@@ -66,8 +66,15 @@ export default class ViewManager {
 
     // Runway Landing Animation Screen
     showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true) {
-        this.hideAllExcept(['welcome-page-wrapper', 'snow-container']);
+        this.hideAllExcept(['welcome-page-wrapper', 'snow-container', ]);
         this.addActiveClass(['welcome-page-wrapper', 'snow-container']);
+        
+        // Explicitly hide planeSkyAnimation to prevent overlap (use inline style to override)
+        const planeSkyAnimation = document.getElementById('planeSkyAnimation');
+        if (planeSkyAnimation) {
+            planeSkyAnimation.style.display = 'none';
+        }
+        this.removeActiveClass(['planeSkyAnimation']);
         
         // Control logo visibility
         const welcomeWrapper = document.getElementById('welcome-page-wrapper');
@@ -221,7 +228,7 @@ export default class ViewManager {
             // After runway animation completes (5 seconds), show congratulations
             const timeout2 = setTimeout(() => {
                 console.log('Step 3: Showing congratulations');
-                this.showCongratulations(finalScore);
+                // this.showCongratulations(finalScore);
                 this.gameOverAnimating = false; // Reset flag after sequence completes
             }, 5000);
             this.gameOverTimeouts.push(timeout2);
