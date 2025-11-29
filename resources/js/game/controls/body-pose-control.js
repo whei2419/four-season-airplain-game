@@ -106,51 +106,41 @@ export default class BodyPoseControl {
 
     detectHandHeight(landmarks) {
         // Key landmarks:
-        // 0 = nose (reference point)
+        // 11 = left shoulder
+        // 12 = right shoulder
         // 15 = left wrist
         // 16 = right wrist
         
-        const nose = landmarks[0];
+        const leftShoulder = landmarks[11];
+        const rightShoulder = landmarks[12];
         const leftWrist = landmarks[15];
         const rightWrist = landmarks[16];
         
-        if (!nose) {
+        if (!leftShoulder || !rightShoulder || !leftWrist || !rightWrist) {
             this.verticalInput = 0;
             return;
         }
 
-        // Use the higher hand (closest to top of frame)
-        let handY = null;
-        
-        if (leftWrist && leftWrist.visibility > 0.5) {
-            handY = leftWrist.y;
-        }
-        if (rightWrist && rightWrist.visibility > 0.5) {
-            if (handY === null || rightWrist.y < handY) {
-                handY = rightWrist.y;
-            }
-        }
-        
-        if (handY === null) {
+        if (leftWrist.visibility < 0.5 || rightWrist.visibility < 0.5) {
             this.verticalInput = 0;
             return;
         }
-
-        // Calculate hand position relative to nose
-        const relativeY = handY - nose.y;
         
-        // Hand above nose (negative Y) = move up (positive input)
-        // Hand below nose (positive Y) = move down (negative input)
-        // Range: nose ±0.3 for full control
-        if (relativeY < -0.1) {
-            // Hand up - plane goes up
-            this.verticalInput = Math.min(1, (Math.abs(relativeY) - 0.1) / 0.2);
-        } else if (relativeY > 0.1) {
-            // Hand down - plane goes down
-            this.verticalInput = Math.max(-1, -(relativeY - 0.1) / 0.2);
-        } else {
-            // Neutral zone
-            this.verticalInput = 0;
+        // Calculate average arm height (positive = arms up, negative = arms down)
+        const leftArmHeight = leftShoulder.y - leftWrist.y;
+        const rightArmHeight = rightShoulder.y - rightWrist.y;
+        const avgArmHeight = (leftArmHeight + rightArmHeight) / 2;
+        
+        // Arms raised (T-pose or higher) - plane goes up
+        // More forgiving: any position where wrists are near or above shoulders
+        if (avgArmHeight > -0.1) {
+            // Scale from -0.1 (arms slightly below shoulders) to 0.2 (arms well above)
+            this.verticalInput = Math.min(1, Math.max(0, (avgArmHeight + 0.1) / 0.3));
+        }
+        // Arms down at sides - plane goes down
+        else {
+            // Scale from -0.1 to -0.4 (arms clearly down)
+            this.verticalInput = Math.max(-1, Math.min(0, (avgArmHeight + 0.1) / 0.3));
         }
     }
 
