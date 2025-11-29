@@ -753,9 +753,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Wait a bit for game to render, then show container behind loading
                         setTimeout(() => {
                             //hide snow during gameplay
-                            if (window.viewManager) {
-                                window.viewManager.hideSnow('snow-container');
-                            }
                             const gameContainer = document.getElementById('game-container');
                             if (gameContainer) {
                                 gameContainer.style.display = 'flex';
@@ -781,6 +778,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         
                         setTimeout(() => {
+                            //hide snow effect
+                            if (window.viewManager) {
+                                window.viewManager.hideSnow('snow-container');
+                            }
                             // Use view manager to switch to game
                             if (window.viewManager) {
                                 window.viewManager.switchView('game');
