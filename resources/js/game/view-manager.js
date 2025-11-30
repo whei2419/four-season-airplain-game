@@ -215,6 +215,15 @@ export default class ViewManager {
     showPlaneDescending() {
         this.hideAllExcept(['planeDescendingView', 'snow-container']);
         this.addActiveClass(['planeDescendingView', 'snow-container']);
+        
+        // Reset and trigger plane animation
+        const planeContainer = document.querySelector('.plane-descending-container');
+        if (planeContainer) {
+            // Force animation restart
+            planeContainer.style.animation = 'none';
+            void planeContainer.offsetWidth; // Force reflow
+            planeContainer.style.animation = '';
+        }
     }
 
     hidePlaneDescending() {
@@ -243,18 +252,16 @@ export default class ViewManager {
         
         // After 3.5 seconds, show runway landing animation
         const timeout1 = setTimeout(() => {
-            console.log('Step 2: Showing runway landing');
             this.hidePlaneDescending();
-            this.showRunwayLandingAnimation(false, false, true); // No logo, no button, with plane animation
-            
-            // After runway animation completes (5 seconds), show congratulations
+            this.showRunwayLandingAnimation(false, false, false , false, false);
             const timeout2 = setTimeout(() => {
                 console.log('Step 3: Showing congratulations');
                 this.showCongratulations(finalScore);
-                this.gameOverAnimating = false; // Reset flag after sequence completes
-            }, 5000);
+                this.gameOverAnimating = false; 
+            }, 8000);
             this.gameOverTimeouts.push(timeout2);
         }, 3500);
+
         this.gameOverTimeouts.push(timeout1);
         
         this.currentView = 'gameOver';
