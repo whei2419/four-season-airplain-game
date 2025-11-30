@@ -27,7 +27,7 @@ class GameController extends Controller
                 'title' => 'You\'ve Won: 2-pcs Sachets 1ml',
                 'description' => 'Redeem your reward at the counter after the event and enjoy RM10 OFF (min. spend RM30)',
                 'discount' => 'RM10 OFF (min. spend RM30)',
-                'image' => 'assets/images/reward-tier1.png'
+                'image' => 'assets/images/boarding-pass/1.webp'
             ];
         } elseif ($score >= 16 && $score <= 25) {
             return [
@@ -35,7 +35,7 @@ class GameController extends Controller
                 'title' => 'You\'ve Won: 4-pcs Sachets 1ml',
                 'description' => 'Redeem your reward at the counter after the event and enjoy RM10 OFF (min. spend RM30)',
                 'discount' => 'RM10 OFF (min. spend RM30)',
-                'image' => 'assets/images/reward-tier2.png'
+                'image' => 'assets/images/boarding-pass/2.webp'
             ];
         } else {
             return [
@@ -43,7 +43,7 @@ class GameController extends Controller
                 'title' => 'You\'ve Won: 1 Trial Kit',
                 'description' => 'Redeem your reward at the counter after the event and enjoy RM10 OFF (no min. spend)',
                 'discount' => 'RM10 OFF (no min. spend)',
-                'image' => 'assets/images/reward-tier3.png'
+                'image' => 'assets/images/boarding-pass/3.webp'
             ];
         }
     }

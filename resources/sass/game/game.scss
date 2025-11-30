@@ -843,7 +843,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(0 0 0 / 10%);
   animation: fadeIn 0.3s ease-out;
   overflow-y: auto;
   padding-top: 100px;
@@ -870,14 +870,37 @@
     }
   }
 
+  .registration-title-img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .registration-subtitle-img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .registration-title {
-    font-family: "Gordita", sans-serif;
-    color: #fff;
-    font-size: 72px; // Huge title
-    margin-bottom: 15px;
+    color: #FFFFFF; /* White fill */
+    font-size: 80px;
     font-weight: bold;
-    text-shadow: -3px -3px 0 #2a8556, 3px -3px 0 #2a8556, -3px 3px 0 #2a8556,
-      3px 3px 0 #2a8556;
+    
+    /* Soft shadow for depth */
+    text-shadow: -3px -3px 0 #2a8556, 3px 3px 0 #2a8556, -3px 3px 0 #2a8556, 3px -3px 0 #2a8556;
+    
+    /* Optional: Letter spacing for that rounded look */
+    letter-spacing: 2px;
+    
+    /* Use a rounded font family */
+    font-family: 'Gordita', 'Rounded', sans-serif;
   }
 
   .registration-subtitle {
@@ -1304,6 +1327,24 @@
 
   .form-actions {
     margin-top: 10vh;
+  }
+
+  .instruction-title-img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .instruction-desc-img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .instruction-title {
@@ -1842,6 +1883,26 @@
       }
     }
     
+    .congrats-title-img {
+      position: absolute;
+      top: 220px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      height: auto;
+      animation: bounceIn 0.6s ease-out 0.3s both;
+    }
+    
+    .congrats-subtitle-img {
+      position: absolute;
+      top: 290px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      height: auto;
+      animation: fadeIn 0.6s ease-out 0.4s both;
+    }
+    
     .congrats-title {
       position: absolute;
       top: 220px;
@@ -2027,9 +2088,11 @@
 }
 
 #view-leaderboard-btn {
+  margin-top: 20px;
   background-color: #2eb870;
   font-size: 20px;
   color: #fff;
+  border: 3px solid #ffffff;
 }
 
 // ===========================

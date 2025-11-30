@@ -171,15 +171,9 @@
                 <p><strong>Score:</strong> {{ $player->score }} points</p>
             </div>
             
-            <div class="congrats-section">
-                <h2 class="congrats-title">Congratulations!</h2>
-                <p class="reward-detail">{{ $reward['title'] }}</p>
-                <p class="reward-description">{{ $reward['description'] }}</p>
-            </div>
-            
             @if(isset($reward['image']))
-            <div class="reward-image">
-                <img src="{{ asset($reward['image']) }}" alt="Reward">
+            <div class="reward-image" style="margin: 20px 0;">
+                <img src="{{ asset($reward['image']) }}" alt="Boarding Pass" style="max-width: 100%; height: auto; border-radius: 10px;">
             </div>
             @endif
             

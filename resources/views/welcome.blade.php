@@ -29,7 +29,7 @@
                 Start
             </button>
             <button id="view-leaderboard-btn" class="game-button secondary-btn">
-                View Leaderboard
+                <i class="fas fa-trophy"></i> Leaderboard
             </button>
         </div>
 
@@ -95,11 +95,11 @@
 
     <!-- Registration Form Container (Hidden by default) -->
     <div id="registration-screen" class="registration-overlay">
-        <button type="button" id="back-btn" class="back-btn-top">← BACK</button>
+        <button type="button" id="back-btn" class="back-btn-top"><i class="fas fa-arrow-left"></i></button>
         
         <div class="registration-content">
-            <h1 class="registration-title">Welcome Aboard!</h1>
-            <p class="registration-subtitle">Check in below to start your holiday with INNISFREE!</p>
+            <img src="{{ asset('assets/images/Welcome Aboard!.png') }}" alt="Welcome Aboard!" class="registration-title-img">
+            <img src="{{ asset('assets/images/Check in below to start your holiday with INNISFREE!.png') }}" alt="Check in below to start your holiday with INNISFREE!" class="registration-subtitle-img">
             
             <div class="registration-card">
                 <h2 class="form-title">Registration</h2>
@@ -207,7 +207,7 @@
 
     <!-- Instruction Screen (Hidden by default) -->
     <div id="instruction-screen" class="registration-overlay" style="background-image: url('{{ asset('assets/images/instruction_BG.webp') }}'); background-size: cover; background-position: center; background-color: transparent;">
-        <button type="button" id="instruction-back-btn" class="back-btn-top">← BACK</button>
+        <button type="button" id="instruction-back-btn" class="back-btn-top"><i class="fas fa-arrow-left"></i></button>
         
         <div class="instruction-logo-container">
             <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Airline" class="instruction-logo">
@@ -216,7 +216,7 @@
         <!-- Instruction Content 1 - Tilt Controls -->
         <div id="instruction-content-1" class="instruction-content">
             <div class="registration-card instruction-card">
-                <h2 class="instruction-title">How to Play</h2>
+                <img src="{{ asset('assets/images/How to Play.png') }}" alt="How to Play" class="instruction-title-img">
                 
                 <div class="tilt-controls">
                     <div class="tilt-item">
@@ -238,10 +238,10 @@
         <!-- Instruction Content 2 - Points -->
         <div id="instruction-content-2" class="instruction-content">
             <div class="registration-card instruction-card">
-                <h2 class="instruction-title">How to Play</h2>
-                <p class="instruction-desc">
-                    Play to earn as many points as you can. The top scorer of the month will win a full-sized Green Tea Ceramide Milk 160ml!
-                    <br><span class="small-text">*The top scorer will be contacted by 15 January via WhatsApp.</span>
+                <img src="{{ asset('assets/images/How to Play.png') }}" alt="How to Play" class="instruction-title-img">
+                <img src="{{ asset('assets/images/Play to earn as many points as you can. The top scorer of the month will win a full-sized Green Tea Ceramide Milk 160ml!.png') }}" alt="Play to earn points" class="instruction-desc-img">
+                <p class="instruction-desc" style="margin-top: 10px;">
+                    <span class="small-text">*The top scorer will be contacted by 15 January via WhatsApp.</span>
                 </p>
 
                 <div class="instruction-items">
@@ -351,8 +351,8 @@
                 <x-game-logo class="game-logo" />
             </div>
             
-            <h1 class="congrats-title">Congratulations!</h1>
-            <p class="congrats-subtitle">Welcome to INNISFREE Jeju House!</p>
+            <img src="{{ asset('assets/images/Congratulations!.png') }}" alt="Congratulations!" class="congrats-title-img">
+            <img src="{{ asset('assets/images/Welcome to INNISFREE Jeju House!.png') }}" alt="Welcome to INNISFREE Jeju House!" class="congrats-subtitle-img">
             
             <p class="congrats-arrived">You've safely arrived with:</p>
             
