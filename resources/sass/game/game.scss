@@ -1877,17 +1877,15 @@
       animation: fadeIn 0.6s ease-out 0.2s both;
       
       .game-logo {
-        max-width: 180px;
-        width: 100%;
-        height: auto;
+        max-width: 300px;
+    margin-bottom: 30px;
       }
     }
     
     .congrats-title-img {
       position: absolute;
-      top: 220px;
-      left: 50%;
-      transform: translateX(-50%);
+         top: 502px;
+    left: 13%;
       max-width: 90%;
       height: auto;
       animation: bounceIn 0.6s ease-out 0.3s both;
@@ -1895,9 +1893,8 @@
     
     .congrats-subtitle-img {
       position: absolute;
-      top: 290px;
-      left: 50%;
-      transform: translateX(-50%);
+         top: 686px;
+    left: 9%;
       max-width: 90%;
       height: auto;
       animation: fadeIn 0.6s ease-out 0.4s both;
@@ -1934,61 +1931,60 @@
     }
     
     .congrats-arrived {
-      position: absolute;
-      top: 410px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: "Gordita", sans-serif;
-      font-size: 18px;
-      color: #fff;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      margin: 0;
+         position: absolute;
+    top: 841px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Gordita", sans-serif;
+    font-size: 43px;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
       white-space: nowrap;
       animation: fadeIn 0.6s ease-out 0.5s both;
     }
     
     .score-display {
       position: absolute;
-      top: 450px;
+      top: 900px;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
-      animation: slideUpBounce 0.6s ease-out 0.6s both;
+
       
       .score-value {
         font-family: "Gordita", sans-serif;
-        font-size: 140px;
+        font-size: 350px;
         font-weight: bold;
         color: #fff;
         line-height: 1;
         margin: 0;
-        text-shadow: -4px -4px 0 #2a8556, 4px -4px 0 #2a8556, -4px 4px 0 #2a8556, 4px 4px 0 #2a8556;
+        text-shadow: -7px -7px 0 #3BB776 , 7px -7px 0 #3BB776, -7px 7px 0 #3BB776, 7px 7px 0 #3BB776;
       }
       
       .score-suffix {
         font-family: "Gordita", sans-serif;
-        font-size: 36px;
+        font-size: 69px;
         font-weight: bold;
         color: #fff;
-        text-shadow: -2px -2px 0 #2a8556, 2px -2px 0 #2a8556, -2px 2px 0 #2a8556, 2px 2px 0 #2a8556;
+        text-shadow: -3px -3px 0 #3BB776 , 3px -3px 0 #3BB776, -3px 3px 0 #3BB776, 3px 3px 0 #3BB776;
         margin-top: -15px;
       }
     }
     
     .ranking-display {
       position: absolute;
-      top: 630px;
+      top: 1340px;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
-      animation: slideUpBounce 0.6s ease-out 0.7s both;
       
       .ranking-text {
         font-family: "Gordita", sans-serif;
-        font-size: 32px;
+           font-size: 78px;
         font-weight: bold;
         color: #fff;
-        text-shadow: -2px -2px 0 #2a8556, 2px -2px 0 #2a8556, -2px 2px 0 #2a8556, 2px 2px 0 #2a8556;
+        text-shadow: -3px -3px 0 #3BB776 , 3px -3px 0 #3BB776, -3px 3px 0 #3BB776, 3px 3px 0 #3BB776;
         white-space: nowrap;
         
         #final-ranking {
@@ -1999,10 +1995,9 @@
     
     .game-button {
       position: absolute;
-      bottom: 80px;
+      bottom: 313px;
       left: 50%;
       transform: translateX(-50%);
-      animation: slideUpBounce 0.6s ease-out 0.9s both;
     }
   }
 }
