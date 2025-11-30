@@ -284,7 +284,7 @@
 
         <!-- Takeoff Animation (Hidden by default) -->
         <div id="takeoff-animation" class="takeoff-animation">
-            <img src="{{ asset('assets/images/animate-plian1.webp') }}" alt="Airplane Takeoff" class="takeoff-plane">
+            <img src="{{ asset('assets/images/game/plain.webp') }}" alt="Airplane Takeoff" class="takeoff-plane">
         </div>
 
         <!-- Countdown Screen (Hidden by default) -->
