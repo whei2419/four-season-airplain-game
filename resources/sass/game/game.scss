@@ -650,6 +650,20 @@
   z-index: 2; // Within welcome-page-wrapper context
 }
 
+// Passport Actions (Done Button) - Same position as leaderboard-actions
+.passport-actions {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 151; // Above passport animation
+  display: none;
+  
+  &.active {
+    display: block;
+  }
+}
+
 .welcome-actions {
   position: absolute;
   bottom: 15%;
@@ -1942,4 +1956,44 @@
   background-color: #2eb870;
   font-size: 20px;
   color: #fff;
+}
+
+// ===========================
+// Passport Animation
+// ===========================
+
+.passport-animation {
+  position: fixed;
+  top: 50%;
+  left: -100%;
+  transform: translateY(-50%);
+  z-index: 150;
+  display: none;
+  pointer-events: none;
+  
+  &.active {
+    display: block;
+    animation: passportSlideIn 1.5s ease-out forwards;
+  }
+  
+  .passport-image {
+    width: 1040px;
+    margin-left: -146px;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  }
+}
+
+@keyframes passportSlideIn {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

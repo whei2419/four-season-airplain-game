@@ -62,6 +62,18 @@
                 Next
             </button>
         </div>
+        
+        <!-- Passport Animation Container -->
+        <div id="passport-animation" class="passport-animation">
+            <img src="{{ asset('assets/images/passport.webp') }}" alt="Passport" class="passport-image">
+        </div>
+        
+        <!-- Passport Done Button -->
+        <div class="passport-actions">
+            <button id="passport-done-btn" class="game-button">
+                Done
+            </button>
+        </div>
     </div>
 
     <!-- Registration Form Container (Hidden by default) -->

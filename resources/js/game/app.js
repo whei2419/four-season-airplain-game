@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup leaderboard next button
     setupLeaderboardNextButton();
     
+    // Setup passport done button
+    setupPassportDoneButton();
+    
     // Setup view leaderboard button
     setupViewLeaderboardButton();
     
@@ -128,7 +131,28 @@ function setupLeaderboardNextButton() {
     const leaderboardNextBtn = document.getElementById('leaderboard-next-btn');
     if (leaderboardNextBtn) {
         leaderboardNextBtn.addEventListener('click', () => {
-            console.log('Leaderboard next button clicked, reloading page...');
+            console.log('Leaderboard next button clicked, showing passport animation...');
+            
+            // Hide leaderboard
+            const leaderboardContainer = document.querySelector('.leaderboard-container');
+            const leaderboardActions = document.querySelector('.leaderboard-actions');
+            if (leaderboardContainer) leaderboardContainer.classList.remove('active');
+            if (leaderboardActions) leaderboardActions.classList.remove('active');
+            
+            // Show passport animation (without auto-reload)
+            if (window.viewManager) {
+                window.viewManager.showPassportAnimation();
+            }
+        });
+    }
+}
+
+// Setup Passport Done button
+function setupPassportDoneButton() {
+    const passportDoneBtn = document.getElementById('passport-done-btn');
+    if (passportDoneBtn) {
+        passportDoneBtn.addEventListener('click', () => {
+            console.log('Passport done button clicked, reloading page...');
             window.location.reload();
         });
     }

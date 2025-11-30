@@ -571,4 +571,40 @@ export default class ViewManager {
             this.stopSnow(containerId);
         });
     }
+    
+    // Passport Animation Helper Methods
+    showPassportAnimation(onComplete) {
+        const passportAnimation = document.getElementById('passport-animation');
+        const passportActions = document.querySelector('.passport-actions');
+        
+        if (passportAnimation) {
+            passportAnimation.classList.add('active');
+            
+            // Show Done button after animation completes
+            if (passportActions) {
+                setTimeout(() => {
+                    passportActions.classList.add('active');
+                }, 1500); // Show after animation finishes
+            }
+            
+            // Call onComplete callback after animation finishes (1.5s)
+            if (onComplete && typeof onComplete === 'function') {
+                setTimeout(() => {
+                    onComplete();
+                }, 1500); // Match animation duration
+            }
+        }
+    }
+    
+    hidePassportAnimation() {
+        const passportAnimation = document.getElementById('passport-animation');
+        const passportActions = document.querySelector('.passport-actions');
+        
+        if (passportAnimation) {
+            passportAnimation.classList.remove('active');
+        }
+        if (passportActions) {
+            passportActions.classList.remove('active');
+        }
+    }
 }
