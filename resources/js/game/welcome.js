@@ -592,7 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
         backBtn.addEventListener('click', function() {
             if (window.soundManager) window.soundManager.play('button');
             registrationScreen.style.display = 'none';
-            startScreen.style.display = 'block';
+            startScreen.style.display = 'flex';
             
             // Show welcome logo when going back
             const welcomeLogo = document.querySelector('.welcome-logo-container');
