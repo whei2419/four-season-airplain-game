@@ -564,6 +564,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start -> Registration
     if (startBtn && startScreen && registrationScreen) {
         startBtn.addEventListener('click', function() {
+            if (window.soundManager) {
+                window.soundManager.play('button');
+                // Start background music when user clicks start
+                window.soundManager.playBGM();
+            }
             startScreen.style.display = 'none';
             registrationScreen.style.display = 'flex';
             
@@ -587,6 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Registration Back -> Start
     if (backBtn && startScreen && registrationScreen) {
         backBtn.addEventListener('click', function() {
+            if (window.soundManager) window.soundManager.play('button');
             registrationScreen.style.display = 'none';
             startScreen.style.display = 'block';
             
@@ -678,6 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Instruction Content 1 Next -> Content 2
     if (instruction1NextBtn && instructionContent1 && instructionContent2) {
         instruction1NextBtn.addEventListener('click', function() {
+            if (window.soundManager) window.soundManager.play('button');
             instructionContent1.style.display = 'none';
             instructionContent2.style.display = 'block';
         });
@@ -686,6 +693,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Instruction Back -> Registration or Previous Content
     if (instructionBackBtn && instructionScreen && registrationScreen && instructionContent1 && instructionContent2) {
         instructionBackBtn.addEventListener('click', function() {
+            if (window.soundManager) window.soundManager.play('button');
             // If on content 2, go back to content 1
             if (instructionContent2.style.display === 'block') {
                 instructionContent2.style.display = 'none';
@@ -707,6 +715,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Instruction Content 2 Next -> Takeoff Animation -> Countdown -> Game
     if (instruction2NextBtn && registrationForm && takeoffAnimation && countdownScreen) {
         instruction2NextBtn.addEventListener('click', function() {
+            if (window.soundManager) {
+                window.soundManager.play('button');
+                // Play airplane sound (BGM already playing from start button)
+                window.soundManager.play('flyOff');
+            }
             // Hide instruction content and logo
             instructionContent2.style.display = 'none';
             const instructionLogo = document.querySelector('.instruction-logo-container');
@@ -768,6 +781,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const gameLoading = document.getElementById('game-loading');
                     if (gameLoading) {
                         gameLoading.style.display = 'block';
+                    }
+                    
+                    // Stop airplane sound when loading screen appears
+                    if (window.soundManager) {
+                        // Fade out the fly off sound over 2 seconds
+                        window.soundManager.fadeOut('flyOff', 2000);
                     }
                     
                     // Initialize pose controls while loading screen is showing

@@ -320,6 +320,9 @@
                 <span id="control-mode-text">Body Pose</span>
             </button>
             <button id="calibrate-btn" class="control-btn">Calibrate</button>
+            <button id="sound-toggle-btn" class="control-btn">
+                <i class="fas fa-volume-up" id="sound-icon"></i>
+            </button>
         </div>
     </div>
     
@@ -377,6 +380,17 @@
             bottle: "{{ asset('assets/images/game/game-object/bottle_15pts.webp') }}",
             present: "{{ asset('assets/images/game/game-object/present_10pts.webp') }}",
             badcloud: "{{ asset('assets/images/game/game-object/bad cloud_-5pts.webp') }}"
+        };
+        
+        // Sound assets
+        window.soundAssets = {
+            bgm: "{{ asset('assets/sounds/bgm.mp3') }}",
+            button: "{{ asset('assets/sounds/Button.mp3') }}",
+            deduct: "{{ asset('assets/sounds/Deduct.mp3') }}",
+            flyOff: "{{ asset('assets/sounds/Fly Off.mp3') }}",
+            landing: "{{ asset('assets/sounds/Landing 00.18.mp3') }}",
+            score: "{{ asset('assets/sounds/Score.mp3') }}",
+            winning: "{{ asset('assets/sounds/Winning.mp3') }}"
         };
         
         // API endpoints

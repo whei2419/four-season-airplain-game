@@ -335,6 +335,15 @@ export default class ViewManager {
     }
 
     showCongratulations(finalScore) {
+        // Play winning and landing sounds
+        if (window.soundManager) {
+            window.soundManager.play('landing');
+            // Delay winning sound slightly so landing plays first
+            setTimeout(() => {
+                window.soundManager.play('winning');
+            }, 500);
+        }
+        
         // Hide welcome page wrapper and actions
         const welcomeWrapper = document.getElementById('welcome-page-wrapper');
         if (welcomeWrapper) {

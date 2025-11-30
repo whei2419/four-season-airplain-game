@@ -7,6 +7,7 @@ import GameScene from './game-scene';
 import ControlManager from './controls/control-manager';
 import ViewManager from './view-manager';
 import LeaderboardManager from './leaderboard-manager';
+import SoundManager from './sound-manager';
 import './welcome';
 
 window.Alpine = Alpine;
@@ -14,6 +15,9 @@ Alpine.start();
 
 // Export SnowEffect for game over screen
 window.SnowEffect = SnowEffect;
+
+// Initialize Sound Manager
+window.soundManager = new SoundManager();
 
 // Initialize View Manager
 window.viewManager = new ViewManager();
@@ -45,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup control mode UI
     setupControlUI();
+    
+    // Setup sound toggle
+    setupSoundToggle();
     
     // Setup play again button
     setupPlayAgainButton();
@@ -79,6 +86,7 @@ function setupControlUI() {
     // This is handled in welcome.js to preserve performance
     
     controlModeBtn.addEventListener('click', async () => {
+        if (window.soundManager) window.soundManager.play('button');
         if (currentMode === 'keyboard') {
             // Switch to pose mode
             const videoElement = document.getElementById('gesture-video');
@@ -107,10 +115,27 @@ function setupControlUI() {
     
     if (calibrateBtn) {
         calibrateBtn.addEventListener('click', () => {
+            if (window.soundManager) window.soundManager.play('button');
             window.controlManager.calibratePose();
             alert('Body pose calibrated! Current shoulder position is now center.');
         });
     }
+}
+
+// Setup Sound Toggle
+function setupSoundToggle() {
+    const soundToggleBtn = document.getElementById('sound-toggle-btn');
+    const soundIcon = document.getElementById('sound-icon');
+    
+    if (!soundToggleBtn || !soundIcon) return;
+    
+    soundToggleBtn.addEventListener('click', () => {
+        if (window.soundManager) {
+            const muted = window.soundManager.toggleMute();
+            soundIcon.className = muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+            window.soundManager.play('button');
+        }
+    });
 }
 
 // Setup Next button (from congratulations screen)
@@ -118,6 +143,7 @@ function setupPlayAgainButton() {
     const playAgainBtn = document.getElementById('next-btn');
     if (playAgainBtn) {
         playAgainBtn.addEventListener('click', () => {
+            if (window.soundManager) window.soundManager.play('button');
             console.log('Next button clicked, showing runway landing animation...');
             
             // Hide instruction screen explicitly
@@ -143,6 +169,7 @@ function setupLeaderboardNextButton() {
     const leaderboardNextBtn = document.getElementById('leaderboard-next-btn');
     if (leaderboardNextBtn) {
         leaderboardNextBtn.addEventListener('click', async () => {
+            if (window.soundManager) window.soundManager.play('button');
             console.log('Leaderboard next button clicked, checking for QR code...');
             
             // Ensure QR code is generated before showing passport
@@ -171,6 +198,7 @@ function setupPassportDoneButton() {
     const passportDoneBtn = document.getElementById('passport-done-btn');
     if (passportDoneBtn) {
         passportDoneBtn.addEventListener('click', () => {
+            if (window.soundManager) window.soundManager.play('button');
             console.log('Passport done button clicked, reloading page...');
             
             // Reload the page
@@ -184,6 +212,7 @@ function setupViewLeaderboardButton() {
     const viewLeaderboardBtn = document.getElementById('view-leaderboard-btn');
     if (viewLeaderboardBtn) {
         viewLeaderboardBtn.addEventListener('click', () => {
+            if (window.soundManager) window.soundManager.play('button');
             console.log('View leaderboard button clicked...');
             
             // Hide instruction screen explicitly
@@ -206,6 +235,7 @@ function setupCloseLeaderboardButton() {
     const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
     if (closeLeaderboardBtn) {
         closeLeaderboardBtn.addEventListener('click', () => {
+            if (window.soundManager) window.soundManager.play('button');
             console.log('Close leaderboard button clicked...');
             if (window.viewManager) {
                 window.viewManager.showRunwayLandingAnimation(true, true, false, true, false, false);

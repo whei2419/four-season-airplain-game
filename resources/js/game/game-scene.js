@@ -114,9 +114,16 @@ export default class GameScene extends Phaser.Scene {
             loop: true
         });
         
-        // Reduce spawn rate for better performance (4 seconds instead of 3)
+        // Spawn initial objects immediately to fill screen
+        for (let i = 0; i < 5; i++) {
+            this.time.delayedCall(i * 400, () => {
+                this.spawnObject();
+            });
+        }
+        
+        // Faster spawn rate for more objects (2 seconds instead of 4)
         objectTimer = this.time.addEvent({
-            delay: 4000,
+            delay: 2000,
             callback: this.spawnObject,
             callbackScope: this,
             loop: true
@@ -225,13 +232,16 @@ export default class GameScene extends Phaser.Scene {
         if (obj.objectType === 'bottle') {
             points = 15;
             score += 15;
+            if (window.soundManager) window.soundManager.play('score');
         } else if (obj.objectType === 'present') {
             points = 10;
             score += 10;
+            if (window.soundManager) window.soundManager.play('score');
         } else if (obj.objectType === 'badcloud') {
             points = -5;
             score -= 5;
             color = 0x000000; // Black for negative
+            if (window.soundManager) window.soundManager.play('deduct');
         }
         
         // Create floating point indicator
