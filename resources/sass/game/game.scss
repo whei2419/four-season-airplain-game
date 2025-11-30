@@ -1976,6 +1976,40 @@
     animation: passportSlideIn 1.5s ease-out forwards;
   }
   
+  .passport-content {
+    text-align: center;
+    position: relative;
+  }
+  
+  .passport-title {
+    font-family: "Gordita", sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 
+      3px 3px 0px #3bb776,
+      -1px -1px 0px #3bb776,
+      1px -1px 0px #3bb776,
+      -1px 1px 0px #3bb776,
+      1px 1px 0px #3bb776;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  
+  .passport-subtitle {
+    font-family: "Gordita", sans-serif;
+    font-size: 32px;
+    font-weight: normal;
+    color: white;
+    text-shadow: 
+      2px 2px 0px #3bb776,
+      -1px -1px 0px #3bb776,
+      1px -1px 0px #3bb776,
+      -1px 1px 0px #3bb776,
+      1px 1px 0px #3bb776;
+    margin-bottom: 30px;
+  }
+  
   .passport-image {
     width: 1040px;
     margin-left: -146px;

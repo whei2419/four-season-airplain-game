@@ -65,7 +65,11 @@
         
         <!-- Passport Animation Container -->
         <div id="passport-animation" class="passport-animation">
-            <img src="{{ asset('assets/images/passport.webp') }}" alt="Passport" class="passport-image">
+            <div class="passport-content">
+                <h1 class="passport-title">Thank you for flying with<br>INNISFREE Airline!</h1>
+                <p class="passport-subtitle">Scan the QR below to reveal your reward</p>
+                <img src="{{ asset('assets/images/passport.webp') }}" alt="Passport" class="passport-image">
+            </div>
         </div>
         
         <!-- Passport Done Button -->
