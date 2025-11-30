@@ -468,6 +468,13 @@
   text-align: center;
   margin-bottom: 25px;
 
+  .thank-you-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
   .thank-you-text {
     font-family: "Gordita", sans-serif;
     font-size: 32px;
@@ -2115,6 +2122,15 @@
     align-items: center;
   }
   
+  .passport-title-img {
+    max-width: 90%;
+    height: auto;
+    margin-bottom: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
   .passport-title {
     font-family: "Gordita", sans-serif;
     font-size: 48px;
@@ -2146,9 +2162,9 @@
   
   .passport-qr-container {
     position: absolute;
-       top: 442px;
-    left: 500px;
-    z-index: 10;
+   top: 479px;
+  left: 500px;
+  z-index: 10;
   }
   
   .passport-qr-image {

@@ -36,8 +36,7 @@
         <!-- Leaderboard Container -->
         <div class="leaderboard-container">
             <div class="leaderboard-thank-you">
-                <h1 class="thank-you-text">Thank you for flying with</h1>
-                <h1 class="thank-you-text">INNISFREE Airline!</h1>
+                <img src="{{ asset('assets/images/Thank you for flying with INNISFREE Airline!.png') }}" alt="Thank you for flying with INNISFREE Airline!" class="thank-you-img">
             </div>
             
             <div class="leaderboard-card">
@@ -76,8 +75,7 @@
         <!-- Passport Animation Container -->
         <div id="passport-animation" class="passport-animation">
             <div class="passport-content">
-                <h1 class="passport-title">Thank you for flying with<br>INNISFREE Airline!</h1>
-                <p class="passport-subtitle">Scan the QR below to reveal your reward</p>
+                <img src="{{ asset('assets/images/Thank you for flying with INNISFREE Airline! Scan the QR below to reveal your reward.png') }}" alt="Thank you for flying with INNISFREE Airline!" class="passport-title-img">
                 <div class="passport-qr-container">
                     <img id="passport-qr-code" src="" alt="QR Code" class="passport-qr-image" style="display:none;">
                 </div>

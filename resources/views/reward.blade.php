@@ -178,7 +178,7 @@
             @endif
             
             <div class="thank-you-footer">
-                Thank you for flying with INNISFREE Airline.
+                <img src="{{ asset('assets/images/Thank you for flying with INNISFREE Airline!.png') }}" alt="Thank you for flying with INNISFREE Airline!" style="max-width: 100%; height: auto;">
             </div>
         </div>
         
