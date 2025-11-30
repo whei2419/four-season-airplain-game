@@ -131,8 +131,15 @@ function setupPlayAgainButton() {
 function setupLeaderboardNextButton() {
     const leaderboardNextBtn = document.getElementById('leaderboard-next-btn');
     if (leaderboardNextBtn) {
-        leaderboardNextBtn.addEventListener('click', () => {
-            console.log('Leaderboard next button clicked, showing passport animation...');
+        leaderboardNextBtn.addEventListener('click', async () => {
+            console.log('Leaderboard next button clicked, checking for QR code...');
+            
+            // Ensure QR code is generated before showing passport
+            if (!window.playerData?.qr_code_url && window.playerData?.id) {
+                console.log('QR code not ready, waiting for generation...');
+                // Wait a bit for the saveScore API to complete
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
             
             // Hide leaderboard
             const leaderboardContainer = document.querySelector('.leaderboard-container');

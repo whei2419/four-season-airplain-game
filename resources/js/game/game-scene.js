@@ -282,6 +282,25 @@ export default class GameScene extends Phaser.Scene {
     endGame() {
         console.log('Game Over! Final Score:', score);
         
+        // Save score to database immediately
+        if (window.leaderboardManager && window.playerData && window.playerData.id) {
+            window.leaderboardManager.saveScore(
+                window.playerData.id,
+                score
+            ).then(result => {
+                console.log('SaveScore API result:', result);
+                if (result && result.qr_code_url) {
+                    window.playerData.qr_code_url = result.qr_code_url;
+                    window.playerData.reward_url = result.reward_url;
+                    console.log('QR Code URL saved on game end:', result.qr_code_url);
+                } else {
+                    console.error('QR code URL not found in response:', result);
+                }
+            }).catch(error => {
+                console.error('Error saving score:', error);
+            });
+        }
+        
         // Pause game physics
         this.physics.pause();
         

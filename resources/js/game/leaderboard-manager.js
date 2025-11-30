@@ -151,7 +151,7 @@ export default class LeaderboardManager {
         }
     }
 
-    async saveScore(playerName, flightNumber, score) {
+    async saveScore(playerId, score) {
         try {
             const saveScoreUrl = window.apiUrls?.saveScore || '/api/game/save-score';
             const response = await fetch(saveScoreUrl, {

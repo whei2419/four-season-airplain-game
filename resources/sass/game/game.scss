@@ -1979,6 +1979,9 @@
   .passport-content {
     text-align: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .passport-title {
@@ -2011,18 +2014,18 @@
   }
   
   .passport-qr-container {
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+       top: 442px;
+    left: 500px;
+    z-index: 10;
   }
   
   .passport-qr-image {
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     background: white;
-    padding: 20px;
-    border-radius: 20px;
+    padding: 15px;
+    border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   }
   
@@ -2031,6 +2034,7 @@
     margin-left: -146px;
     height: auto;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    position: relative;
   }
 }
 

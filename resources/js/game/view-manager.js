@@ -375,18 +375,8 @@ export default class ViewManager {
                 rankingDisplay.textContent = ranking;
             }
             
-            // Save score to database
-            if (window.leaderboardManager && window.playerData && window.playerData.id) {
-                window.leaderboardManager.saveScore(
-                    window.playerData.id,
-                    finalScore
-                ).then(result => {
-                    if (result && result.qr_code_url) {
-                        window.playerData.qr_code_url = result.qr_code_url;
-                        console.log('QR Code URL:', result.qr_code_url);
-                    }
-                });
-            }
+            // Score already saved in game-scene.js endGame()
+            // QR code should be ready in window.playerData.qr_code_url
         }
     }
 
@@ -596,9 +586,23 @@ export default class ViewManager {
     showPassportAnimation(onComplete) {
         const passportAnimation = document.getElementById('passport-animation');
         const passportActions = document.querySelector('.passport-actions');
+        const passportQrCode = document.getElementById('passport-qr-code');
         
         if (passportAnimation) {
             passportAnimation.classList.add('active');
+            
+            // Display QR code if available
+            if (window.playerData && window.playerData.qr_code_url && passportQrCode) {
+                console.log('Setting QR code image:', window.playerData.qr_code_url);
+                passportQrCode.src = window.playerData.qr_code_url;
+                passportQrCode.style.display = 'block';
+            } else {
+                console.warn('QR code not available:', { 
+                    playerData: window.playerData, 
+                    qrCodeUrl: window.playerData?.qr_code_url,
+                    element: passportQrCode 
+                });
+            }
             
             // Show Done button after animation completes
             if (passportActions) {
