@@ -32,3 +32,5 @@ Thumbs.db
 /public/hot
 /public/build
 
+# QR Codes
+/public/qrcodes
