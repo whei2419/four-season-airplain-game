@@ -204,9 +204,12 @@
   pointer-events: none;
 
   &__score {
-    position: absolute;
+  
+
+
+      position: absolute;
     top: 112px;
-    left: 500px;
+    left: 871px;
     color: white;
     font-family: "Gordita", sans-serif;
     font-size: 43px;
@@ -215,9 +218,9 @@
   }
 
   &__timer {
-    position: absolute;
+      position: absolute;
     top: 112px;
-    left: 871px;
+    left: 500px;
     color: white;
     font-family: "Gordita", sans-serif;
     font-size: 43px;
