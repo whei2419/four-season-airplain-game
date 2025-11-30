@@ -1,5 +1,3 @@
-import 'intl-tel-input/build/css/intlTelInput.css';
-
 // Hardcoded country list with all countries
 const allCountries = [
     { name: "Afghanistan", iso2: "af", dialCode: "93" },

@@ -2,6 +2,11 @@
 
 @section('title', 'Welcome')
 
+@push('styles')
+<!-- intl-tel-input CSS from CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.5/build/css/intlTelInput.min.css">
+@endpush
+
 @section('content')
     <!-- Page Loader -->
     <div id="page-loader" class="page-loader" style="background-image: url('{{ asset('assets/images/background 03.webp') }}')">
