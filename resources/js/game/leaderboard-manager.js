@@ -127,6 +127,7 @@ export default class LeaderboardManager {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"')?.getAttribute('content') || '',
                 },
                 body: JSON.stringify({
@@ -138,17 +139,34 @@ export default class LeaderboardManager {
 
             const result = await response.json();
 
-            if (result.success) {
+            if (response.ok && result.success) {
                 console.log('Player saved successfully:', result.data);
                 return result.data;
             } else {
-                console.error('Failed to save player');
-                return null;
+                // Laravel validation errors or other failures
+                const errorMessage = this.formatErrorMessage(result);
+                throw new Error(errorMessage);
             }
         } catch (error) {
             console.error('Error saving player:', error);
-            return null;
+            // If it's already an Error object with a message, re-throw it
+            if (error instanceof Error && error.message && !error.message.includes('JSON')) {
+                throw error;
+            }
+            // Otherwise, throw a user-friendly error
+            throw new Error('Failed to register player. Please check your information and try again.');
         }
+    }
+
+    formatErrorMessage(result) {
+        // Check if Laravel validation errors exist
+        if (result.errors) {
+            // Get all error messages and join them
+            const errorMessages = Object.values(result.errors).flat();
+            return errorMessages.join('\n');
+        }
+        // Fallback to general message
+        return result.message || 'Failed to save player. Please try again.';
     }
 
     async saveScore(playerId, score) {

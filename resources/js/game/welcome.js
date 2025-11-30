@@ -652,16 +652,26 @@ document.addEventListener('DOMContentLoaded', function() {
                             window.playerData.id = playerRecord.id;
                             window.playerData.flight_number = playerRecord.flight_number;
                             console.log('Player registered with ID:', playerRecord.id);
+                            
+                            // All validations passed, show instruction screen with content 1
+                            registrationScreen.style.display = 'none';
+                            instructionScreen.style.display = 'flex';
+                            instructionContent1.style.display = 'block';
+                            instructionContent2.style.display = 'none';
                         }
                     })
-                    .catch(err => console.error('Error registering player:', err));
+                    .catch(err => {
+                        console.error('Error registering player:', err);
+                        // Show error to user
+                        alert(err.message || 'Failed to register player. Please try again.');
+                    });
+            } else {
+                // If leaderboardManager is not available, proceed anyway
+                registrationScreen.style.display = 'none';
+                instructionScreen.style.display = 'flex';
+                instructionContent1.style.display = 'block';
+                instructionContent2.style.display = 'none';
             }
-            
-            // All validations passed, show instruction screen with content 1
-            registrationScreen.style.display = 'none';
-            instructionScreen.style.display = 'flex';
-            instructionContent1.style.display = 'block';
-            instructionContent2.style.display = 'none';
             
             // Hide welcome logo and show instruction logo
             const welcomeLogo = document.querySelector('.welcome-logo-container');

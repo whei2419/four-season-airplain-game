@@ -73,30 +73,47 @@ class GameController extends Controller
     
     public function savePlayer(Request $request)
     {
-        $validated = $request->validate([
-            'player_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'contact' => 'required|string|max:50',
-        ]);
-        
-        // Generate unique reward token
-        $rewardToken = Str::random(32);
-        
-        // Create player record with initial score of 0
-        $gameScore = GameScore::create([
-            'player_name' => $validated['player_name'],
-            'email' => $validated['email'],
-            'contact' => $validated['contact'],
-            'flight_number' => 'FLIGHT IF' . str_pad(rand(100, 999), 3, '0', STR_PAD_LEFT),
-            'score' => 0,
-            'reward_token' => $rewardToken,
-        ]);
-        
-        return response()->json([
-            'success' => true,
-            'message' => 'Player registered successfully',
-            'data' => $gameScore,
-        ]);
+        try {
+            $validated = $request->validate([
+                'player_name' => 'required|string|max:255',
+                'email' => 'required|email|max:255|unique:game_scores,email',
+                'contact' => 'required|string|max:50|unique:game_scores,contact',
+            ], [
+                'email.unique' => 'This email has already been registered.',
+                'contact.unique' => 'This contact number has already been registered.',
+            ]);
+            
+            // Generate unique reward token
+            $rewardToken = Str::random(32);
+            
+            // Create player record with initial score of 0
+            $gameScore = GameScore::create([
+                'player_name' => $validated['player_name'],
+                'email' => $validated['email'],
+                'contact' => $validated['contact'],
+                'flight_number' => 'FLIGHT IF' . str_pad(rand(100, 999), 3, '0', STR_PAD_LEFT),
+                'score' => 0,
+                'reward_token' => $rewardToken,
+            ]);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Player registered successfully',
+                'data' => $gameScore,
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while registering the player.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
     
     public function saveScore(Request $request)
