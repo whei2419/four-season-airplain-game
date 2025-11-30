@@ -638,6 +638,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 contact: `${countryCode}${contact}`
             };
             
+            // Save player to database and get player ID
+            if (window.leaderboardManager) {
+                window.leaderboardManager.savePlayer(name, email, `${countryCode}${contact}`)
+                    .then(playerRecord => {
+                        if (playerRecord) {
+                            window.playerData.id = playerRecord.id;
+                            window.playerData.flight_number = playerRecord.flight_number;
+                            console.log('Player registered with ID:', playerRecord.id);
+                        }
+                    })
+                    .catch(err => console.error('Error registering player:', err));
+            }
+            
             // All validations passed, show instruction screen with content 1
             registrationScreen.style.display = 'none';
             instructionScreen.style.display = 'flex';

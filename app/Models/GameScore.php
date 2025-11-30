@@ -11,6 +11,8 @@ class GameScore extends Model
 
     protected $fillable = [
         'player_name',
+        'email',
+        'contact',
         'flight_number',
         'score',
     ];

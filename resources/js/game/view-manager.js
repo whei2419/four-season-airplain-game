@@ -376,11 +376,9 @@ export default class ViewManager {
             }
             
             // Save score to database
-            if (window.leaderboardManager && window.playerData) {
-                const flightNumber = `FLIGHT IF${String(Math.floor(Math.random() * 900) + 100)}`;
+            if (window.leaderboardManager && window.playerData && window.playerData.id) {
                 window.leaderboardManager.saveScore(
-                    window.playerData.name || 'Anonymous',
-                    flightNumber,
+                    window.playerData.id,
                     finalScore
                 );
             }

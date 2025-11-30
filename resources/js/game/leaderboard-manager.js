@@ -120,6 +120,37 @@ export default class LeaderboardManager {
         return div.innerHTML;
     }
 
+    async savePlayer(playerName, email, contact) {
+        try {
+            const savePlayerUrl = window.apiUrls?.savePlayer || '/api/game/save-player';
+            const response = await fetch(savePlayerUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"')?.getAttribute('content') || '',
+                },
+                body: JSON.stringify({
+                    player_name: playerName,
+                    email: email,
+                    contact: contact,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log('Player saved successfully:', result.data);
+                return result.data;
+            } else {
+                console.error('Failed to save player');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error saving player:', error);
+            return null;
+        }
+    }
+
     async saveScore(playerName, flightNumber, score) {
         try {
             const saveScoreUrl = window.apiUrls?.saveScore || '/api/game/save-score';
@@ -127,11 +158,10 @@ export default class LeaderboardManager {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"')?.getAttribute('content') || '',
                 },
                 body: JSON.stringify({
-                    player_name: playerName,
-                    flight_number: flightNumber,
+                    player_id: playerId,
                     score: score,
                 }),
             });

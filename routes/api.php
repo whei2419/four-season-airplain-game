@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Game API Routes
+Route::post('/game/save-player', [GameController::class, 'savePlayer']);
 Route::post('/game/save-score', [GameController::class, 'saveScore']);
 Route::get('/game/leaderboard', [GameController::class, 'getLeaderboard']);

@@ -17,15 +17,39 @@ class GameController extends Controller
         return view('game');
     }
     
-    public function saveScore(Request $request)
+    public function savePlayer(Request $request)
     {
         $validated = $request->validate([
             'player_name' => 'required|string|max:255',
-            'flight_number' => 'nullable|string|max:50',
+            'email' => 'required|email|max:255',
+            'contact' => 'required|string|max:50',
+        ]);
+        
+        // Create player record with initial score of 0
+        $gameScore = GameScore::create([
+            'player_name' => $validated['player_name'],
+            'email' => $validated['email'],
+            'contact' => $validated['contact'],
+            'flight_number' => 'FLIGHT IF' . str_pad(rand(100, 999), 3, '0', STR_PAD_LEFT),
+            'score' => 0,
+        ]);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Player registered successfully',
+            'data' => $gameScore,
+        ]);
+    }
+    
+    public function saveScore(Request $request)
+    {
+        $validated = $request->validate([
+            'player_id' => 'required|integer|exists:game_scores,id',
             'score' => 'required|integer|min:0',
         ]);
         
-        $gameScore = GameScore::create($validated);
+        $gameScore = GameScore::findOrFail($validated['player_id']);
+        $gameScore->update(['score' => $validated['score']]);
         
         return response()->json([
             'success' => true,
