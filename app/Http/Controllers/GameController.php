@@ -27,7 +27,7 @@ class GameController extends Controller
     
     private function getRewardTier($score)
     {
-        if ($score >= 0 && $score <= 15) {
+        if ($score >= 0 && $score <= 50) {
             return [
                 'tier' => 1,
                 'title' => 'You\'ve Won: 2-pcs Sachets 1ml',
@@ -35,7 +35,7 @@ class GameController extends Controller
                 'discount' => 'RM10 OFF (min. spend RM30)',
                 'image' => 'assets/images/boarding-pass/2.webp'
             ];
-        } elseif ($score >= 16 && $score <= 25) {
+        } elseif ($score >= 51 && $score <= 149) {
             return [
                 'tier' => 2,
                 'title' => 'You\'ve Won: 4-pcs Sachets 1ml',
@@ -43,10 +43,10 @@ class GameController extends Controller
                 'discount' => 'RM10 OFF (min. spend RM30)',
                 'image' => 'assets/images/boarding-pass/3.webp'
             ];
-        } else {
+        } else { // Score 150 and above
             return [
                 'tier' => 3,
-                'title' => 'You\'ve Won: 1 Trial Kit',
+                'title' => 'You\'ve Won: 1-pc Miniature',
                 'description' => 'Redeem your reward at the counter after the event and enjoy RM10 OFF (no min. spend)',
                 'discount' => 'RM10 OFF (no min. spend)',
                 'image' => 'assets/images/boarding-pass/1.webp'

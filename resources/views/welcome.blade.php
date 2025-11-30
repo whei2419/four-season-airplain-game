@@ -148,7 +148,21 @@
         </div>
         
         <!-- Large Keyboard Visual -->
-        <div class="keyboard-visual">
+        <div class="keyboard-visual" id="keyboard-visual">
+            <div class="keyboard-controls">
+                <button class="keyboard-control-btn" id="keyboard-drag-handle" title="Drag to move">
+                    <i class="fas fa-arrows-alt"></i>
+                </button>
+                <button class="keyboard-control-btn" id="keyboard-size-decrease" title="Make smaller">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="keyboard-control-btn" id="keyboard-size-increase" title="Make bigger">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="keyboard-control-btn" id="keyboard-reset" title="Reset position">
+                    <i class="fas fa-undo"></i>
+                </button>
+            </div>
             <div class="keyboard-row">
                 <div class="key">1</div>
                 <div class="key">2</div>
@@ -405,5 +419,147 @@
             timeLimit: {{ $settings['game_time_limit'] }},
             showCamera: {{ $settings['show_camera_feed'] ? 'true' : 'false' }}
         };
+
+        // Keyboard Visual Controls
+        (function() {
+            const keyboard = document.getElementById('keyboard-visual');
+            const dragHandle = document.getElementById('keyboard-drag-handle');
+            const sizeDecrease = document.getElementById('keyboard-size-decrease');
+            const sizeIncrease = document.getElementById('keyboard-size-increase');
+            const resetBtn = document.getElementById('keyboard-reset');
+
+            let scale = 1;
+            let isDragging = false;
+            let currentX = 0;
+            let currentY = 0;
+            let initialX = 0;
+            let initialY = 0;
+
+            // Load saved position and scale
+            const savedScale = localStorage.getItem('keyboardScale');
+            const savedX = localStorage.getItem('keyboardX');
+            const savedY = localStorage.getItem('keyboardY');
+
+            if (savedScale) {
+                scale = parseFloat(savedScale);
+                keyboard.style.transform = `scale(${scale})`;
+            }
+
+            if (savedX && savedY) {
+                currentX = parseFloat(savedX);
+                currentY = parseFloat(savedY);
+                keyboard.style.left = `${currentX}px`;
+                keyboard.style.bottom = `${currentY}px`;
+                keyboard.style.right = 'auto';
+            }
+
+            // Dragging functionality
+            dragHandle.addEventListener('mousedown', dragStart);
+            dragHandle.addEventListener('touchstart', dragStart);
+
+            function dragStart(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                isDragging = true;
+
+                // Get current position from computed style
+                const computedStyle = window.getComputedStyle(keyboard);
+                const currentBottom = parseFloat(computedStyle.bottom) || 0;
+                const currentLeft = parseFloat(computedStyle.left) || 0;
+
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - currentLeft;
+                    initialY = e.touches[0].clientY;
+                } else {
+                    initialX = e.clientX - currentLeft;
+                    initialY = e.clientY;
+                }
+
+                // Store the starting bottom position
+                currentY = currentBottom;
+
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchmove', drag);
+                document.addEventListener('touchend', dragEnd);
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                let clientX, clientY;
+                if (e.type === 'touchmove') {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+
+                // Calculate new position - horizontal is straightforward
+                let newX = clientX - initialX;
+                
+                // For vertical, calculate delta from initial click and apply to starting bottom position
+                let deltaY = initialY - clientY; // How much mouse moved up (positive) or down (negative)
+                let newY = currentY + deltaY; // Add because moving up increases bottom value
+
+                // Get keyboard dimensions
+                const keyboardRect = keyboard.getBoundingClientRect();
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                // Constrain to viewport boundaries - allow some overflow but keep part visible
+                const minX = -(keyboardRect.width - 100); // Allow overflow on left, keep 100px visible
+                const maxX = viewportWidth - 100; // Keep at least 100px visible on right
+                const minY = 0; // Can go to the very bottom
+                const maxY = viewportHeight - 100; // Keep at least 100px visible at top
+
+                // Apply constraints and update current position
+                newX = Math.max(minX, Math.min(newX, maxX));
+                newY = Math.max(minY, Math.min(newY, maxY));
+
+                keyboard.style.left = `${newX}px`;
+                keyboard.style.bottom = `${newY}px`;
+                keyboard.style.right = 'auto';
+            }
+
+            function dragEnd() {
+                isDragging = false;
+                localStorage.setItem('keyboardX', currentX);
+                localStorage.setItem('keyboardY', currentY);
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchmove', drag);
+                document.removeEventListener('touchend', dragEnd);
+            }
+
+            // Size controls
+            sizeDecrease.addEventListener('click', () => {
+                scale = Math.max(0.5, scale - 0.1);
+                keyboard.style.transform = `scale(${scale})`;
+                localStorage.setItem('keyboardScale', scale);
+            });
+
+            sizeIncrease.addEventListener('click', () => {
+                scale = Math.min(1.5, scale + 0.1);
+                keyboard.style.transform = `scale(${scale})`;
+                localStorage.setItem('keyboardScale', scale);
+            });
+
+            // Reset button
+            resetBtn.addEventListener('click', () => {
+                scale = 1;
+                currentX = 0;
+                currentY = 0;
+                keyboard.style.transform = 'scale(1)';
+                keyboard.style.left = '0';
+                keyboard.style.bottom = '0px';
+                keyboard.style.right = '0';
+                localStorage.removeItem('keyboardScale');
+                localStorage.removeItem('keyboardX');
+                localStorage.removeItem('keyboardY');
+            });
+        })();
     </script>
 @endsection
