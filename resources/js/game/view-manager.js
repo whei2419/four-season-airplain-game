@@ -65,7 +65,7 @@ export default class ViewManager {
     }
 
     // Runway Landing Animation Screen
-    showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true) {
+    showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true, planeInPosition = false, showLeaderboard = false) {
         this.hideAllExcept(['welcome-page-wrapper', 'snow-container', ]);
         this.addActiveClass(['welcome-page-wrapper', 'snow-container']);
         
@@ -80,6 +80,8 @@ export default class ViewManager {
         const welcomeWrapper = document.getElementById('welcome-page-wrapper');
         const welcomeLogo = welcomeWrapper?.querySelector('.welcome-logo-container');
         const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
+        const welcomePlane = welcomeWrapper?.querySelector('.airplane-container');
+        const leaderboardContainer = welcomeWrapper?.querySelector('.leaderboard-container');
         
         if (welcomeLogo) {
             if (withLogo) {
@@ -96,12 +98,32 @@ export default class ViewManager {
             }
         }
         
-        // Trigger plane animation if requested
-        if (withPlaneAnimation) {
-            // Small delay to ensure view is rendered before animation
-            setTimeout(() => {
-                this.triggerPlaneAnimation();
-            }, 100);
+        // Control leaderboard visibility
+        if (leaderboardContainer) {
+            if (showLeaderboard) {
+                leaderboardContainer.classList.add('active');
+            } else {
+                leaderboardContainer.classList.remove('active');
+            }
+        }
+        
+        // Handle plane visibility and animation
+        if (welcomePlane) {
+            if (planeInPosition) {
+                // Show plane in final position without animation
+                welcomePlane.classList.add('active', 'in-position');
+            } else {
+                // Remove in-position class if it exists
+                welcomePlane.classList.remove('in-position');
+                
+                // Trigger plane animation if requested
+                if (withPlaneAnimation) {
+                    // Small delay to ensure view is rendered before animation
+                    setTimeout(() => {
+                        this.triggerPlaneAnimation();
+                    }, 100);
+                }
+            }
         }
     }
 
@@ -228,7 +250,7 @@ export default class ViewManager {
             // After runway animation completes (5 seconds), show congratulations
             const timeout2 = setTimeout(() => {
                 console.log('Step 3: Showing congratulations');
-                // this.showCongratulations(finalScore);
+                this.showCongratulations(finalScore);
                 this.gameOverAnimating = false; // Reset flag after sequence completes
             }, 5000);
             this.gameOverTimeouts.push(timeout2);

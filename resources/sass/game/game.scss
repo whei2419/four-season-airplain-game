@@ -74,6 +74,8 @@
 .game-ui { z-index: 10000; }
 #game-over-screen { z-index: 20000; }
 #game-over-snow-container { z-index: 20001; }
+#registration-screen { z-index: 10001; } // Above game-ui
+#instruction-screen { z-index: 10002; } // Above registration
 
 // Child elements visibility control
 .welcome-logo-container,
@@ -86,6 +88,15 @@
 .welcome-actions.active,
 .airplane-container-down.active {
   display: block;
+}
+
+// Leaderboard is hidden by default
+.leaderboard-container {
+  display: none;
+  
+  &.active {
+    display: flex;
+  }
 }
 
 // Airplane container is always rendered but animated
@@ -369,6 +380,155 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+}
+
+// Leaderboard Container
+.leaderboard-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.leaderboard-thank-you {
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 30px;
+
+  .thank-you-text {
+    font-family: "Gordita", sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #3bb776;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 5px 0;
+    text-transform: uppercase;
+    -webkit-text-stroke: 2px white;
+    paint-order: stroke fill;
+  }
+}
+
+.leaderboard-card {
+  background: white;
+  border-radius: 30px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 90%;
+  border: 4px solid #3bb776;
+}
+
+.leaderboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #3bb776;
+
+  .leaderboard-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .leaderboard-title {
+    font-family: "Gordita", sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: #3bb776;
+    margin: 0;
+    text-transform: uppercase;
+  }
+}
+
+.leaderboard-table {
+  margin-bottom: 25px;
+}
+
+.leaderboard-table-header {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 10px;
+  padding: 15px 10px;
+  background-color: #3bb776;
+  border-radius: 10px;
+  margin-bottom: 15px;
+
+  .leaderboard-col {
+    font-family: "Gordita", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+  }
+}
+
+.leaderboard-table-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 10px;
+  padding: 15px 10px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  align-items: center;
+
+  &:nth-child(odd) {
+    background-color: #e8e8e8;
+  }
+
+  .leaderboard-col {
+    font-family: "Gordita", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+  }
+}
+
+.leaderboard-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .next-btn {
+    background-color: #3bb776;
+    color: white;
+    font-family: "Gordita", sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 0;
+    width: 250px;
+    border-radius: 50px;
+    border: 6px solid white;
+    box-shadow: 0 6px 0 #2a8556;
+    cursor: pointer;
+    transition: all 0.1s ease;
+
+    &:hover {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #2a8556;
+      background-color: #45c985;
+    }
+
+    &:active {
+      transform: translateY(6px);
+      box-shadow: 0 0 0 #2a8556;
+    }
+  }
 }
 
 // Reusable Game Button

@@ -20,6 +20,62 @@
             </button>
         </div>
 
+        <!-- Leaderboard Container -->
+        <div class="leaderboard-container">
+            <div class="leaderboard-thank-you">
+                <h1 class="thank-you-text">Thank you for flying with</h1>
+                <h1 class="thank-you-text">INNISFREE Airline!</h1>
+            </div>
+            
+            <div class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <img src="{{ asset('assets/images/plane_icon.svg') }}" alt="Plane" class="leaderboard-icon">
+                    <h2 class="leaderboard-title">LEADERBOARD</h2>
+                </div>
+                
+                <div class="leaderboard-table">
+                    <div class="leaderboard-table-header">
+                        <div class="leaderboard-col">Flights</div>
+                        <div class="leaderboard-col">Name</div>
+                        <div class="leaderboard-col">Points</div>
+                    </div>
+                    <div class="leaderboard-table-body" id="leaderboard-body">
+                        <!-- Leaderboard entries will be populated here -->
+                        <div class="leaderboard-row">
+                            <div class="leaderboard-col">FLIGHT IF101</div>
+                            <div class="leaderboard-col">ANGEL</div>
+                            <div class="leaderboard-col">50 PTS</div>
+                        </div>
+                        <div class="leaderboard-row">
+                            <div class="leaderboard-col">FLIGHT IF102</div>
+                            <div class="leaderboard-col">WALLY</div>
+                            <div class="leaderboard-col">40 PTS</div>
+                        </div>
+                        <div class="leaderboard-row">
+                            <div class="leaderboard-col">FLIGHT IF103</div>
+                            <div class="leaderboard-col">SITI</div>
+                            <div class="leaderboard-col">30 PTS</div>
+                        </div>
+                        <div class="leaderboard-row">
+                            <div class="leaderboard-col">FLIGHT IF104</div>
+                            <div class="leaderboard-col">ALAN</div>
+                            <div class="leaderboard-col">25 PTS</div>
+                        </div>
+                        <div class="leaderboard-row">
+                            <div class="leaderboard-col">FLIGHT IF105</div>
+                            <div class="leaderboard-col">WONG LI ONG</div>
+                            <div class="leaderboard-col">20 PTS</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="leaderboard-footer">
+                    <button class="next-btn">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Registration Form Container (Hidden by default) -->
     <div id="registration-screen" class="registration-overlay">
         <button type="button" id="back-btn" class="back-btn-top">← BACK</button>
