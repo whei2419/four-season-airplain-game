@@ -11,16 +11,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $topPlayer = GameScore::orderBy('score', 'desc')
+            ->orderBy('created_at', 'asc')
+            ->first();
+        
         $stats = [
             'total_players' => GameScore::count(),
-            'total_played' => GameScore::where('score', '>', 0)->count(),
+            'top_player_name' => $topPlayer ? $topPlayer->player_name : 'N/A',
+            'top_player_score' => $topPlayer ? $topPlayer->score : 0,
             'total_scanned' => GameScore::where('scanned', true)->count(),
-            'avg_score' => GameScore::where('score', '>', 0)->avg('score'),
-            'highest_score' => GameScore::max('score'),
+            'avg_score' => GameScore::where('score', '>', 0)->avg('score') ?? 0,
         ];
         
         $recent_players = GameScore::orderBy('created_at', 'desc')
-            ->limit(10)
+            ->limit(6)
             ->get();
         
         return view('admin.dashboard', compact('stats', 'recent_players'));
@@ -63,7 +67,7 @@ class DashboardController extends Controller
         $sortOrder = $request->get('sort_order', 'desc');
         $query->orderBy($sortBy, $sortOrder);
         
-        $players = $query->paginate(20);
+        $players = $query->paginate(10);
         
         return view('admin.players', compact('players'));
     }
