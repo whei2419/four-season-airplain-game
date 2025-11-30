@@ -170,7 +170,7 @@ export default class LeaderboardManager {
 
             if (result.success) {
                 console.log('Score saved successfully:', result.data);
-                return result.data;
+                return result;
             } else {
                 console.error('Failed to save score');
                 return null;

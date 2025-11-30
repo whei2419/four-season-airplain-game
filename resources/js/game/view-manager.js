@@ -380,7 +380,12 @@ export default class ViewManager {
                 window.leaderboardManager.saveScore(
                     window.playerData.id,
                     finalScore
-                );
+                ).then(result => {
+                    if (result && result.qr_code_url) {
+                        window.playerData.qr_code_url = result.qr_code_url;
+                        console.log('QR Code URL:', result.qr_code_url);
+                    }
+                });
             }
         }
     }

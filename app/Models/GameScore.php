@@ -15,9 +15,14 @@ class GameScore extends Model
         'contact',
         'flight_number',
         'score',
+        'reward_token',
+        'scanned',
+        'scanned_at',
     ];
 
     protected $casts = [
         'score' => 'integer',
+        'scanned' => 'boolean',
+        'scanned_at' => 'datetime',
     ];
 }

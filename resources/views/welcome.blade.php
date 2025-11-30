@@ -68,6 +68,9 @@
             <div class="passport-content">
                 <h1 class="passport-title">Thank you for flying with<br>INNISFREE Airline!</h1>
                 <p class="passport-subtitle">Scan the QR below to reveal your reward</p>
+                <div class="passport-qr-container">
+                    <img id="passport-qr-code" src="" alt="QR Code" class="passport-qr-image" style="display:none;">
+                </div>
                 <img src="{{ asset('assets/images/passport.webp') }}" alt="Passport" class="passport-image">
             </div>
         </div>

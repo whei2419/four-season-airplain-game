@@ -2010,6 +2010,22 @@
     margin-bottom: 30px;
   }
   
+  .passport-qr-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .passport-qr-image {
+    width: 300px;
+    height: 300px;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
   .passport-image {
     width: 1040px;
     margin-left: -146px;

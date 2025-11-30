@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 // Landing Page
 Route::get('/', [GameController::class, 'welcome'])->name('welcome');
 
+// Reward page
+Route::get('/reward/{token}', [GameController::class, 'showReward'])->name('game.reward');
+
 // Game Routes
 Route::get('/game', [GameController::class, 'index'])->name('game.index');
 Route::get('/game/intro', function () {
