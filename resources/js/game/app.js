@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup view leaderboard button
     setupViewLeaderboardButton();
     
+    // Setup close leaderboard button
+    setupCloseLeaderboardButton();
+    
     // Setup leaderboard pagination
     window.leaderboardManager.setupPaginationListeners();
 });
@@ -131,6 +134,19 @@ function setupViewLeaderboardButton() {
             console.log('View leaderboard button clicked...');
             if (window.viewManager) {
                 window.viewManager.showRunwayLandingAnimation(true, false, false, false, true, false);
+            }
+        });
+    }
+}
+
+// Setup Close Leaderboard button
+function setupCloseLeaderboardButton() {
+    const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
+    if (closeLeaderboardBtn) {
+        closeLeaderboardBtn.addEventListener('click', () => {
+            console.log('Close leaderboard button clicked...');
+            if (window.viewManager) {
+                window.viewManager.showRunwayLandingAnimation(true, true, false, true, false, false);
             }
         });
     }

@@ -31,6 +31,7 @@
             </div>
             
             <div class="leaderboard-card">
+                <button id="close-leaderboard-btn" class="close-leaderboard-btn">✕</button>
                 <div class="leaderboard-header">
                     <img src="{{ asset('assets/images/plane_icon.svg') }}" alt="Plane" class="leaderboard-icon">
                     <h2 class="leaderboard-title">LEADERBOARD</h2>

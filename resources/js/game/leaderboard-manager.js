@@ -43,15 +43,15 @@ export default class LeaderboardManager {
 
         leaderboardBody.innerHTML = scores.map(score => {
             const isTopThree = score.rank <= 3;
-            const crownEmoji = score.rank === 1 ? '👑' : score.rank === 2 ? '🥈' : score.rank === 3 ? '🥉' : '';
+            const crownEmoji = score.rank === 1 ? '👑 ' : score.rank === 2 ? '🥈 ' : score.rank === 3 ? '🥉 ' : '';
             const topThreeClass = isTopThree ? `top-${score.rank}` : '';
+            const flightNumber = score.flight_number ? score.flight_number.toUpperCase() : 'N/A';
             
             return `
                 <div class="leaderboard-row ${topThreeClass}">
-                    <div class="leaderboard-col rank-col">
-                        ${isTopThree ? `<span class="crown-icon">${crownEmoji}</span>` : score.rank}
+                    <div class="leaderboard-col flight-col">
+                        ${isTopThree ? `<span class="crown-icon">${crownEmoji}</span>` : ''}${flightNumber}
                     </div>
-                    <div class="leaderboard-col">${score.flight_number ? score.flight_number.toUpperCase() : 'N/A'}</div>
                     <div class="leaderboard-col">${this.escapeHtml(score.player_name)}</div>
                     <div class="leaderboard-col points-col">${score.score} PTS</div>
                 </div>
