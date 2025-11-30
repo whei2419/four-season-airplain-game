@@ -53,7 +53,7 @@ export default class GameScene extends Phaser.Scene {
         
         // Create player at bottom center (off-screen initially)
         player = this.physics.add.sprite(540, 2100, 'player');
-        player.setScale(0.2);
+        player.setScale(0.15);
         player.setCollideWorldBounds(true);
         player.setDepth(50); // Middle depth for cloud layering
         
@@ -114,17 +114,17 @@ export default class GameScene extends Phaser.Scene {
             loop: true
         });
         
-        // Spawn initial objects immediately to fill screen
+        // Spawn initial objects immediately to fill screen with better spacing
         for (let i = 0; i < 5; i++) {
-            this.time.delayedCall(i * 400, () => {
-                this.spawnObject();
+            this.time.delayedCall(i * 100, () => {
+                this.spawnObject(-150 - (i * 250)); // Spread objects vertically
             });
         }
         
         // Faster spawn rate for more objects (2 seconds instead of 4)
         objectTimer = this.time.addEvent({
             delay: 2000,
-            callback: this.spawnObject,
+            callback: () => this.spawnObject(-50),
             callbackScope: this,
             loop: true
         });
@@ -197,18 +197,37 @@ export default class GameScene extends Phaser.Scene {
         });
     }
 
-    spawnObject() {
+    spawnObject(startY = -50) {
         if (timeLeft <= 0) return;
         
         const types = [
-            { key: 'bottle', scale: 0.08 },
-            { key: 'present', scale: 0.04 },
-            { key: 'badcloud', scale: 0.10 }
+            { key: 'bottle', scale: 0.10 },
+            { key: 'present', scale: 0.06 },
+            { key: 'badcloud', scale: 0.12 }
         ];
         const selectedType = Phaser.Utils.Array.GetRandom(types);
-        const x = Phaser.Math.Between(100, 980);
         
-        const obj = gameObjects.create(x, -50, selectedType.key);
+        // Ensure minimum spacing between objects horizontally
+        let x = Phaser.Math.Between(100, 980);
+        
+        // Check for nearby objects and try to avoid overlap
+        const nearbyObjects = gameObjects.children.entries.filter(obj => {
+            return Math.abs(obj.y - startY) < 150; // Check objects within 150px vertically
+        });
+        
+        // If there are nearby objects, try to find a clear X position
+        if (nearbyObjects.length > 0) {
+            let attempts = 0;
+            let tooClose = true;
+            
+            while (tooClose && attempts < 10) {
+                x = Phaser.Math.Between(100, 980);
+                tooClose = nearbyObjects.some(obj => Math.abs(obj.x - x) < 150);
+                attempts++;
+            }
+        }
+        
+        const obj = gameObjects.create(x, startY, selectedType.key);
         obj.setScale(selectedType.scale);
         obj.setVelocityY(0); // No physics velocity - manual movement in update
         obj.setVelocityX(0); // No horizontal movement
