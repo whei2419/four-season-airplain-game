@@ -14,7 +14,7 @@
     </div>
 
     <!-- Welcome Page Wrapper (will be hidden when game starts) -->
-    <div id="welcome-page-wrapper">
+    <div id="welcome-page-wrapper" style="background-image: url('{{ asset('assets/images/welcome_BG.webp') }}');">
         <!-- Airplane Animation -->
         <div class="airplane-container">
             <img src="{{ asset('assets/images/land-plain.webp') }}" alt="Airplane" class="airplane-animation">
@@ -218,11 +218,11 @@
                 
                 <div class="tilt-controls">
                     <div class="tilt-item">
-                        <img src="{{ asset('assets/images/tilt_left.webp') }}" alt="Tilt Left" class="tilt-icon">
+                        <img src="{{ asset('assets/images/Tilt_left.webp') }}" alt="Tilt Left" class="tilt-icon">
                         <span class="tilt-label">Tilt Left</span>
                     </div>
                     <div class="tilt-item">
-                        <img src="{{ asset('assets/images/tilt_right.webp') }}" alt="Tilt Right" class="tilt-icon">
+                        <img src="{{ asset('assets/images/Tilt_right.webp') }}" alt="Tilt Right" class="tilt-icon">
                         <span class="tilt-label">Tilt Right</span>
                     </div>
                 </div>
@@ -335,7 +335,7 @@
     </div>
     
     <!-- Game Over Screen (Hidden until game ends) -->
-    <div id="game-over-screen" class="game-over-screen">
+    <div id="game-over-screen" class="game-over-screen" style="background-image: url('{{ asset('assets/images/background 03.webp') }}');">
         <!-- Snow Effect for Game Over -->
         <div id="game-over-snow-container"></div>
         

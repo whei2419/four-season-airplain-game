@@ -1,7 +1,4 @@
-// Body Pose Control using MediaPipe Pose
-import { Pose } from '@mediapipe/pose';
-import { Camera } from '@mediapipe/camera_utils';
-
+// Body Pose Control using MediaPipe Pose (loaded from CDN)
 export default class BodyPoseControl {
     constructor() {
         this.enabled = false;
@@ -14,6 +11,27 @@ export default class BodyPoseControl {
         this.shoulderTiltCalibration = 0; // Neutral shoulder angle
     }
 
+    async loadMediaPipeScripts() {
+        // Load MediaPipe Pose from CDN
+        if (!window.Pose) {
+            await this.loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js');
+        }
+        if (!window.Camera) {
+            await this.loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js');
+        }
+    }
+
+    loadScript(src) {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.crossOrigin = 'anonymous';
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
     async initialize(videoElement, canvasElement) {
         this.videoElement = videoElement;
         this.canvasElement = canvasElement;
@@ -22,8 +40,11 @@ export default class BodyPoseControl {
         this.canvasElement.width = 320;
         this.canvasElement.height = 240;
 
+        // Load MediaPipe scripts from CDN
+        await this.loadMediaPipeScripts();
+
         // Initialize MediaPipe Pose
-        this.pose = new Pose({
+        this.pose = new window.Pose({
             locateFile: (file) => {
                 return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
             }
@@ -41,7 +62,7 @@ export default class BodyPoseControl {
         this.pose.onResults((results) => this.onResults(results));
 
         // Initialize camera
-        this.camera = new Camera(this.videoElement, {
+        this.camera = new window.Camera(this.videoElement, {
             onFrame: async () => {
                 await this.pose.send({ image: this.videoElement });
             },
