@@ -106,10 +106,18 @@ function setupPlayAgainButton() {
         playAgainBtn.addEventListener('click', () => {
             console.log('Next button clicked, showing runway landing animation...');
             
+            // Hide instruction screen explicitly
+            const instructionScreen = document.getElementById('instruction-screen');
+            if (instructionScreen) {
+                instructionScreen.classList.remove('active');
+                instructionScreen.style.display = 'none';
+            }
+            
             // Hide game over screens using reusable function
             if (window.viewManager) {
                 window.viewManager.hideGameOverScreens();
-                window.viewManager.showRunwayLandingAnimation(true, true, true, false, true, true);
+                // Show leaderboard with next button but WITHOUT close button (game over flow)
+                window.viewManager.showRunwayLandingAnimation(true, true, true, false, true, true, false);
             }
         });
     }
@@ -132,8 +140,17 @@ function setupViewLeaderboardButton() {
     if (viewLeaderboardBtn) {
         viewLeaderboardBtn.addEventListener('click', () => {
             console.log('View leaderboard button clicked...');
+            
+            // Hide instruction screen explicitly
+            const instructionScreen = document.getElementById('instruction-screen');
+            if (instructionScreen) {
+                instructionScreen.classList.remove('active');
+                instructionScreen.style.display = 'none';
+            }
+            
             if (window.viewManager) {
-                window.viewManager.showRunwayLandingAnimation(true, false, false, false, true, false);
+                // Show leaderboard WITH close button (welcome screen flow)
+                window.viewManager.showRunwayLandingAnimation(true, false, false, false, true, false, true);
             }
         });
     }

@@ -65,7 +65,7 @@ export default class ViewManager {
     }
 
     // Runway Landing Animation Screen
-    showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true, planeInPosition = false, showLeaderboard = false, showLeaderboardNextBtn = false) {
+    showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true, planeInPosition = false, showLeaderboard = false, showLeaderboardNextBtn = false, showCloseButton = true) {
         this.hideAllExcept(['welcome-page-wrapper', 'snow-container', ]);
         this.addActiveClass(['welcome-page-wrapper', 'snow-container']);
         
@@ -106,6 +106,16 @@ export default class ViewManager {
                 // Fetch leaderboard data when showing
                 if (window.leaderboardManager) {
                     window.leaderboardManager.fetchLeaderboard(1);
+                }
+                
+                // Control close button visibility
+                const closeBtn = document.getElementById('close-leaderboard-btn');
+                if (closeBtn) {
+                    if (showCloseButton) {
+                        closeBtn.style.display = 'block';
+                    } else {
+                        closeBtn.style.display = 'none';
+                    }
                 }
             } else {
                 leaderboardContainer.classList.remove('active');
