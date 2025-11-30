@@ -35,6 +35,8 @@ Route::get('/game/play', function () {
 // Admin Routes (Protected)
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/players', [DashboardController::class, 'players'])->name('players');
+    Route::get('/players/export', [DashboardController::class, 'exportPlayers'])->name('players.export');
 });
 
 // Old dashboard route - redirect to admin
