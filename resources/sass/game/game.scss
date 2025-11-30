@@ -80,23 +80,19 @@
 // Child elements visibility control
 .welcome-logo-container,
 .welcome-actions,
-.airplane-container-down {
+.airplane-container-down,
+.leaderboard-actions {
   display: none;
 }
 
 .welcome-logo-container.active,
-.welcome-actions.active,
-.airplane-container-down.active {
+.airplane-container-down.active,
+.leaderboard-actions.active {
   display: block;
 }
 
-// Leaderboard is hidden by default
-.leaderboard-container {
-  display: none;
-  
-  &.active {
-    display: flex;
-  }
+.welcome-actions.active {
+  display: flex;
 }
 
 // Airplane container is always rendered but animated
@@ -374,36 +370,33 @@
 }
 
 // Welcome page actions (Start button)
-.welcome-actions {
-  position: fixed;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2; // Within welcome-page-wrapper context
-}
-
 // Leaderboard Container
 .leaderboard-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1; // Within welcome-page-wrapper context
+  display: none; // Hidden by default
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
   box-sizing: border-box;
+  
+  &.active {
+    display: flex;
+  }
 }
 
 .leaderboard-thank-you {
   text-align: center;
-  margin-top: 80px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 
   .thank-you-text {
     font-family: "Gordita", sans-serif;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
     color: #3bb776;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -417,10 +410,9 @@
 .leaderboard-card {
   background: white;
   border-radius: 30px;
-  padding: 30px;
+  padding: 40px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
-  width: 90%;
+  width: 100%;
   border: 4px solid #3bb776;
 }
 
@@ -454,16 +446,16 @@
 
 .leaderboard-table-header {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 10px;
-  padding: 15px 10px;
+  grid-template-columns: 2fr 1.5fr 1fr;
+  gap: 15px;
+  padding: 18px 15px;
   background-color: #3bb776;
   border-radius: 10px;
   margin-bottom: 15px;
 
   .leaderboard-col {
     font-family: "Gordita", sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     color: white;
     text-align: center;
@@ -473,14 +465,15 @@
 .leaderboard-table-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  min-height: 350px;
 }
 
 .leaderboard-row {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 10px;
-  padding: 15px 10px;
+  grid-template-columns: 2fr 1.5fr 1fr;
+  gap: 15px;
+  padding: 18px 15px;
   background-color: #f0f0f0;
   border-radius: 10px;
   align-items: center;
@@ -491,44 +484,70 @@
 
   .leaderboard-col {
     font-family: "Gordita", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #333;
     text-align: center;
   }
 }
 
-.leaderboard-footer {
+.leaderboard-pagination {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  align-items: center;
+  gap: 20px;
+  margin-top: 25px;
 
-  .next-btn {
+  button {
     background-color: #3bb776;
     color: white;
     font-family: "Gordita", sans-serif;
-    font-size: 28px;
+    font-size: 16px;
     font-weight: bold;
-    text-transform: uppercase;
-    padding: 12px 0;
-    width: 250px;
-    border-radius: 50px;
-    border: 6px solid white;
-    box-shadow: 0 6px 0 #2a8556;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid white;
     cursor: pointer;
-    transition: all 0.1s ease;
+    transition: all 0.2s ease;
 
-    &:hover {
-      transform: translateY(3px);
-      box-shadow: 0 3px 0 #2a8556;
+    &:hover:not(:disabled) {
       background-color: #45c985;
+      transform: scale(1.05);
     }
 
-    &:active {
-      transform: translateY(6px);
-      box-shadow: 0 0 0 #2a8556;
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
+
+  .page-info {
+    font-family: "Gordita", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+// Leaderboard Actions (Next Button) - Same position as welcome-actions
+.leaderboard-actions {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2; // Within welcome-page-wrapper context
+}
+
+.welcome-actions {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2; // Within welcome-page-wrapper context
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
 
 // Reusable Game Button
@@ -559,6 +578,27 @@
   &:active {
     transform: translateY(8px);
     box-shadow: 0 0 0 #2a8556;
+  }
+  
+  &.secondary-btn {
+    background-color: white;
+    color: #3bb776;
+    border: 6px solid #3bb776;
+    box-shadow: 0 8px 0 rgba(59, 183, 118, 0.3);
+    font-size: 28px;
+    border-radius: 10px; /* Square with slight rounding */
+    
+    &:hover {
+      background-color: #f0fdf4;
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 rgba(59, 183, 118, 0.3);
+    }
+    
+    &:active {
+      transform: translateY(8px);
+      box-shadow: 0 0 0 rgba(59, 183, 118, 0.3);
+      background-color: #e0f7e9;
+    }
   }
 }
 

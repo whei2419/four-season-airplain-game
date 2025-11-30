@@ -631,6 +631,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
             
+            // Store player data globally for later use
+            window.playerData = {
+                name: name,
+                email: email,
+                contact: `${countryCode}${contact}`
+            };
+            
             // All validations passed, show instruction screen with content 1
             registrationScreen.style.display = 'none';
             instructionScreen.style.display = 'flex';

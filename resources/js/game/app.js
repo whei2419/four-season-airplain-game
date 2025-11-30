@@ -6,6 +6,7 @@ import PreloadScene from './preload-scene';
 import GameScene from './game-scene';
 import ControlManager from './controls/control-manager';
 import ViewManager from './view-manager';
+import LeaderboardManager from './leaderboard-manager';
 import './welcome';
 
 window.Alpine = Alpine;
@@ -21,6 +22,9 @@ window.viewManager = new ViewManager();
 window.controlManager = new ControlManager();
 window.controlManager.setupKeyboardControls();
 
+// Initialize Leaderboard Manager
+window.leaderboardManager = new LeaderboardManager();
+
 // Initialize Snow Effect
 let snowEffect = null;
 document.addEventListener('DOMContentLoaded', () => {
@@ -33,6 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup play again button
     setupPlayAgainButton();
+    
+    // Setup leaderboard next button
+    setupLeaderboardNextButton();
+    
+    // Setup view leaderboard button
+    setupViewLeaderboardButton();
+    
+    // Setup leaderboard pagination
+    window.leaderboardManager.setupPaginationListeners();
 });
 
 // Setup control mode switching UI
@@ -83,13 +96,42 @@ function setupControlUI() {
     }
 }
 
-// Setup Play Again button
+// Setup Next button (from congratulations screen)
 function setupPlayAgainButton() {
-    const playAgainBtn = document.getElementById('play-again-btn');
+    const playAgainBtn = document.getElementById('next-btn');
     if (playAgainBtn) {
         playAgainBtn.addEventListener('click', () => {
-            console.log('Play again clicked, reloading page...');
+            console.log('Next button clicked, showing runway landing animation...');
+            
+            // Hide game over screens using reusable function
+            if (window.viewManager) {
+                window.viewManager.hideGameOverScreens();
+                window.viewManager.showRunwayLandingAnimation(true, true, true, false, true, true);
+            }
+        });
+    }
+}
+
+// Setup Leaderboard Next button
+function setupLeaderboardNextButton() {
+    const leaderboardNextBtn = document.getElementById('leaderboard-next-btn');
+    if (leaderboardNextBtn) {
+        leaderboardNextBtn.addEventListener('click', () => {
+            console.log('Leaderboard next button clicked, reloading page...');
             window.location.reload();
+        });
+    }
+}
+
+// Setup View Leaderboard button
+function setupViewLeaderboardButton() {
+    const viewLeaderboardBtn = document.getElementById('view-leaderboard-btn');
+    if (viewLeaderboardBtn) {
+        viewLeaderboardBtn.addEventListener('click', () => {
+            console.log('View leaderboard button clicked...');
+            if (window.viewManager) {
+                window.viewManager.showRunwayLandingAnimation(true, false, false, false, true, false);
+            }
         });
     }
 }

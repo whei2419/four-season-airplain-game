@@ -65,7 +65,7 @@ export default class ViewManager {
     }
 
     // Runway Landing Animation Screen
-    showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true, planeInPosition = false, showLeaderboard = false) {
+    showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true, planeInPosition = false, showLeaderboard = false, showLeaderboardNextBtn = false) {
         this.hideAllExcept(['welcome-page-wrapper', 'snow-container', ]);
         this.addActiveClass(['welcome-page-wrapper', 'snow-container']);
         
@@ -82,6 +82,7 @@ export default class ViewManager {
         const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
         const welcomePlane = welcomeWrapper?.querySelector('.airplane-container');
         const leaderboardContainer = welcomeWrapper?.querySelector('.leaderboard-container');
+        const leaderboardActions = document.querySelector('.leaderboard-actions');
         
         if (welcomeLogo) {
             if (withLogo) {
@@ -102,8 +103,21 @@ export default class ViewManager {
         if (leaderboardContainer) {
             if (showLeaderboard) {
                 leaderboardContainer.classList.add('active');
+                // Fetch leaderboard data when showing
+                if (window.leaderboardManager) {
+                    window.leaderboardManager.fetchLeaderboard(1);
+                }
             } else {
                 leaderboardContainer.classList.remove('active');
+            }
+        }
+        
+        // Control leaderboard actions (Next button) visibility - only show when specified
+        if (leaderboardActions) {
+            if (showLeaderboardNextBtn) {
+                leaderboardActions.classList.add('active');
+            } else {
+                leaderboardActions.classList.remove('active');
             }
         }
         
@@ -258,7 +272,7 @@ export default class ViewManager {
                 console.log('Step 3: Showing congratulations');
                 this.showCongratulations(finalScore);
                 this.gameOverAnimating = false; 
-            }, 8000);
+            }, 7000);
             this.gameOverTimeouts.push(timeout2);
         }, 3500);
 
@@ -322,6 +336,16 @@ export default class ViewManager {
             const rankingDisplay = document.getElementById('final-ranking');
             if (rankingDisplay) {
                 rankingDisplay.textContent = ranking;
+            }
+            
+            // Save score to database
+            if (window.leaderboardManager && window.playerData) {
+                const flightNumber = `FLIGHT IF${String(Math.floor(Math.random() * 900) + 100)}`;
+                window.leaderboardManager.saveScore(
+                    window.playerData.name || 'Anonymous',
+                    flightNumber,
+                    finalScore
+                );
             }
         }
     }
@@ -448,6 +472,28 @@ export default class ViewManager {
         allViewElements.forEach(elementId => {
             this.hideElement(elementId);
         });
+    }
+    
+    // Hide game over and congratulations screens
+    hideGameOverScreens() {
+        const congratsScreen = document.getElementById('congratulations-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        
+        if (congratsScreen) {
+            congratsScreen.classList.remove('active');
+        }
+        if (gameOverScreen) {
+            gameOverScreen.classList.remove('active');
+        }
+    }
+    
+    // Show game over and congratulations screens
+    showGameOverScreens() {
+        const gameOverScreen = document.getElementById('game-over-screen');
+        
+        if (gameOverScreen) {
+            gameOverScreen.classList.add('active');
+        }
     }
 
     getCurrentView() {

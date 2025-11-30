@@ -18,6 +18,9 @@
             <button id="start-btn" class="game-button">
                 Start
             </button>
+            <button id="view-leaderboard-btn" class="game-button secondary-btn">
+                View Leaderboard
+            </button>
         </div>
 
         <!-- Leaderboard Container -->
@@ -40,39 +43,23 @@
                         <div class="leaderboard-col">Points</div>
                     </div>
                     <div class="leaderboard-table-body" id="leaderboard-body">
-                        <!-- Leaderboard entries will be populated here -->
-                        <div class="leaderboard-row">
-                            <div class="leaderboard-col">FLIGHT IF101</div>
-                            <div class="leaderboard-col">ANGEL</div>
-                            <div class="leaderboard-col">50 PTS</div>
-                        </div>
-                        <div class="leaderboard-row">
-                            <div class="leaderboard-col">FLIGHT IF102</div>
-                            <div class="leaderboard-col">WALLY</div>
-                            <div class="leaderboard-col">40 PTS</div>
-                        </div>
-                        <div class="leaderboard-row">
-                            <div class="leaderboard-col">FLIGHT IF103</div>
-                            <div class="leaderboard-col">SITI</div>
-                            <div class="leaderboard-col">30 PTS</div>
-                        </div>
-                        <div class="leaderboard-row">
-                            <div class="leaderboard-col">FLIGHT IF104</div>
-                            <div class="leaderboard-col">ALAN</div>
-                            <div class="leaderboard-col">25 PTS</div>
-                        </div>
-                        <div class="leaderboard-row">
-                            <div class="leaderboard-col">FLIGHT IF105</div>
-                            <div class="leaderboard-col">WONG LI ONG</div>
-                            <div class="leaderboard-col">20 PTS</div>
-                        </div>
+                        <!-- Leaderboard entries will be populated dynamically -->
+                        <div style="text-align: center; padding: 50px; color: #999; font-family: 'Gordita', sans-serif;">Loading...</div>
                     </div>
                 </div>
                 
-                <div class="leaderboard-footer">
-                    <button class="next-btn">NEXT</button>
+                <div class="leaderboard-pagination">
+                    <button id="prev-page" disabled>Previous</button>
+                    <span class="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+                    <button id="next-page" disabled>Next</button>
                 </div>
             </div>
+        </div>
+        
+        <div class="leaderboard-actions">
+            <button id="leaderboard-next-btn" class="game-button">
+                Next
+            </button>
         </div>
     </div>
 
@@ -348,7 +335,7 @@
                 <span class="ranking-text">YOUR RANKING: <span id="final-ranking">#01</span></span>
             </div>
             
-            <button id="play-again-btn" class="game-button">Play Again</button>
+            <button id="next-btn" class="game-button">Next</button>
         </div>
     </div>
 
@@ -362,6 +349,12 @@
             bottle: "{{ asset('assets/images/game/game-object/bottle_15pts.webp') }}",
             present: "{{ asset('assets/images/game/game-object/present_10pts.webp') }}",
             badcloud: "{{ asset('assets/images/game/game-object/bad cloud_-5pts.webp') }}"
+        };
+        
+        // API endpoints
+        window.apiUrls = {
+            leaderboard: "{{ url('/api/game/leaderboard') }}",
+            saveScore: "{{ url('/api/game/save-score') }}"
         };
     </script>
 @endsection
