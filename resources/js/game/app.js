@@ -119,8 +119,9 @@ function setupPlayAgainButton() {
             // Hide game over screens using reusable function
             if (window.viewManager) {
                 window.viewManager.hideGameOverScreens();
-                // Show leaderboard with next button but WITHOUT close button (game over flow)
-                window.viewManager.showRunwayLandingAnimation(true, true, true, false, true, true, false);
+                // Show leaderboard with next button but WITHOUT welcome-actions or close button (game over flow)
+                // Parameters: withLogo=true, withButton=false, withPlaneAnimation=true, planeInPosition=false, showLeaderboard=true, showLeaderboardNextBtn=true, showCloseButton=false
+                window.viewManager.showRunwayLandingAnimation(true, false, true, false, true, true, false);
             }
         });
     }
@@ -152,8 +153,36 @@ function setupPassportDoneButton() {
     const passportDoneBtn = document.getElementById('passport-done-btn');
     if (passportDoneBtn) {
         passportDoneBtn.addEventListener('click', () => {
-            console.log('Passport done button clicked, reloading page...');
-            window.location.reload();
+            console.log('Passport done button clicked, resetting to welcome screen...');
+            
+            // Clear the registration form
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const contactInput = document.getElementById('contact');
+            const countryCodeInput = document.getElementById('country_code');
+            const selectedFlag = document.getElementById('selected-flag');
+            const selectedCode = document.getElementById('selected-code');
+            
+            if (nameInput) nameInput.value = '';
+            if (emailInput) emailInput.value = '';
+            if (contactInput) contactInput.value = '';
+            if (countryCodeInput) countryCodeInput.value = '+60';
+            if (selectedFlag) {
+                selectedFlag.className = 'iti__flag iti__my';
+            }
+            if (selectedCode) {
+                selectedCode.textContent = '+60';
+            }
+            
+            // Hide passport animation and button
+            if (window.viewManager) {
+                window.viewManager.hidePassportAnimation();
+            }
+            
+            // Reset to welcome screen with logo, buttons, plane in position (no animation)
+            if (window.viewManager) {
+                window.viewManager.showRunwayLandingAnimation(true, true, false, true, false, false, true);
+            }
         });
     }
 }

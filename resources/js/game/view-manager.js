@@ -64,6 +64,25 @@ export default class ViewManager {
         }
     }
 
+    // Reusable functions for welcome-actions visibility
+    showWelcomeActions() {
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
+        if (welcomeActions) {
+            welcomeActions.classList.remove('active');
+            welcomeActions.style.display = 'flex';
+        }
+    }
+
+    hideWelcomeActions() {
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
+        if (welcomeActions) {
+            welcomeActions.classList.remove('active');
+            welcomeActions.style.setProperty('display', 'none', 'important');
+        }
+    }
+
     // Runway Landing Animation Screen
     showRunwayLandingAnimation(withLogo = true, withButton = true, withPlaneAnimation = true, planeInPosition = false, showLeaderboard = false, showLeaderboardNextBtn = false, showCloseButton = true) {
         this.hideAllExcept(['welcome-page-wrapper', 'snow-container', ]);
@@ -79,7 +98,6 @@ export default class ViewManager {
         // Control logo visibility
         const welcomeWrapper = document.getElementById('welcome-page-wrapper');
         const welcomeLogo = welcomeWrapper?.querySelector('.welcome-logo-container');
-        const welcomeActions = welcomeWrapper?.querySelector('.welcome-actions');
         const welcomePlane = welcomeWrapper?.querySelector('.airplane-container');
         const leaderboardContainer = welcomeWrapper?.querySelector('.leaderboard-container');
         const leaderboardActions = document.querySelector('.leaderboard-actions');
@@ -91,12 +109,10 @@ export default class ViewManager {
                 welcomeLogo.classList.remove('active');
             }
         }
-        if (welcomeActions) {
-            if (withButton) {
-                welcomeActions.classList.add('active');
-            } else {
-                welcomeActions.classList.remove('active');
-            }
+        if (withButton) {
+            this.showWelcomeActions();
+        } else {
+            this.hideWelcomeActions();
         }
         
         // Control leaderboard visibility
@@ -274,22 +290,20 @@ export default class ViewManager {
         console.log('Step 1: Showing plane descending');
         this.showPlaneDescending();
         
-        // Explicitly hide welcome-actions during game over
-        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
-        if (welcomeWrapper) {
-            const welcomeActions = welcomeWrapper.querySelector('.welcome-actions');
-            if (welcomeActions) {
-                welcomeActions.classList.remove('active');
-            }
-        }
+        // Hide welcome-actions using reusable function
+        this.hideWelcomeActions();
         
         // After 3.5 seconds, show runway landing animation
         const timeout1 = setTimeout(() => {
             this.hidePlaneDescending();
             // Hide all: logo, buttons, plane animation, leaderboard, leaderboard next button
             this.showRunwayLandingAnimation(false, false, false, false, false, false);
+            // Ensure welcome-actions stays hidden
+            this.hideWelcomeActions();
             const timeout2 = setTimeout(() => {
                 console.log('Step 3: Showing congratulations');
+                // Hide welcome-actions before showing congratulations
+                this.hideWelcomeActions();
                 this.showCongratulations(finalScore);
                 this.gameOverAnimating = false; 
             }, 7000);
@@ -317,11 +331,14 @@ export default class ViewManager {
     }
 
     showCongratulations(finalScore) {
-        // Hide welcome page wrapper
+        // Hide welcome page wrapper and actions
         const welcomeWrapper = document.getElementById('welcome-page-wrapper');
         if (welcomeWrapper) {
             welcomeWrapper.classList.remove('active');
         }
+        
+        // Hide welcome actions using reusable function
+        this.hideWelcomeActions();
         
         // Show game over screen again
         const gameOverScreen = document.getElementById('game-over-screen');
