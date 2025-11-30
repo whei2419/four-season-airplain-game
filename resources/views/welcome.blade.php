@@ -43,7 +43,7 @@
             <div class="leaderboard-card">
                 <button id="close-leaderboard-btn" class="close-leaderboard-btn">✕</button>
                 <div class="leaderboard-header">
-                    <img src="{{ asset('assets/images/plane_icon.svg') }}" alt="Plane" class="leaderboard-icon">
+                    <i class="fas fa-plane leaderboard-icon"></i>
                     <h2 class="leaderboard-title">LEADERBOARD</h2>
                 </div>
                 

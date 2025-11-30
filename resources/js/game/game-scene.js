@@ -292,7 +292,9 @@ export default class GameScene extends Phaser.Scene {
                 if (result && result.qr_code_url) {
                     window.playerData.qr_code_url = result.qr_code_url;
                     window.playerData.reward_url = result.reward_url;
+                    window.playerData.ranking = result.ranking; // Store ranking
                     console.log('QR Code URL saved on game end:', result.qr_code_url);
+                    console.log('Player ranking:', result.ranking);
                 } else {
                     console.error('QR code URL not found in response:', result);
                 }

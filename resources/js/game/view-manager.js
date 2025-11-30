@@ -368,8 +368,14 @@ export default class ViewManager {
                 scoreDisplay.textContent = finalScore;
             }
             
-            // Calculate ranking (simple mock - you can implement real ranking logic)
-            const ranking = this.calculateRanking(finalScore);
+            // Use real ranking from API if available, otherwise calculate mock ranking
+            let ranking;
+            if (window.playerData && window.playerData.ranking) {
+                ranking = '#' + String(window.playerData.ranking).padStart(2, '0');
+            } else {
+                ranking = this.calculateRanking(finalScore);
+            }
+            
             const rankingDisplay = document.getElementById('final-ranking');
             if (rankingDisplay) {
                 rankingDisplay.textContent = ranking;
@@ -381,8 +387,8 @@ export default class ViewManager {
     }
 
     calculateRanking(score) {
-        // Mock ranking calculation based on score
-        // You can replace this with actual API call to get real ranking
+        // Mock ranking calculation based on score (fallback only)
+        // Real ranking comes from API
         if (score >= 100) return '#01';
         if (score >= 75) return '#02';
         if (score >= 50) return '#03';

@@ -122,12 +122,21 @@ class GameController extends Controller
         
         $gameScore->qr_code_url = asset($qrCodePath);
         
+        // Calculate actual ranking
+        $ranking = GameScore::where('score', '>', $gameScore->score)
+            ->orWhere(function($query) use ($gameScore) {
+                $query->where('score', '=', $gameScore->score)
+                      ->where('created_at', '<', $gameScore->created_at);
+            })
+            ->count() + 1;
+        
         return response()->json([
             'success' => true,
             'message' => 'Score saved successfully',
             'data' => $gameScore,
             'qr_code_url' => asset($qrCodePath),
             'reward_url' => $rewardUrl,
+            'ranking' => $ranking,
         ]);
     }
     
