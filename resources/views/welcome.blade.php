@@ -366,8 +366,9 @@
         
         // API endpoints
         window.apiUrls = {
-            leaderboard: "{{ url('/api/game/leaderboard') }}",
-            saveScore: "{{ url('/api/game/save-score') }}"
+            leaderboard: "{{ route('api.game.leaderboard') }}",
+            savePlayer: "{{ route('api.game.savePlayer') }}",
+            saveScore: "{{ route('api.game.saveScore') }}"
         };
     </script>
 @endsection
