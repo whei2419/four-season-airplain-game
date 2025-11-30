@@ -10,8 +10,12 @@
             margin: 0;
             padding: 0;
             font-family: 'Gordita', sans-serif;
-            background: linear-gradient(180deg, #4CAF50 0%, #FFA726 50%, #EC407A 100%);
-            min-height: 100vh;
+            background-image: url('{{ asset('assets/images/mobileBG.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100svh;
             display: flex;
             flex-direction: column;
         }
@@ -30,8 +34,9 @@
             margin-bottom: 40px;
         }
         .logo-section img {
-            width: 120px;
-            height: auto;
+            width: auto;
+            height: 15vh;
+            object-fit: contain;
             margin-bottom: 10px;
         }
         .logo-text {
@@ -40,6 +45,15 @@
             color: white;
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+        .reward-title-img {
+            max-width: 100%;
+            height: auto;
+            text-align: center;
+            margin-bottom: 30px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         .reward-title {
             font-size: 36px;
@@ -110,9 +124,12 @@
         .reward-image {
             text-align: center;
             margin: 30px 0;
+            position: absolute;
+            right: 0;
+            top: 30vh;
         }
         .reward-image img {
-            max-width: 200px;
+            max-width: 95vw;
             height: auto;
         }
         .thank-you-footer {
@@ -128,8 +145,12 @@
         .footer-credits {
             text-align: center;
             margin-top: 30px;
-            color: rgba(255,255,255,0.8);
-            font-size: 14px;
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 12px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
         }
         .player-info {
             background: #f5f5f5;
@@ -150,37 +171,16 @@
 <body>
     <div class="reward-container">
         <div class="logo-section">
-            <img src="{{ asset('assets/images/innisfree-logo.png') }}" alt="Innisfree Logo">
-            <div class="logo-text">Airline</div>
+            <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Innisfree Logo">
         </div>
         
-        <h1 class="reward-title">Your INNISFREE Travel Reward</h1>
+        <img src="{{ asset('assets/images/Your INNISFREE Travel Reward.png') }}" alt="Your INNISFREE Travel Reward" class="reward-title-img">
         
-        <div class="reward-card">
-            <div class="flight-award-header">
-                <div class="innisfree-logo-small">
-                    <img src="{{ asset('assets/images/innisfree-icon.png') }}" alt="Innisfree">
-                    <span>Innisfree<br>Airline</span>
-                </div>
-                <div class="flight-awards-text">Flight Awards</div>
-            </div>
-            
-            <div class="player-info">
-                <p><strong>Player:</strong> {{ $player->player_name }}</p>
-                <p><strong>Flight:</strong> {{ $player->flight_number }}</p>
-                <p><strong>Score:</strong> {{ $player->score }} points</p>
-            </div>
-            
             @if(isset($reward['image']))
-            <div class="reward-image" style="margin: 20px 0;">
-                <img src="{{ asset($reward['image']) }}" alt="Boarding Pass" style="max-width: 100%; height: auto; border-radius: 10px;">
+            <div class="reward-image">
+                <img src="{{ asset($reward['image']) }}" alt="Boarding Pass">
             </div>
             @endif
-            
-            <div class="thank-you-footer">
-                <img src="{{ asset('assets/images/Thank you for flying with INNISFREE Airline!.png') }}" alt="Thank you for flying with INNISFREE Airline!" style="max-width: 100%; height: auto;">
-            </div>
-        </div>
         
         <div class="footer-credits">
             Powered by WOWSOME® 2025
