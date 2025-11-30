@@ -90,7 +90,7 @@ function setupControlUI() {
                 window.controlManager.setControlMode('pose');
                 currentMode = 'pose';
                 document.getElementById('control-mode-text').textContent = 'Body Pose';
-                cameraContainer.style.display = 'block';
+                if (window.gameSettings?.showCamera) cameraContainer.style.display = 'block';
                 calibrateBtn.style.display = 'inline-block';
             } else {
                 alert('Failed to initialize body pose controls. Please allow camera access and try again.');

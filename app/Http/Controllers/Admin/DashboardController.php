@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GameScore;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -144,5 +145,28 @@ class DashboardController extends Controller
         };
         
         return response()->stream($callback, 200, $headers);
+    }
+
+    public function settings()
+    {
+        $settings = [
+            'game_time_limit' => Setting::get('game_time_limit', 60),
+            'show_camera_feed' => Setting::get('show_camera_feed', 1),
+        ];
+        
+        return view('admin.settings', compact('settings'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'game_time_limit' => 'required|integer|min:10|max:300',
+            'show_camera_feed' => 'required|boolean',
+        ]);
+
+        Setting::set('game_time_limit', $request->game_time_limit);
+        Setting::set('show_camera_feed', $request->show_camera_feed);
+
+        return redirect()->route('admin.settings')->with('success', 'Settings updated successfully!');
     }
 }

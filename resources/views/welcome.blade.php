@@ -385,5 +385,11 @@
             savePlayer: "{{ route('api.game.savePlayer') }}",
             saveScore: "{{ route('api.game.saveScore') }}"
         };
+        
+        // Game settings from admin panel
+        window.gameSettings = {
+            timeLimit: {{ $settings['game_time_limit'] }},
+            showCamera: {{ $settings['show_camera_feed'] ? 'true' : 'false' }}
+        };
     </script>
 @endsection

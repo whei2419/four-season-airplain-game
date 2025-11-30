@@ -37,6 +37,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/players', [DashboardController::class, 'players'])->name('players');
     Route::get('/players/export', [DashboardController::class, 'exportPlayers'])->name('players.export');
+    Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
+    Route::post('/settings', [DashboardController::class, 'updateSettings'])->name('settings.update');
 });
 
 // Old dashboard route - redirect to admin

@@ -6,7 +6,7 @@ let player;
 let cursors;
 let score = 0;
 let scoreText;
-let timeLeft = 5; // Set to 5 seconds for testing
+let timeLeft = window.gameSettings?.timeLimit || 60; // Use admin setting or default to 60
 let timerText;
 let gameObjects;
 let objectTimer;
@@ -95,10 +95,14 @@ export default class GameScene extends Phaser.Scene {
         
         // Reset game variables
         score = 0;
-        timeLeft = 5; // Set to 5 seconds for testing
+        timeLeft = window.gameSettings?.timeLimit || 60; // Use admin setting or default to 60
         gameTime = 0;
         document.getElementById('score').textContent = score;
-        document.getElementById('timer').textContent = '00:05';
+        
+        // Format timer display based on time limit
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
     
     startGameplay() {

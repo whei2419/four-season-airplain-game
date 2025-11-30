@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\GameScore;
+use App\Models\Setting;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
 
@@ -11,7 +12,12 @@ class GameController extends Controller
 {
     public function welcome()
     {
-        return view('welcome');
+        $settings = [
+            'game_time_limit' => Setting::get('game_time_limit', 60),
+            'show_camera_feed' => Setting::get('show_camera_feed', 1),
+        ];
+        
+        return view('welcome', compact('settings'));
     }
     
     public function index()

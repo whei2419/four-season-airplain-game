@@ -241,8 +241,12 @@ export default class ViewManager {
         // Hide welcome page wrapper but keep snow visible
         this.removeActiveClass(['welcome-page-wrapper']);
 
-        // Show game elements
-        this.addActiveClass(['game-container', 'game-ui', 'camera-container']);
+        // Show game elements (conditionally show camera based on settings)
+        const elementsToShow = ['game-container', 'game-ui'];
+        if (window.gameSettings?.showCamera) {
+            elementsToShow.push('camera-container');
+        }
+        this.addActiveClass(elementsToShow);
 
         document.body.style.overflow = 'hidden';
     }

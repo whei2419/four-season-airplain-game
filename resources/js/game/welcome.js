@@ -786,7 +786,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 const cameraContainer = document.getElementById('camera-container');
                                 
                                 if (controlModeText) controlModeText.textContent = 'Body Pose';
-                                if (cameraContainer) cameraContainer.style.display = 'block';
+                                if (cameraContainer && window.gameSettings?.showCamera) cameraContainer.style.display = 'block';
                                 if (calibrateBtn) calibrateBtn.style.display = 'inline-block';
                                 console.log('Body pose controls initialized');
                             } else {
