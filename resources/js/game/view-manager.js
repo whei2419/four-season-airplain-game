@@ -264,10 +264,20 @@ export default class ViewManager {
         console.log('Step 1: Showing plane descending');
         this.showPlaneDescending();
         
+        // Explicitly hide welcome-actions during game over
+        const welcomeWrapper = document.getElementById('welcome-page-wrapper');
+        if (welcomeWrapper) {
+            const welcomeActions = welcomeWrapper.querySelector('.welcome-actions');
+            if (welcomeActions) {
+                welcomeActions.classList.remove('active');
+            }
+        }
+        
         // After 3.5 seconds, show runway landing animation
         const timeout1 = setTimeout(() => {
             this.hidePlaneDescending();
-            this.showRunwayLandingAnimation(false, false, false , false, false);
+            // Hide all: logo, buttons, plane animation, leaderboard, leaderboard next button
+            this.showRunwayLandingAnimation(false, false, false, false, false, false);
             const timeout2 = setTimeout(() => {
                 console.log('Step 3: Showing congratulations');
                 this.showCongratulations(finalScore);

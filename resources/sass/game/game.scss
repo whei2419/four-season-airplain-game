@@ -656,7 +656,6 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2; // Within welcome-page-wrapper context
-  display: flex !important;
   flex-direction: column;
   gap: 20px;
   align-items: center;
