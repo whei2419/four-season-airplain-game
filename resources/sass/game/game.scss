@@ -2169,6 +2169,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 1040px; // Match passport image width for proper positioning
   }
   
   .passport-title-img {
@@ -2211,9 +2212,9 @@
   
   .passport-qr-container {
     position: absolute;
-   top: 479px;
-  left: 500px;
-  z-index: 10;
+    top: 501px;
+    left: 556px;
+    z-index: 10;
   }
   
   .passport-qr-image {
