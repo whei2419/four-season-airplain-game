@@ -43,28 +43,10 @@ function setupControlUI() {
     
     if (!controlModeBtn) return;
     
-    let currentMode = 'pose';
+    let currentMode = 'keyboard'; // Start with keyboard mode
     
-    // Auto-initialize pose mode on load
-    setTimeout(async () => {
-        const videoElement = document.getElementById('gesture-video');
-        const canvasElement = document.getElementById('gesture-canvas');
-        
-        const success = await window.controlManager.initializePoseMode(videoElement, canvasElement);
-        
-        if (success) {
-            window.controlManager.setControlMode('pose');
-            document.getElementById('control-mode-text').textContent = 'Body Pose';
-            cameraContainer.style.display = 'block';
-            calibrateBtn.style.display = 'inline-block';
-            console.log('Body pose controls initialized automatically');
-        } else {
-            // Fallback to keyboard if pose fails
-            currentMode = 'keyboard';
-            document.getElementById('control-mode-text').textContent = 'Keyboard';
-            console.log('Failed to initialize body pose controls, using keyboard');
-        }
-    }, 1000);
+    // Pose initialization will be done when loading screen appears
+    // This is handled in welcome.js to preserve performance
     
     controlModeBtn.addEventListener('click', async () => {
         if (currentMode === 'keyboard') {

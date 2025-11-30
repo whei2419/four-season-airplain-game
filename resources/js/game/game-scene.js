@@ -6,7 +6,7 @@ let player;
 let cursors;
 let score = 0;
 let scoreText;
-let timeLeft = 5; // Set to 5 seconds for testing
+let timeLeft = 60; // Game duration in seconds
 let timerText;
 let gameObjects;
 let objectTimer;
@@ -95,10 +95,10 @@ export default class GameScene extends Phaser.Scene {
         
         // Reset game variables
         score = 0;
-        timeLeft = 5; // Set to 5 seconds for testing
+        timeLeft = 60; // Game duration in seconds
         gameTime = 0;
         document.getElementById('score').textContent = score;
-        document.getElementById('timer').textContent = '00:05';
+        document.getElementById('timer').textContent = '01:00';
     }
     
     startGameplay() {

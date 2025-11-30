@@ -750,6 +750,31 @@ document.addEventListener('DOMContentLoaded', function() {
                         gameLoading.style.display = 'block';
                     }
                     
+                    // Initialize pose controls while loading screen is showing
+                    setTimeout(async () => {
+                        console.log('Initializing pose controls...');
+                        const videoElement = document.getElementById('gesture-video');
+                        const canvasElement = document.getElementById('gesture-canvas');
+                        
+                        if (window.controlManager) {
+                            const success = await window.controlManager.initializePoseMode(videoElement, canvasElement);
+                            
+                            if (success) {
+                                window.controlManager.setControlMode('pose');
+                                const controlModeText = document.getElementById('control-mode-text');
+                                const calibrateBtn = document.getElementById('calibrate-btn');
+                                const cameraContainer = document.getElementById('camera-container');
+                                
+                                if (controlModeText) controlModeText.textContent = 'Body Pose';
+                                if (cameraContainer) cameraContainer.style.display = 'block';
+                                if (calibrateBtn) calibrateBtn.style.display = 'inline-block';
+                                console.log('Body pose controls initialized');
+                            } else {
+                                console.log('Failed to initialize pose controls, using keyboard');
+                            }
+                        }
+                    }, 500);
+                    
                     // Wait for full 5 seconds for progress bar to complete, then initialize game
                     setTimeout(() => {
                         console.log('Initializing game...');
@@ -770,13 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Show game container behind loading screen
                         const gameContainer = document.getElementById('game-container');
                         if (gameContainer) {
-                            gameContainer.style.display = 'flex';
-                            gameContainer.style.position = 'fixed';
-                            gameContainer.style.top = '0';
-                            gameContainer.style.left = '0';
-                            gameContainer.style.width = '100vw';
-                            gameContainer.style.height = '100vh';
-                            gameContainer.style.zIndex = '100'; // Behind loading
+                            gameContainer.classList.add('active');
                         }
                         
                         // Small delay then fade out loading screen
@@ -816,20 +835,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 
                                 document.body.style.overflow = 'hidden';
                                 
-                                const gameContainer = document.getElementById('game-container');
-                                const gameUI = document.getElementById('game-ui');
-                                const cameraContainer = document.getElementById('camera-container');
-                                if (gameContainer) {
-                                    gameContainer.style.zIndex = '9999';
-                                }
-                                if (gameUI) {
-                                    gameUI.style.display = 'block';
-                                    gameUI.style.zIndex = '10000';
-                                }
-                                if (cameraContainer) {
-                                    cameraContainer.style.display = 'block';
-                                    cameraContainer.style.zIndex = '10001';
-                                }
+                                // Elements already activated by viewManager.showGame()
+                                // No need to set inline styles
                             }
                             }, 500);
                         }, 500);

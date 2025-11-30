@@ -403,6 +403,45 @@ export default class ViewManager {
             }
         });
     }
+    
+    // Optimized show/hide function that properly hides elements
+    showElement(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.classList.add('active');
+            element.style.visibility = 'visible';
+            element.style.pointerEvents = 'auto';
+        }
+    }
+    
+    hideElement(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.classList.remove('active');
+            element.style.visibility = 'hidden';
+            element.style.pointerEvents = 'none';
+        }
+    }
+    
+    // Hide all views completely
+    hideAllViews() {
+        const allViewElements = [
+            'welcome-page-wrapper',
+            'planeSkyAnimation',
+            'planeDescendingView',
+            'game-loading',
+            'game-container',
+            'game-ui',
+            'camera-container',
+            'game-over-screen',
+            'snow-container',
+            'game-over-snow-container'
+        ];
+        
+        allViewElements.forEach(elementId => {
+            this.hideElement(elementId);
+        });
+    }
 
     getCurrentView() {
         return this.currentView;
