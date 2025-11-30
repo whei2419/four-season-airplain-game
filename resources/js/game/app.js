@@ -28,6 +28,17 @@ window.leaderboardManager = new LeaderboardManager();
 // Initialize Snow Effect
 let snowEffect = null;
 document.addEventListener('DOMContentLoaded', () => {
+    // Hide page loader after everything is loaded
+    const pageLoader = document.getElementById('page-loader');
+    if (pageLoader) {
+        setTimeout(() => {
+            pageLoader.classList.add('hidden');
+            setTimeout(() => {
+                pageLoader.style.display = 'none';
+            }, 500); // Wait for fade out animation
+        }, 1000); // Show loader for at least 1 second
+    }
+    
     if (document.getElementById('snow-container')) {
         snowEffect = new SnowEffect('snow-container');
     }
@@ -160,36 +171,10 @@ function setupPassportDoneButton() {
     const passportDoneBtn = document.getElementById('passport-done-btn');
     if (passportDoneBtn) {
         passportDoneBtn.addEventListener('click', () => {
-            console.log('Passport done button clicked, resetting to welcome screen...');
+            console.log('Passport done button clicked, reloading page...');
             
-            // Clear the registration form
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const contactInput = document.getElementById('contact');
-            const countryCodeInput = document.getElementById('country_code');
-            const selectedFlag = document.getElementById('selected-flag');
-            const selectedCode = document.getElementById('selected-code');
-            
-            if (nameInput) nameInput.value = '';
-            if (emailInput) emailInput.value = '';
-            if (contactInput) contactInput.value = '';
-            if (countryCodeInput) countryCodeInput.value = '+60';
-            if (selectedFlag) {
-                selectedFlag.className = 'iti__flag iti__my';
-            }
-            if (selectedCode) {
-                selectedCode.textContent = '+60';
-            }
-            
-            // Hide passport animation and button
-            if (window.viewManager) {
-                window.viewManager.hidePassportAnimation();
-            }
-            
-            // Reset to welcome screen with logo, buttons, plane in position (no animation)
-            if (window.viewManager) {
-                window.viewManager.showRunwayLandingAnimation(true, true, false, true, false, false, true);
-            }
+            // Reload the page
+            window.location.reload();
         });
     }
 }

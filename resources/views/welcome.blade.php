@@ -3,6 +3,16 @@
 @section('title', 'Welcome')
 
 @section('content')
+    <!-- Page Loader -->
+    <div id="page-loader" class="page-loader" style="background-image: url('{{ asset('assets/images/background 03.webp') }}')">
+        <div class="loading-content">
+            <img src="{{ asset('assets/images/airline logo.webp') }}" alt="Logo" class="loading-logo">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="page-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Welcome Page Wrapper (will be hidden when game starts) -->
     <div id="welcome-page-wrapper">
         <!-- Airplane Animation -->
