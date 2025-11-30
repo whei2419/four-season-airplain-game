@@ -21,22 +21,38 @@
     <div class="container-xl">
         <!-- Filters -->
         <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="ti ti-filter me-2"></i>Filters
+                </h3>
+            </div>
             <div class="card-body">
                 <form method="GET" action="{{ route('admin.players') }}">
-                    <div class="row g-3">
+                    <div class="row g-3 align-items-end">
                         <!-- Search -->
                         <div class="col-md-4">
-                            <label class="form-label">Search</label>
-                            <input type="text" name="search" class="form-control" value="{{ request('search') }}" 
-                                placeholder="Name, Email, or Flight #">
+                            <label class="form-label">
+                                <i class="ti ti-search me-1"></i>Search Player
+                            </label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="ti ti-search"></i>
+                                </span>
+                                <input type="text" name="search" class="form-control" value="{{ request('search') }}" 
+                                    placeholder="Name, Email, or Flight #">
+                            </div>
                         </div>
 
                         <!-- Status Filter -->
-                        <div class="col-md-4">
-                            <label class="form-label">Status</label>
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                <i class="ti ti-filter me-1"></i>Status
+                            </label>
                             <select name="status" class="form-select">
                                 <option value="">All Players</option>
-                                <option value="played" {{ request('status') == 'played' ? 'selected' : '' }}>Played Game</option>
+                                <option value="played" {{ request('status') == 'played' ? 'selected' : '' }}>
+                                    <i class="ti ti-circle-check"></i> Played Game
+                                </option>
                                 <option value="not_played" {{ request('status') == 'not_played' ? 'selected' : '' }}>Not Played</option>
                                 <option value="scanned" {{ request('status') == 'scanned' ? 'selected' : '' }}>QR Scanned</option>
                                 <option value="not_scanned" {{ request('status') == 'not_scanned' ? 'selected' : '' }}>QR Not Scanned</option>
@@ -44,23 +60,30 @@
                         </div>
 
                         <!-- Sort -->
-                        <div class="col-md-4">
-                            <label class="form-label">Sort By</label>
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                <i class="ti ti-sort-descending me-1"></i>Sort By
+                            </label>
                             <select name="sort_by" class="form-select">
                                 <option value="created_at" {{ request('sort_by') == 'created_at' ? 'selected' : '' }}>Registration Date</option>
                                 <option value="score" {{ request('sort_by') == 'score' ? 'selected' : '' }}>Score</option>
                                 <option value="player_name" {{ request('sort_by') == 'player_name' ? 'selected' : '' }}>Name</option>
                             </select>
                         </div>
-                    </div>
 
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="ti ti-filter"></i> Apply Filters
-                        </button>
-                        <a href="{{ route('admin.players') }}" class="btn btn-secondary">
-                            <i class="ti ti-x"></i> Clear
-                        </a>
+                        <!-- Action Buttons -->
+                        <div class="col-md-2">
+                            <div class="btn-list">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="ti ti-search me-1"></i>Search
+                                </button>
+                                @if(request()->hasAny(['search', 'status', 'sort_by']))
+                                <a href="{{ route('admin.players') }}" class="btn btn-ghost-secondary w-100">
+                                    <i class="ti ti-x me-1"></i>Clear
+                                </a>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
