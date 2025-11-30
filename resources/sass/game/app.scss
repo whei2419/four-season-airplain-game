@@ -1,34 +1,6 @@
 // Game Styles
 @use 'game';
 
-@font-face {
-    font-family: 'InnisfreeGothic';
-    src: url('../../../public/assets/font/InnisfreeGothicR.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'InnisfreeGothic';
-    src: url('../../../public/assets/font/InnisfreeGothicB.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Gordita';
-    src: url('../../../public/assets/font/Type Atelier - Gordita.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Gordita';
-    src: url('../../../public/assets/font/Type Atelier - Gordita Bold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-
 * {
     margin: 0;
     padding: 0;

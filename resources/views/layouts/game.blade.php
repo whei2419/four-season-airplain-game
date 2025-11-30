@@ -10,6 +10,34 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
+    <!-- Custom Fonts -->
+    <style>
+        @font-face {
+            font-family: 'InnisfreeGothic';
+            src: url('{{ asset('assets/font/InnisfreeGothicR.otf') }}') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'InnisfreeGothic';
+            src: url('{{ asset('assets/font/InnisfreeGothicB.otf') }}') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Gordita';
+            src: url('{{ asset('assets/font/Type Atelier - Gordita.otf') }}') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Gordita';
+            src: url('{{ asset('assets/font/Type Atelier - Gordita Bold.otf') }}') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+    </style>
+    
     <!-- Game Styles -->
     @vite(['resources/sass/game/app.scss', 'resources/js/game/app.js'])
     @stack('styles')
