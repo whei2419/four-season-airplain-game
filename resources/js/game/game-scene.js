@@ -115,9 +115,9 @@ export default class GameScene extends Phaser.Scene {
         });
         
         // Spawn initial objects immediately to fill screen with better spacing
-        for (let i = 0; i < 5; i++) {
-            this.time.delayedCall(i * 100, () => {
-                this.spawnObject(-150 - (i * 250)); // Spread objects vertically
+        for (let i = 0; i < 3; i++) {
+            this.time.delayedCall(i * 300, () => {
+                this.spawnObject(-200 - (i * 400)); // Spread objects vertically further apart
             });
         }
         
@@ -201,9 +201,9 @@ export default class GameScene extends Phaser.Scene {
         if (timeLeft <= 0) return;
         
         const types = [
-            { key: 'bottle', scale: 0.10 },
-            { key: 'present', scale: 0.06 },
-            { key: 'badcloud', scale: 0.12 }
+            { key: 'bottle', scale: 0.08 },
+            { key: 'present', scale: 0.05 },
+            { key: 'badcloud', scale: 0.14 }
         ];
         const selectedType = Phaser.Utils.Array.GetRandom(types);
         
