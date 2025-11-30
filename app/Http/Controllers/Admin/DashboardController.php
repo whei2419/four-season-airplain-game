@@ -173,4 +173,22 @@ class DashboardController extends Controller
 
         return redirect()->route('admin.settings')->with('success', 'Settings updated successfully!');
     }
+
+    public function clearAllPlayers(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string',
+        ]);
+
+        // Verify the admin password
+        if (!\Illuminate\Support\Facades\Hash::check($request->password, auth()->user()->password)) {
+            return redirect()->route('admin.settings')->with('error', 'Invalid password. Players were not deleted.');
+        }
+
+        // Delete all game scores (players)
+        $count = \App\Models\GameScore::count();
+        \App\Models\GameScore::truncate();
+
+        return redirect()->route('admin.settings')->with('success', "Successfully deleted {$count} player records.");
+    }
 }

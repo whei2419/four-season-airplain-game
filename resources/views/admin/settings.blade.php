@@ -21,6 +21,13 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="ti ti-alert-triangle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
@@ -134,6 +141,91 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Dangerous Actions -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-danger">
+                    <div class="card-header bg-danger-lt">
+                        <h3 class="card-title text-danger">
+                            <i class="ti ti-alert-triangle me-2"></i>Danger Zone
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h4 class="mb-1">Clear All Player Data</h4>
+                                <p class="text-muted mb-0">
+                                    Permanently delete all player records, scores, and QR codes. This action cannot be undone.
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#clearPlayersModal">
+                                    <i class="ti ti-trash me-2"></i>Clear All Players
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Clear All Players Confirmation Modal -->
+<div class="modal fade" id="clearPlayersModal" tabindex="-1" aria-labelledby="clearPlayersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="clearPlayersModalLabel">
+                    <i class="ti ti-alert-triangle me-2"></i>Confirm Clear All Players
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('admin.settings.clear-players') }}" method="POST" id="clearPlayersForm">
+                @csrf
+                @method('DELETE')
+                <div class="modal-body">
+                    <div class="alert alert-danger d-flex align-items-start mb-3">
+                        <i class="ti ti-alert-triangle me-2 mt-1" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <strong>Warning:</strong> This will permanently delete all player data including:
+                            <ul class="mb-0 mt-2 ps-3">
+                                <li>Player names and contact information</li>
+                                <li>Game scores and flight numbers</li>
+                                <li>QR codes and scan records</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label required">Enter your password to confirm</label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            class="form-control" 
+                            placeholder="Your admin password"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <small class="text-muted">You must enter your password to proceed with this action.</small>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="confirmClear" required>
+                        <label class="form-check-label" for="confirmClear">
+                            I understand this action cannot be undone
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="ti ti-trash me-2"></i>Clear All Players
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
