@@ -259,6 +259,8 @@ export default class GameScene extends Phaser.Scene {
         } else if (obj.objectType === 'badcloud') {
             points = -5;
             score -= 5;
+            // Ensure score doesn't go below 0
+            if (score < 0) score = 0;
             color = 0x000000; // Black for negative
             if (window.soundManager) window.soundManager.play('deduct');
         }
