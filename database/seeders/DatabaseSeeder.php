@@ -12,12 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create default admin user
-        \App\Models\User::create([
-            'name' => 'Admin',
-            'email' => 'admin@innisfree.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('password'),
-            'email_verified_at' => now(),
-        ]);
+        // Create or update admin user
+        \App\Models\User::updateOrCreate(
+            ['email' => 'admin@innisfree.com'],
+            [
+                'name' => 'Admin',
+                'password' => \Illuminate\Support\Facades\Hash::make('innisfree2025'),
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }
