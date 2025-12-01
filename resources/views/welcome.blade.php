@@ -244,6 +244,14 @@
                         <img src="{{ asset('assets/images/Tilt_right.webp') }}" alt="Tilt Right" class="tilt-icon">
                         <span class="tilt-label">Tilt Right</span>
                     </div>
+                    <div class="tilt-item">
+                        <img src="{{ asset('assets/images/move down.webp') }}" alt="Move Down" class="tilt-icon">
+                        <span class="tilt-label">Move Down</span>
+                    </div>
+                    <div class="tilt-item">
+                        <img src="{{ asset('assets/images/move up.webp') }}" alt="Move Up" class="tilt-icon">
+                        <span class="tilt-label">Move Up</span>
+                    </div>
                 </div>
             </div>
             

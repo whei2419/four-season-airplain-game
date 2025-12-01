@@ -1465,28 +1465,30 @@
   }
 
   .tilt-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 100px; // Increased gap between items
-    margin-top: 60px; // Move down
-    padding: 30px 0 40px 0; // More bottom padding for spacing before NEXT button
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 60px; // Row gap and column gap
+    margin-top: 40px;
+    padding: 30px 60px 40px 60px; // Add horizontal padding
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 
     .tilt-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px; // Space between icon and label
+      gap: 12px; // Space between icon and label
 
       .tilt-icon {
-        width: 380px; // Larger icons
+        width: 200px; // Reduced from 300px
         height: auto;
         object-fit: contain;
       }
 
       .tilt-label {
         font-family: "Gordita", sans-serif;
-        font-size: 32px;
+        font-size: 28px; // Reduced from 32px
         font-weight: bold;
         color: #3bb776;
       }
