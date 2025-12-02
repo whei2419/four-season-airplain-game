@@ -280,19 +280,31 @@
                         <h6 class="mb-3 text-muted">
                             <i class="ti ti-qrcode me-1"></i>Reward QR Code
                         </h6>
-                        @if($player->qr_code_url)
-                            <div class="text-center">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <img src="{{ $player->qr_code_url }}" alt="QR Code" class="img-fluid" style="max-width: 300px;">
+                        @if($player->reward_token && $player->score > 0)
+                            @php
+                                $qrCodePath = 'qrcodes/' . $player->reward_token . '.svg';
+                                $qrCodeFullPath = public_path($qrCodePath);
+                            @endphp
+                            @if(file_exists($qrCodeFullPath))
+                                <div class="text-center">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <img src="{{ asset($qrCodePath) }}" alt="QR Code" class="img-fluid" style="max-width: 300px;">
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <a href="{{ route('game.reward', $player->reward_token) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                            <i class="ti ti-external-link me-1"></i>Open Reward Page
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="mt-3">
-                                    <a href="{{ route('game.reward', $player->reward_token) }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                        <i class="ti ti-external-link me-1"></i>Open Reward Page
-                                    </a>
+                            @else
+                                <div class="text-center text-muted py-5">
+                                    <i class="ti ti-qrcode-off" style="font-size: 3rem;"></i>
+                                    <p class="mt-2">QR Code file not found</p>
+                                    <small>The QR code file may have been deleted</small>
                                 </div>
-                            </div>
+                            @endif
                         @else
                             <div class="text-center text-muted py-5">
                                 <i class="ti ti-qrcode-off" style="font-size: 3rem;"></i>
