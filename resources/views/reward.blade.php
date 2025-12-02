@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Gordita', sans-serif;
-            background-image: url('{{ asset('assets/images/mobileBG.png') }}');
+            background-image: url('{{ asset('assets/images/mobileBG.webp') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
