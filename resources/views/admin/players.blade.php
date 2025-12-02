@@ -288,8 +288,8 @@
                             @if(file_exists($qrCodeFullPath))
                                 <div class="text-center">
                                     <div class="card">
-                                        <div class="card-body">
-                                            <img src="{{ asset($qrCodePath) }}" alt="QR Code" class="img-fluid" style="max-width: 300px;">
+                                        <div class="card-body p-3">
+                                            <img src="{{ asset($qrCodePath) }}" alt="QR Code" class="img-fluid" style="max-width: 100%; width: 250px; height: auto;">
                                         </div>
                                     </div>
                                     <div class="mt-3">
