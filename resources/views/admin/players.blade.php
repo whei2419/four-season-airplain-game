@@ -145,7 +145,7 @@
                                     @if($player->scanned)
                                         <div>
                                             <i class="ti ti-qrcode text-success" style="font-size: 1.5rem;"></i>
-                                            <div class="text-muted small">{{ $player->scanned_at->format('M d, H:i') }}</div>
+                                            <div class="text-muted small">{{ $player->scanned_at->format('M d, h:i A') }}</div>
                                         </div>
                                     @else
                                         <i class="ti ti-qrcode text-muted" style="font-size: 1.5rem;"></i>
@@ -257,7 +257,7 @@
                                         <span class="badge badge-outline text-success">
                                             <i class="ti ti-qrcode me-1"></i>Yes
                                         </span>
-                                        <div class="text-muted small mt-1">{{ $player->scanned_at->format('M d, Y H:i') }}</div>
+                                        <div class="text-muted small mt-1">{{ $player->scanned_at->format('M d, Y h:i A') }}</div>
                                     @else
                                         <span class="badge badge-outline text-secondary">
                                             <i class="ti ti-qrcode me-1"></i>No
