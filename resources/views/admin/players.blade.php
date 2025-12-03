@@ -153,7 +153,7 @@
                                 </td>
                                 <td>
                                     <span class="text-muted">
-                                        <i class="ti ti-clock me-1"></i>{{ $player->created_at->format('M d, Y H:i') }}
+                                        <i class="ti ti-clock me-1"></i>{{ $player->created_at->format('M d, Y h:i A') }}
                                     </span>
                                 </td>
                                 <td class="text-center">
